@@ -22,9 +22,8 @@ public class Node extends Rectangle {
     private boolean selected;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
     private MainFrame mainFrame;
-    private CenterPane centerPane;
 
-    public Node(String nodeName, MainFrame mainFrame, CenterPane centerPane) {
+    public Node(String nodeName, MainFrame mainFrame) {
        this.label = new Text(nodeName);
        this.selected = false;
 
@@ -37,7 +36,6 @@ public class Node extends Rectangle {
 
        setFill(DEFAULT_COLOR);
        setStroke(Color.DARKGREY);
-       this.centerPane = centerPane;
        this.mainFrame = mainFrame;
 
        setMouseListenerProperties();
@@ -96,18 +94,6 @@ public class Node extends Rectangle {
            this.setFill(Color.LAVENDER);
        } else {
            this.setFill(DEFAULT_COLOR);
-       }
-   }
-
-   private void moveSeveralNodes(MouseEvent e) {
-       double tempDiffX = centerPane.getMouseSourceX() - e.getSceneX();
-       double tempDiffY = centerPane.getMouseSourceY() - e.getSceneY();
-       for (Node node1 : centerPane.getNodes()) {
-           if (node1.isSelected()) {
-               node1.setLocation(node1.getTranslateX() - tempDiffX, node1.getTranslateY() - tempDiffY);
-               centerPane.setMouseSourceX(e.getSceneX());
-               centerPane.setMouseSourceY(e.getSceneY());
-           }
        }
    }
 }

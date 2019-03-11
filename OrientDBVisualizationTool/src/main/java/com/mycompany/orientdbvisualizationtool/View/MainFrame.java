@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 /**
  * @author emanuelnae
  */
@@ -32,27 +34,27 @@ public class MainFrame extends Application {
 
         //center
 
-        CenterPane centerPane = new CenterPane(scene);
-
-        borderPane.setCenter(centerPane);
-
-
         scene = new Scene(borderPane, WIDTH, HEIGHT);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        this.node1 = new Node("node1", this, centerPane);
-        this.node2 = new Node("node2", this, centerPane);
+        this.node1 = new Node("node1", this);
+        this.node2 = new Node("node2", this);
         node1.setLocation(-100, 0);
         node2.setLocation(100, 0);
-        centerPane.getChildren().add(edge);
-        node1.addToPane(centerPane);
-        node2.addToPane(centerPane);
+        ArrayList nodes = new ArrayList();
+        nodes.add(node1);
+        nodes.add(node2);
+        CenterPane centerPane = new CenterPane(scene, nodes);
+        borderPane.setCenter(centerPane);
         this.edge = new Edge(node1, node2);
         edge.setStartX(node1.getTranslateX());
         edge.setStartY(node1.getTranslateY());
         edge.setEndX(node2.getTranslateX());
         edge.setEndY(node2.getTranslateY());
+        centerPane.getChildren().add(edge);
+        node1.addToPane(centerPane);
+        node2.addToPane(centerPane);
 
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
 

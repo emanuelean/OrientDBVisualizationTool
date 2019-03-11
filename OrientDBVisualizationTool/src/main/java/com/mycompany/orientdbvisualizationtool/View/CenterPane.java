@@ -24,13 +24,14 @@ public class CenterPane extends StackPane {
     private double mouseSourceY = 0;
     private Rectangle selectionArea = new Rectangle();
     private ArrayList<Node> nodes = new ArrayList<>();
-    public static final int WIDTH = 1000;
-    public static final int HEIGHT = WIDTH * 9 / 16;
+    private static final int WIDTH = 1000;
+    private static final int HEIGHT = WIDTH * 9 / 16;
     private Scene scene;
 
 
-    public CenterPane(Scene scene) {
+    public CenterPane(Scene scene, ArrayList<Node> nodes) {
         this.scene = scene;
+        this.nodes = nodes;
         setProperties();
 
     }
@@ -44,9 +45,7 @@ public class CenterPane extends StackPane {
 
         this.getChildren().add(selectionArea);
 
-        this.setOnMouseDragged(e ->
-
-                {
+        this.setOnMouseDragged(e -> {
                     //area selection using blue rectangle
                     if (e.isControlDown()) {
                         selectionArea.setVisible(true);
@@ -75,9 +74,7 @@ public class CenterPane extends StackPane {
                 }
         );
 
-        this.setOnMouseReleased(e ->
-
-                {
+        this.setOnMouseReleased(e -> {
                     //area selection
                     if (e.isControlDown()) {
                         for (Node node : nodes) {
