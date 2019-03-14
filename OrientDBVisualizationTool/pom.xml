@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.mycompany.orientdbvisualizationtool.MainApp</mainClass>
+        <mainClass>com.mycompany.orientdbvisualizationtool.VisTool</mainClass>
     </properties>
 
     <organization>
@@ -39,6 +39,28 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                    <!-- Executable JAR configuration. -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                    <configuration>
+                            <archive>
+                                    <manifest>
+                                            <mainClass>mycompany.orientdbvisualizationtool.VisTool</mainClass>
+                                    </manifest>
+                            </archive>
+                    </configuration>
+            </plugin>
+            <plugin>
+                <!-- Javadoc configuration. -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                        <show>private</show>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -104,7 +126,13 @@
             </plugin>
         </plugins>
     </build>
-
+    <repositories>
+        <repository>
+            <id>objectdb</id>
+            <name>ObjectDB Repository</name>
+            <url>http://m2.objectdb.com</url>
+        </repository>
+    </repositories>
     <dependencies>
 		<dependency>
 			<groupId>com.objectdb</groupId>
