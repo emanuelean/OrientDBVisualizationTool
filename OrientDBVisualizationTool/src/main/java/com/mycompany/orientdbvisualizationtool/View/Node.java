@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.scene.Cursor;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -14,7 +8,7 @@ import javafx.scene.text.Text;
 
 /**
  *
- * @author emanuelnae
+ * @author Emanuel Mae, Yona Moreda
  */
 public class Node extends Rectangle {
     
@@ -26,7 +20,6 @@ public class Node extends Rectangle {
     public Node(String nodeName, MainFrame mainFrame) {
        this.label = new Text(nodeName);
        this.selected = false;
-
        setWidth(nodeName.length() * 10.0f);
        setHeight(40.0f);
 
@@ -51,9 +44,7 @@ public class Node extends Rectangle {
                }
        );
 
-
        Text nodeLabel = this.getLabel();
-
 
        nodeLabel.setOnMousePressed(e -> {
                    if (!this.isSelected()) {

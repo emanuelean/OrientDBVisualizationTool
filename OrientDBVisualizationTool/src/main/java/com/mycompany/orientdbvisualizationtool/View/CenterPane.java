@@ -1,37 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.orientdbvisualizationtool.View;
-
 
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 import java.util.ArrayList;
 
-
 /**
- * @author emanuelnae
+ * @author Emanuel Nae, Yona Moreda
  */
 public class CenterPane extends StackPane {
 
-    private double mouseSourceX = 0;
-    private double mouseSourceY = 0;
-    private Rectangle selectionArea = new Rectangle();
-    private ArrayList<Node> nodes = new ArrayList<>();
+    private double mouseSourceX;
+    private double mouseSourceY;
+    private Rectangle selectionArea;
+    private ArrayList<Node> nodes;
+    private Scene scene;
     private static final int WIDTH = 1000;
     private static final int HEIGHT = WIDTH * 9 / 16;
-    private Scene scene;
-
 
     public CenterPane(Scene scene, ArrayList<Node> nodes) {
         this.scene = scene;
         this.nodes = nodes;
+        this.selectionArea = new Rectangle();
+        this.mouseSourceX = 0;
+        this.mouseSourceY = 0;
         setProperties();
 
     }

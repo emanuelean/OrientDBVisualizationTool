@@ -1,19 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 
 /**
- * @author emanuelnae
+ * @author Emanuel Nae, Yona Moreda
  */
 public class MainFrame extends Application {
     public static final int WIDTH = 1000;
@@ -29,12 +23,9 @@ public class MainFrame extends Application {
         primaryStage.setTitle("Main View");
         BorderPane borderPane = new BorderPane();
 
-
-        //top
-
-        //center
-
         scene = new Scene(borderPane, WIDTH, HEIGHT);
+
+        //TEMPORARY DEMO NODES WITH EDGE TODO :: remove
         this.node1 = new Node("node1", this);
         this.node2 = new Node("node2", this);
         node1.setLocation(-100, 0);
