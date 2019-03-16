@@ -1,0 +1,38 @@
+28/02 - requirements document
+28/02 - requirements document
+01/03 - researching SB
+01/03 - researching SB
+02/03 - learning javaFX
+02/03 - learning javaFX
+02/03 - learning javaFX
+02/03 - learning javaFX
+03/03 - researching orientDB
+03/03 - researching orientDB
+03/03 - researching orientDB
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+06/03 - researching the db schema
+06/03 - researching the db schema
+06/03 - researching the db schema
+07/03 - Group meeting
+07/03 - Group meeting
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+09/03 - working with orientDB demo file
+09/03 - working with orientDB demo file
+09/03 - working with orientDB demo file
+11/03 - client meeting
+11/03 - client meeting
+12/03 - selecting/learning javafx layout
+12/03 - selecting/learning javafx layout
+14/03 - TA meeting
+14/03 - TA meeting
+15/03 - architecture document
+15/03 - architecture document
