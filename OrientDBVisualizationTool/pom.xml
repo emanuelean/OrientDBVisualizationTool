@@ -151,7 +151,12 @@
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
 		</dependency>
-		
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-client</artifactId>
+            <version>2.4.0</version>
+
+        </dependency>
         <!-- JUnit unit testing framework -->
         <dependency>
             <groupId>    junit          </groupId>

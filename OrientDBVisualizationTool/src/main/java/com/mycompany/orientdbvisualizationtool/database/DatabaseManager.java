@@ -1,5 +1,9 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
+import com.orientechnologies.orient.core.sql.OCommandSQL;
+import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+import com.tinkerpop.blueprints.impls.orient.OrientVertex;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -13,6 +17,8 @@ public class DatabaseManager {
     private EntityManager manager;
 
     private String fileName;
+    OrientGraph graph = new OrientGraph("plocal:test");
+
 
     /**
      * constructor
@@ -31,6 +37,7 @@ public class DatabaseManager {
     private void openDataSource() {
         factory = Persistence.createEntityManagerFactory("db/" + fileName + ".odb");
         manager = factory.createEntityManager();
+
     }
 
     /**
@@ -39,6 +46,8 @@ public class DatabaseManager {
     private void closeDataSource() {
         manager.close();
         factory.close();
+
+        graph.shutdown();
     }
 
 }
