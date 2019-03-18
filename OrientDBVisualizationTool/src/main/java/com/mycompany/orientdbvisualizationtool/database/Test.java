@@ -1,6 +1,9 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
+import com.orientechnologies.orient.core.command.OCommandOutputListener;
 import com.orientechnologies.orient.core.db.document.ODatabaseDocumentTx;
+import com.orientechnologies.orient.core.db.tool.ODatabaseImport;
+import com.orientechnologies.orient.core.exception.OSchemaException;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientEdge;
@@ -11,22 +14,26 @@ public class Test {
     public static void main(String[] args) {
 
         /*
-         * Antal, Test
+         * Antal, Carlos Test
          */
 
         System.out.println("Trying to Connect to Test database");
 
-        OrientGraph graph = new OrientGraph("plocal:test");
+        OrientGraph graph = new OrientGraph("plocal:/home/carlos/Desktop/orientdb-community-2.2.36/bin/test6");
         //OrientGraph graph = new OrientGraph(new ODatabaseDocumentTx("plocal:test"));
 
         System.out.println("Connect to Test database");
+        
+     
 
 
-
-        graph.createVertexType("Person");
-        graph.createVertexType("Address");
-        System.out.println("Added two classes");
-
+		try {
+			        graph.createVertexType("Person");
+			        graph.createVertexType("Address");
+			        System.out.println("Added two classes");
+		}catch(OSchemaException e) {
+			System.out.println("Classess already exist");
+		}
 
         Vertex vPerson = graph.addVertex("class:Person");
         vPerson.setProperty("firstName", "John");
