@@ -1,8 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
-import com.orientechnologies.orient.core.sql.OCommandSQL;
-import com.tinkerpop.blueprints.impls.orient.OrientGraph;
-import com.tinkerpop.blueprints.impls.orient.OrientVertex;
 
 import javax.persistence.*;
 import java.util.*;
@@ -17,7 +14,6 @@ public class DatabaseManager {
     private EntityManager manager;
 
     private String fileName;
-    OrientGraph graph = new OrientGraph("plocal:test");
 
 
     /**
@@ -47,7 +43,6 @@ public class DatabaseManager {
         manager.close();
         factory.close();
 
-        graph.shutdown();
     }
 
 }
