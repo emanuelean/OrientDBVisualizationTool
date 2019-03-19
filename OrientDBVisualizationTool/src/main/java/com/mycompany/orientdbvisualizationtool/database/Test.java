@@ -19,7 +19,7 @@ public class Test {
 
         System.out.println("Trying to Connect to Test database");
 
-        OrientGraph graph = new OrientGraph("plocal:/home/carlos/Desktop/orientdb-community-2.2.36/bin/test6");
+        OrientGraph graph = new OrientGraph("remote:localhost/test5", "root", "root");
         //OrientGraph graph = new OrientGraph(new ODatabaseDocumentTx("plocal:test"));
 
         System.out.println("Connect to Test database");
