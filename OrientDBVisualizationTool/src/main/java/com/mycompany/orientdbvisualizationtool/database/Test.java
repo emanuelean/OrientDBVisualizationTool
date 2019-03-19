@@ -27,6 +27,7 @@ public class Test {
 
         // Test database. Is an almost empty database
         //OrientGraph graph = new OrientGraph("plocal:Test");
+        //OrientGraph graph = new OrientGraph("remote:localhost/test5", "root", "root");
 
         // Doesn't work, but may be useful
         //OrientGraph graph = new OrientGraph(new ODatabaseDocumentTx("plocal:test"));
