@@ -21,8 +21,17 @@ public class Test {
 
         System.out.println("Trying to Connect to Test database");
 
+        // Demo, the database given by the client
+        //OrientGraph graph = new OrientGraph("plocal:/home/carlos/Desktop/orientdb-community-2.2.36/bin/test6");
+        OrientGraph graph = new OrientGraph("plocal:/home/antal/orientdb-community-2.2.20/databases/GratefulDeadConcerts", "root", "6159");
+        //OrientGraph graph = new OrientGraph("remote:plocal:Demo", "root", "6159");
 
-        OrientGraph graph = new OrientGraph("remote:localhost/test5", "root", "root");
+        // Test database. Is an almost empty database
+        //OrientGraph graph = new OrientGraph("plocal:Test");
+        //OrientGraph graph = new OrientGraph("remote:localhost/test5", "root", "root");
+
+        // Doesn't work, but may be useful
+        //OrientGraph graph = new OrientGraph("remote:localhost/test5", "root", "root");
         //OrientGraph graph = new OrientGraph(new ODatabaseDocumentTx("plocal:test"));
 
         System.out.println("Connect to Test database");
