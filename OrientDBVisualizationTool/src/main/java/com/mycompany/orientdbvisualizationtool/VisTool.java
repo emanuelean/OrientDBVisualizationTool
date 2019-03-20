@@ -11,7 +11,7 @@ import javafx.application.Application;
 public class VisTool {
     public static void main(String[] args) {
         Test test = new Test();
-        test.mainTestDB(args);
+        //test.mainTestDB();
         Application.launch(MainFrame.class, args);
     }
 }

@@ -13,7 +13,7 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 public class Test {
     //public Test() {
 
-    public void mainTestDB(String[] args) {
+    public void mainTestDB() {
 
         /*
          * Antal & Carlos Test
