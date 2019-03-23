@@ -1,7 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
 import javax.persistence.*;
-import java.util.*;
 
 /**
  *

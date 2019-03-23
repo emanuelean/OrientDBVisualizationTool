@@ -1,6 +1,6 @@
 package com.mycompany.orientdbvisualizationtool;
 
-import com.mycompany.orientdbvisualizationtool.View.MainFrame;
+import com.mycompany.orientdbvisualizationtool.View.MainView;
 import javafx.application.Application;
 
 /**
@@ -9,6 +9,6 @@ import javafx.application.Application;
  */
 public class VisTool {
     public static void main(String[] args) {
-        Application.launch(MainFrame.class, args);
+        Application.launch(MainView.class, args);
     }
 }
