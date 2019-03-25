@@ -1,90 +1,114 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
-import javafx.scene.Cursor;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
- *
- * @author Emanuel Mae, Yona Moreda
+ * Node represents a vertex in view.
+ * @author Emanuel Nae, Yona Moreda
  */
 public class Node extends Rectangle {
-    
+
     private Text label;
     private boolean selected;
+    private StackPane rectangleAndLabel;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
-    private MainFrame mainFrame;
 
-    public Node(String nodeName, MainFrame mainFrame) {
-       this.label = new Text(nodeName);
-       this.selected = false;
-       setWidth(nodeName.length() * 10.0f);
-       setHeight(40.0f);
+    public Node(String nodeName) {
+        this.label = new Text(nodeName);
+        this.label.setFont(new Font(13));
+        this.setWidth(label.getLayoutBounds().getWidth() + 30);
+        this.setHeight(40.0f);
+        this.selected = false;
+        this.rectangleAndLabel = new StackPane();
 
-       //rounded rectangle
-       setArcWidth(30.0);
-       setArcHeight(20.0);
+        //rounded rectangle
+        this.setArcWidth(40);
+        this.setArcHeight(40);
+        this.setFill(DEFAULT_COLOR);
+        this.setStroke(Color.DARKGREY);
 
-       setFill(DEFAULT_COLOR);
-       setStroke(Color.DARKGREY);
-       this.mainFrame = mainFrame;
+        this.setMouseListenerProperties();
+    }
 
-       setMouseListenerProperties();
-   }
+    /**
+     * Sets properties for mouse events.
+     */
+    private void setMouseListenerProperties() {
+        this.setOnMousePressed(e -> {
+                    if (!this.isSelected()) {
+                        this.setSelected(true);
+                    } else {
+                        this.setSelected(false);
+                    }
+                }
+        );
+        label.setOnMousePressed(e -> {
+                    if (!this.isSelected()) {
+                        this.setSelected(true);
+                    } else {
+                        this.setSelected(false);
+                    }
+                }
+        );
+    }
 
-   private void setMouseListenerProperties() {
-       this.setOnMousePressed(e -> {
-                   if (!this.isSelected()) {
-                       this.setSelected(true);
-                   } else {
-                       this.setSelected(false);
-                   }
-               }
-       );
+    /**
+     * gets label
+     * @return javafx label
+     */
+    public Text getLabel() {
+        return label;
+    }
 
-       Text nodeLabel = this.getLabel();
+    /**
+     * Moves node to point
+     * @param x horizontal position of node
+     * @param y vertical position of node
+     */
+    public void setLocation(double x, double y) {
+        this.rectangleAndLabel.setTranslateX(x);
+        this.rectangleAndLabel.setTranslateY(y);
+    }
 
-       nodeLabel.setOnMousePressed(e -> {
-                   if (!this.isSelected()) {
-                       this.setSelected(true);
-                   } else {
-                       this.setSelected(false);
-                   }
-               }
-       );
+    /**
+     * Adds node to the central pane.
+     * @param centerPane parent pane on the center of scene.
+     */
+    public void addToParentPane(AnchorPane centerPane) {
+        rectangleAndLabel.getChildren().addAll(this, this.getLabel());
+        centerPane.getChildren().add(rectangleAndLabel);
+    }
 
-       this.setOnMouseReleased(e -> mainFrame.getScene().setCursor(Cursor.DEFAULT));
-       nodeLabel.setOnMouseReleased(e -> mainFrame.getScene().setCursor(Cursor.DEFAULT));
-   }
+    /**
+     * Property of node selection.
+     * @return selection boolean
+     */
+    public boolean isSelected() {
+        return selected;
+    }
 
-   public Text getLabel() {
-       return label;
-   }
+    /**
+     * Sets the selection boolean property and the color accordingly
+     * @param selected selection boolean
+     */
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+        if (selected) {
+            this.setFill(Color.LAVENDER);
+        } else {
+            this.setFill(DEFAULT_COLOR);
+        }
+    }
 
-   public void setLocation(double x, double y) {
-       this.setTranslateX(x);
-       this.setTranslateY(y);
-       label.setTranslateX(x);
-       label.setTranslateY(y);
-   }
-
-   public void addToPane(StackPane centerPane) {
-       centerPane.getChildren().add(this);
-       centerPane.getChildren().add(this.getLabel());
-   }
-
-   public boolean isSelected() {
-       return selected;
-   }
-
-   public void setSelected(boolean selected) {
-       this.selected = selected;
-       if (selected) {
-           this.setFill(Color.LAVENDER);
-       } else {
-           this.setFill(DEFAULT_COLOR);
-       }
-   }
+    /**
+     * encapsulates Rectangle and Text Label as Node
+     * @return Pane for representing a Node (rectangle + label)
+     */
+    public StackPane getRectangleAndLabel() {
+        return rectangleAndLabel;
+    }
 }

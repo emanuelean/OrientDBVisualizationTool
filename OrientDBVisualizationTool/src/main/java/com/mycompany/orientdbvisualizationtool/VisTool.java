@@ -4,6 +4,7 @@ import com.mycompany.orientdbvisualizationtool.View.MainFrame;
 import com.mycompany.orientdbvisualizationtool.database.Test;
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
+import com.mycompany.orientdbvisualizationtool.View.MainView;
 import javafx.application.Application;
 
 /**
@@ -13,7 +14,6 @@ import javafx.application.Application;
 public class VisTool {
     
     public static void main(String[] args) {
-        
         testDataForFrontEnd();
         //Test test = new Test();
         //test.mainTestDB();
