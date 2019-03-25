@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.orientdbvisualizationtool.model.places;
 
 /**
@@ -10,5 +5,9 @@ package com.mycompany.orientdbvisualizationtool.model.places;
  * @author albert
  */
 public class Room extends Place{
+
+    public Room(String id, String name) {
+        super(id, name);
+    }
     
 }

@@ -1,5 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
+
 import javax.persistence.*;
 
 /**
@@ -12,6 +13,7 @@ public class DatabaseManager {
     private EntityManager manager;
 
     private String fileName;
+
 
     /**
      * constructor
@@ -30,6 +32,7 @@ public class DatabaseManager {
     private void openDataSource() {
         factory = Persistence.createEntityManagerFactory("db/" + fileName + ".odb");
         manager = factory.createEntityManager();
+
     }
 
     /**
@@ -38,6 +41,7 @@ public class DatabaseManager {
     private void closeDataSource() {
         manager.close();
         factory.close();
+
     }
 
 }
