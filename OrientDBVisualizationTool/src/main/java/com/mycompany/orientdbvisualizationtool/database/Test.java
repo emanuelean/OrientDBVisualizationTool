@@ -1,3 +1,4 @@
+/*
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.orientechnologies.orient.core.command.OCommandOutputListener;
@@ -15,9 +16,11 @@ public class Test {
 
     public void mainTestDB() {
 
-        /*
+        */
+/*
          * Antal & Carlos Test
-         */
+         *//*
+
 
         System.out.println("Trying to Connect to Test database");
 
@@ -37,7 +40,8 @@ public class Test {
         System.out.println("Connect to Test database");
         
      
-        /*
+        */
+/*
         // Add some classes to the Test database
 		try {
             graph.createVertexType("Person");
@@ -46,8 +50,10 @@ public class Test {
 		} catch (OSchemaException e) {
 			System.out.println("Classess already exist");
 		}
-		*/
-        /*
+		*//*
+
+        */
+/*
         // Add some vertices to the Test database
         Vertex vPerson = graph.addVertex("class:Person");
         vPerson.setProperty("firstName", "John");
@@ -59,7 +65,8 @@ public class Test {
         vAddress.setProperty("city", "There city");
         vAddress.setProperty("state", "Somewhere");
         System.out.println("Added a Address: " + vAddress.getId());
-        */
+        *//*
+
 
         //
         //OrientEdge
@@ -69,11 +76,13 @@ public class Test {
             // print the amount of vertices
             long amount_vertices = graph.countVertices();
             System.out.println("amount_vertices: " + amount_vertices);
+*/
 /*
             for (Vertex v : graph.getVertices()) {
                 System.out.println("-  " + v.getProperty("firstName") + "   " + v.getProperty("street"));
             };
-*/
+*//*
+
 
             // Print all vertices
             for (Vertex v : graph.getVertices()) {
@@ -87,3 +96,4 @@ public class Test {
 
 }
 
+*/

@@ -23,18 +23,20 @@ public class MainController {
         Node node3 = new Node("node3");
         Node node4 = new Node("node4");
         Node node5 = new Node("node5");
-        node1.setLocation(300, 100);
-        node2.setLocation(100, 200);
-        node3.setLocation(200, 200);
-        node4.setLocation(300, 200);
-        node5.setLocation(400, 200);
-
         nodes = new ArrayList<>();
         nodes.add(node1);
         nodes.add(node2);
         nodes.add(node3);
         nodes.add(node4);
         nodes.add(node5);
+
+
+        node1.setLocation(300, 100);
+
+        double childrenHeight = node1.getRectangleAndLabel().getTranslateY() + 70;
+        for (int i = 1; i < nodes.size(); i++) {
+            nodes.get(i).setLocation(i * 100, childrenHeight);
+        }
 
         Edge edge1 = new Edge(node1, node2);
         Edge edge2 = new Edge(node1, node3);
@@ -71,6 +73,7 @@ public class MainController {
 
     /**
      * Action taken in the anchor pane in the center.
+     *
      * @param mouseEvent Mouse event for mouse dragged
      */
     public void centerPaneDragged(MouseEvent mouseEvent) {
@@ -108,6 +111,7 @@ public class MainController {
 
     /**
      * Action taken in the anchor pane in the center.
+     *
      * @param mouseEvent Mouse event for mouse pressed
      */
     public void centerPanePressed(MouseEvent mouseEvent) {
@@ -123,6 +127,7 @@ public class MainController {
 
     /**
      * Action taken in the anchor pane in the center.
+     *
      * @param mouseEvent Mouse event for mouse drag released
      */
     public void centerPaneReleased(MouseEvent mouseEvent) {
