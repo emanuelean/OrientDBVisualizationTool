@@ -1,6 +1,6 @@
 package com.mycompany.orientdbvisualizationtool;
 
-import com.mycompany.orientdbvisualizationtool.View.MainFrame;
+//import com.mycompany.orientdbvisualizationtool.View.MainFrame;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.database.Test;
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
@@ -17,11 +17,11 @@ public class VisTool {
     public static void main(String[] args) {        
         //testDataForFrontEnd();
         DatabaseManager db = DatabaseManager.getInstance();
-        db.refreshGraph("");
+        db.refreshGraph("GSV.HQ");
         testDataForFrontEnd();
         //Test test = new Test();
         //test.mainTestDB();
-        Application.launch(MainFrame.class, args);
+        //Application.launch(MainFrame.class, args);
     }
     
     /**

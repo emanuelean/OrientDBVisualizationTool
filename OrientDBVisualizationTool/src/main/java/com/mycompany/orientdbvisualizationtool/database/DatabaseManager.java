@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
+import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.orientechnologies.orient.core.exception.OSchemaException;
 import com.orientechnologies.orient.core.sql.OCommandSQL;
 import com.tinkerpop.blueprints.Direction;
@@ -51,21 +52,40 @@ public class DatabaseManager {
 
     public void refreshGraph(String id) {
         placeManager.emptyPlaces();
-        Vertex v = getLocation("GSV.HQ");
+        Vertex v = getLocation(id);
         addLocationToModel(v);
+        placeManager.printData();
+    }
+
+    private String getCategory(Vertex place) {
+        Iterable<Vertex> vertices;
+        vertices = place.getVertices(Direction.OUT, "instance-of");
+        for (Vertex v : vertices) {
+            return v.getProperty("id");
+        }
+        return "location";
     }
 
     private void addLocationToModel(Vertex location) {
-        Iterable<Edge> edges;
-        edges = location.getEdges(Direction.IN, "part-of");
-        for (Edge e : edges) {
-            System.out.println(e);
+        addLocationToModel(location, null);
+    }
+
+    private void addLocationToModel(Vertex location, Place parent) {
+        String id = (String) location.getProperty("id");
+        String name = (String) location.getProperty("name");
+        String category = getCategory(location);
+        Place newPlace = placeManager.addPlace(id, name, category, parent);
+                
+        Iterable<Vertex> vertices;
+        vertices = location.getVertices(Direction.IN, "part-of");
+        for (Vertex v : vertices) {
+            addLocationToModel(v, newPlace);
         }
     }
 
     private Vertex getLocation(String id) {
         Iterable<Vertex> vertices = graph.getVertices("V_location.id", id);
-        for(Vertex v: vertices){
+        for (Vertex v : vertices) {
             System.out.println("Something: " + v);
             return v;
         }
