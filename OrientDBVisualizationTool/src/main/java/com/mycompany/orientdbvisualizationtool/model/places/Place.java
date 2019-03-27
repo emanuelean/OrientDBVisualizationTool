@@ -24,7 +24,7 @@ public abstract class Place {
         this.id = id;
         this.name = name;
         parent = null;
-        children = new ArrayList();
+        children = new ArrayList<>();
     }
     
     /**
