@@ -25,7 +25,6 @@ public class PlaceManager {
     public static PlaceManager getInstance() {
         if (singletonInstance == null) {
             singletonInstance = new PlaceManager();
-            System.out.println("created new");
         }
         return singletonInstance;
     }

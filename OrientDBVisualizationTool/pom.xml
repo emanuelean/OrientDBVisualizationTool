@@ -12,6 +12,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>com.mycompany.orientdbvisualizationtool.VisTool</mainClass>
+        <argLine>-XX:MaxDirectMemorySize=15904m</argLine>
     </properties>
 
     <organization>
@@ -173,6 +174,12 @@
         <dependency>
             <groupId>com.orientechnologies</groupId>
             <artifactId>orientdb-graphdb</artifactId>
+            <version>2.2.21</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-server</artifactId>
             <version>2.2.21</version>
         </dependency>
 

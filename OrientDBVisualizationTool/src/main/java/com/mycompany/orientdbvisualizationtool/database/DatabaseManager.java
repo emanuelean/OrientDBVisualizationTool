@@ -1,8 +1,14 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
-
+import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
+import com.orientechnologies.orient.core.exception.OSchemaException;
+import com.orientechnologies.orient.core.sql.OCommandSQL;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+import com.tinkerpop.blueprints.impls.orient.OrientGraphFactory;
 import javax.persistence.*;
-import java.util.*;
 
 /**
  *
@@ -10,39 +16,64 @@ import java.util.*;
  */
 public class DatabaseManager {
 
-    private EntityManagerFactory factory;
-    private EntityManager manager;
+    private static DatabaseManager singletonInstance;
 
-    private String fileName;
-
+    private OrientGraph graph;
+    private PlaceManager placeManager;
 
     /**
-     * constructor
+     * Makes sure only one instance of this class can exist
      *
-     * @param fileName the filename of the file we want to create
+     * @return the current class
      */
-    public DatabaseManager(String fileName) {
-        this.fileName = fileName;
-        openDataSource();
-        closeDataSource();
-    }
-    
-    /**
-     * opens the datasource with a specific filename
-     */
-    private void openDataSource() {
-        factory = Persistence.createEntityManagerFactory("db/" + fileName + ".odb");
-        manager = factory.createEntityManager();
-
+    public static DatabaseManager getInstance() {
+        if (singletonInstance == null) {
+            singletonInstance = new DatabaseManager();
+        }
+        return singletonInstance;
     }
 
-    /**
-     * closes the datasource
-     */
-    private void closeDataSource() {
-        manager.close();
-        factory.close();
+    private DatabaseManager() {
+        //this("plocal:/opt/orientdb/databases/Demo", "root", "root");
+        this("plocal:localhost/Demo", "Foo", "bar");
+        long amount_vertices = graph.countVertices();
+        System.out.println("Counter: " + amount_vertices);
+    }
 
+    private DatabaseManager(String host, String user, String password) {
+        if (user.equals("") || password.equals("")) {
+            graph = new OrientGraph(host);
+        } else {
+            graph = new OrientGraph(host, user, password);
+        }
+        placeManager = PlaceManager.getInstance();
+    }
+
+    public void refreshGraph(String id) {
+        placeManager.emptyPlaces();
+        Vertex v = getLocation("GSV.HQ");
+        addLocationToModel(v);
+    }
+
+    private void addLocationToModel(Vertex location) {
+        Iterable<Edge> edges;
+        edges = location.getEdges(Direction.IN, "part-of");
+        for (Edge e : edges) {
+            System.out.println(e);
+        }
+    }
+
+    private Vertex getLocation(String id) {
+        Iterable<Vertex> vertices = graph.getVertices("V_location.id", id);
+        for(Vertex v: vertices){
+            System.out.println("Something: " + v);
+            return v;
+        }
+        return null;
+    }
+
+    public void shutdown() {
+        graph.shutdown();
     }
 
 }
