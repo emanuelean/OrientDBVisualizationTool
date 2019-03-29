@@ -25,7 +25,6 @@ public class PlaceManager {
     public static PlaceManager getInstance() {
         if (singletonInstance == null) {
             singletonInstance = new PlaceManager();
-            System.out.println("created new");
         }
         return singletonInstance;
     }
@@ -48,10 +47,12 @@ public class PlaceManager {
      *
      * @param newPlace The place we want to add
      * @param parent The parent of the place we want to add
+     * @return the new place
      */
-    public void addPlace(Place newPlace, Place parent) {
+    public Place addPlace(Place newPlace, Place parent) {
         linkPlaces(newPlace, parent);
         places.add(newPlace);
+        return newPlace;
     }
 
     /**
@@ -61,32 +62,33 @@ public class PlaceManager {
      * @param name The name of the place
      * @param category Indicates what kind of place it is
      * @param parent The parent of the new place we want to add(if it exists)
+     * @return the new place
      */
-    public void addPlace(String id, String name, String category, Place parent) {
+    public Place addPlace(String id, String name, String category, Place parent) {
         Place newPlace = null;
         switch (category) {
-            case "Location":
+            case "location":
                 newPlace = new Location(id, name);
                 break;
-            case "Building":
+            case "building":
                 newPlace = new Building(id, name);
                 break;
-            case "Floor":
+            case "floor":
                 newPlace = new Floor(id, name);
                 break;
-            case "Room":
+            case "room":
                 newPlace = new Room(id, name);
                 break;
-            case "Area":
+            case "area":
                 newPlace = new Area(id, name);
                 break;
-            case "Cell":
+            case "cell":
                 newPlace = new Cell(id, name);
                 break;
             default:
                 break;
         }
-        addPlace(newPlace, parent);
+        return addPlace(newPlace, parent);
     }
 
     /**
@@ -97,21 +99,30 @@ public class PlaceManager {
         for (Place p : places) {
             p.dereferenceAll();
         }
-        places = new ArrayList();
+        places = new ArrayList<>();
     }
-    
+
     /**
-     * 
+     *
      * @param id The id of the class we want to find
      * @return The class with the id
      */
     public Place getPlace(String id) {
         for (Place p : places) {
-            if(p.getId().equals(id)) {
+            if (p.getId().equals(id)) {
                 return p;
             }
         }
         return null;
+    }
+
+    /**
+     * prints some data for all the places
+     */
+    public void printData() {
+        for (Place p : places) {
+            System.out.println("[Object] - " + p.getId() + " - " + p.getName() + " - " + p.getClass().getName());
+        }
     }
 
 }

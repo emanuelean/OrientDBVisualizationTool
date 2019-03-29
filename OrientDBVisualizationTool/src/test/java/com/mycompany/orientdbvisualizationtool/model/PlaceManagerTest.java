@@ -171,7 +171,7 @@ public class PlaceManagerTest {
      */
     @Test
     public void testAddPlace_4args() {
-        manager.addPlace("L.A.A", "AA", "Floor", buildingB);
+        manager.addPlace("L.A.A", "AA", "floor", buildingB);
 
         assertNotNull(manager.getPlace("L.A.A"));
         assertEquals(manager.getPlace("L.A.A"), buildingB.getChildren().get(0));
