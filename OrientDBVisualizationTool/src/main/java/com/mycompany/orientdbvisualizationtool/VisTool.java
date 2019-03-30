@@ -1,7 +1,5 @@
 package com.mycompany.orientdbvisualizationtool;
 
-import com.mycompany.orientdbvisualizationtool.View.MainFrame;
-import com.mycompany.orientdbvisualizationtool.database.Test;
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import com.mycompany.orientdbvisualizationtool.View.MainView;
@@ -17,18 +15,20 @@ public class VisTool {
         testDataForFrontEnd();
         //Test test = new Test();
         //test.mainTestDB();
-        Application.launch(MainFrame.class, args);
+        Application.launch(MainView.class, args);
     }
     
     /**
      * This data is meant for the front end, so that they have some data
      */
-    private static void testDataForFrontEnd() {
+    public static PlaceManager testDataForFrontEnd() {
         PlaceManager manager = PlaceManager.getInstance();
         
         Place location = new Location("L", "L");
         Place buildingA = new Building("L.A", "A");
         Place buildingB = new Building("L.B", "B");
+        Place buildingC = new Building("L.C", "C");
+        Place buildingD = new Building("L.D", "D");
         Place floorAA = new Floor("L.A.A", "AA");
         Place floorAB = new Floor("L.A.B", "AB");
         Place floorBA = new Floor("L.B.A", "BA");
@@ -45,6 +45,8 @@ public class VisTool {
         manager.addPlace(location, null);
         manager.addPlace(buildingA, location);
         manager.addPlace(buildingB, location);
+        manager.addPlace(buildingC, location);
+        manager.addPlace(buildingD, location);
         manager.addPlace(floorAA, buildingA);
         manager.addPlace(floorAB, buildingA);
         manager.addPlace(floorBA, buildingB);
@@ -57,5 +59,6 @@ public class VisTool {
         manager.addPlace(roomBAB, floorBA);
         manager.addPlace(roomBBA, floorBB);
         manager.addPlace(roomBBB, floorBB);
+        return manager;
     }
 }
