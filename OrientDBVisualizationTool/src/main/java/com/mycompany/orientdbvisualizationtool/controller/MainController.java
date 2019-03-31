@@ -53,7 +53,7 @@ public class MainController {
         selectionArea.setFill(Color.rgb(0, 70, 255, 0.1));
         selectionArea.setStroke(Color.LIGHTBLUE);
         Center_Anchor_Pane.getChildren().add(selectionArea);
-        Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
+        Center_Anchor_Pane.setPrefWidth(WIDTH * .60 + 300);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
 
         setHideCheckBoxActionProperty();
@@ -271,7 +271,7 @@ public class MainController {
      * An auxiliary function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem a source treeView-item to which children treeView-items are added
+     * @param sourceItem  a source treeView-item to which children treeView-items are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {

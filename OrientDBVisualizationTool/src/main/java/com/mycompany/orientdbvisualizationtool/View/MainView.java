@@ -1,5 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
+import com.mycompany.orientdbvisualizationtool.VisTool;
+import com.mycompany.orientdbvisualizationtool.controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,15 +19,21 @@ public class MainView extends Application {
     /**
      * Scene is created and the fxml file is loaded.
      * @param primaryStage The basic underlying frame
-     * @throws Exception
+     * @throws Exception for Application error handling
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("sb-icon.png"));
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MainDesign.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("MainDesign.fxml"));
+        Parent root = fxmlLoader.load();
+        MainController controller = fxmlLoader.getController();
+        controller.setPlaceManager(VisTool.testDataForFrontEnd());
+        controller.addRootNodeToPane();
+        controller.populateTreeView();
         primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
 }

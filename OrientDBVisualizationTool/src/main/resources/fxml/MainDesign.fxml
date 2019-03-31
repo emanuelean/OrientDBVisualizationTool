@@ -85,7 +85,7 @@
                 </AnchorPane>
                 <ScrollPane>
                     <content>
-                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane" onMouseDragged="#centerPaneDragged" onMousePressed="#centerPanePressed" onMouseReleased="#centerPaneReleased" prefHeight="545.0" prefWidth="742.0">
+                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane" style="-fx-background-image: url('icons/back-ground.png'); -fx-background-size: 100px 100px " onMouseDragged="#centerPaneDragged" onMousePressed="#centerPanePressed" onMouseReleased="#centerPaneReleased">
                             <children>
                                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Graph" textAlignment="CENTER" textFill="$x2" />
                             </children>
@@ -97,7 +97,7 @@
                         <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="#9f9f9f" />
                   <VBox layoutX="14.0" layoutY="41.0" prefHeight="481.0" prefWidth="237.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
                      <children>
-                        <CheckBox mnemonicParsing="false" text="Hide" fx:id="Hide_Check_Box">
+                        <CheckBox fx:id="Hide_Check_Box" mnemonicParsing="false" text="Hide">
                            <VBox.margin>
                               <Insets bottom="10.0" left="175.0" />
                            </VBox.margin>

@@ -12,7 +12,7 @@ public abstract class Place {
     private String id;
     private String name;
     private Place parent;
-    private List<Place> children;
+    private ArrayList<Place> children;
     
     /**
      * Constructor
@@ -24,7 +24,7 @@ public abstract class Place {
         this.id = id;
         this.name = name;
         parent = null;
-        children = new ArrayList();
+        children = new ArrayList<>();
     }
     
     /**
@@ -72,7 +72,7 @@ public abstract class Place {
      *
      * @return A list of children of this place
      */
-    public List<Place> getChildren() {
+    public ArrayList<Place> getChildren() {
         return children;
     }
     

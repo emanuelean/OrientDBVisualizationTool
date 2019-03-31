@@ -97,7 +97,7 @@ public class PlaceManager {
         for (Place p : places) {
             p.dereferenceAll();
         }
-        places = new ArrayList();
+        places = new ArrayList<>();
     }
     
     /**
@@ -112,6 +112,14 @@ public class PlaceManager {
             }
         }
         return null;
+    }
+
+    /**
+     * Gets the root of the tree
+     * @return The root of places tree
+     */
+    public Place getRoot(){     //TODO:: make it official
+        return places.get(0);
     }
 
 }
