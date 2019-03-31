@@ -1,0 +1,79 @@
+28/02 - requirements document
+28/02 - requirements document
+01/03 - researching SB
+01/03 - researching SB
+02/03 - learning javaFX
+02/03 - learning javaFX
+02/03 - learning javaFX
+02/03 - learning javaFX
+03/03 - researching orientDB
+03/03 - researching orientDB
+03/03 - researching orientDB
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+04/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+05/03 - working on a javaFX demo application
+06/03 - researching the db schema
+06/03 - researching the db schema
+06/03 - researching the db schema
+07/03 - Group meeting
+07/03 - Group meeting
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+08/03 - javaFX skeleton components
+09/03 - working with orientDB demo file
+09/03 - working with orientDB demo file
+09/03 - working with orientDB demo file
+11/03 - client meeting
+11/03 - client meeting
+12/03 - selecting/learning javafx layout
+12/03 - selecting/learning javafx layout
+14/03 - TA meeting
+14/03 - TA meeting
+15/03 - architecture document
+15/03 - architecture document
+20/03 - front end meeting
+20/03 - front end meeting
+20/03 - front end meeting
+20/03 - front end meeting
+20/03 - front end meeting
+20/03 - front end meeting
+21/03 - fxml file integration
+21/03 - fxml file integration
+21/03 - fxml file integration
+21/03 - fxml file integration
+22/03 - fxml file integration and refactor
+22/03 - fxml file integration and refactor
+22/03 - fxml file integration and refactor
+23/03 - graph display
+23/03 - graph display
+23/03 - graph display
+23/03 - graph display
+25/03 - Group meeting
+25/03 - Group meeting
+26/03 - graph display
+26/03 - graph display
+26/03 - graph display
+26/03 - graph display
+27/03 - right panel Place's detail display
+27/03 - right panel Place's detail display
+27/03 - right panel Place's detail display
+27/03 - right panel Place's detail display
+28/03 - Group meeting
+28/03 - Group meeting
+29/03 - left panel tree view
+29/03 - left panel tree view
+29/03 - left panel tree view
+30/03 - presentation preparation
+30/03 - presentation preparation
+30/03 - presentation preparation
+30/03 - presentation preparation
+31/03 - Arch. document front-end diagram
+31/03 - Arch. document front-end diagram
+31/03 - Arch. document front-end diagram
+31/03 - Arch. document front-end section
+31/03 - Arch. document front-end section

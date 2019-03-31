@@ -1,0 +1,50 @@
+15/02 - TA meeting
+16/02 - Client meeting planning
+20/02 - Client meeting
+20/02 - Client meeting
+21/02 - TA meeting
+21/02 - Group meeting
+21/02 - Group meeting
+21/02 - Research SB
+21/02 - Research SB
+21/02 - Research OrientDB
+21/02 - Research OrientDB
+22/02 - Requirements document
+22/02 - Requirements document
+22/02 - Requirements document
+22/02 - Requirements document
+23/02 - Contact client
+01/03 - Study JavaFX
+01/03 - Study JavaFX
+01/03 - Study JavaFX
+01/03 - Study JavaFX
+01/03 - Study JavaFX
+01/03 - Study JavaFX
+04/03 - Requirements document
+04/03 - Requirements document
+04/03 - coding javaFX demo application
+04/03 - coding javaFX demo application
+04/03 - coding javaFX demo application
+04/03 - coding javaFX demo application
+04/03 - coding javaFX demo application
+04/03 - coding javaFX demo application
+05/03 - OrientDB demo file
+05/03 - OrientDB demo file
+06/03 - Architecture document
+06/03 - Architecture document
+07/03 - Group meeting
+07/03 - Group meeting
+07/03 - Architecture document
+08/03 - Contact client
+09/03 - javaFX tree build trials
+09/03 - javaFX tree build trials
+11/03 - Client meeting
+11/03 - Client meeting
+11/03 - Group meeting
+11/03 - research javaFX dependencies for graph builder
+11/03 - research javaFX dependencies for graph builder
+11/03 - research javaFX dependencies for graph builder
+12/03 - research javaFX dependencies for graph builder
+12/03 - research javaFX dependencies for graph builder
+18/03 - research Gluon
+18/03 - research Gluon

@@ -1,0 +1,21 @@
+15/02 - TA meeting
+20/02 - Client meeting
+20/02 - Client meeting
+02/03 - Relearning Java
+03/03 - Relearning Java
+04/03 - Relearning Java
+07/03 - Group meeting
+07/03 - Group meeting
+10/03 - Research orientDB
+10/03 - Research orientDB
+11/03 - Client meeting
+11/03 - Group meeting
+14/03 - TA meeting
+14/03 - Managing OrientDB
+14/03 - Managing OrientDB
+14/03 - Managing OrientDB
+16/03 - Connecting Java to OrientDB
+16/03 - Connecting Java to OrientDB
+16/03 - Connecting Java to OrientDB
+16/03 - Connecting Java to OrientDB
+17/03 - Connecting Java to OrientDB
