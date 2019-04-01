@@ -8,6 +8,7 @@ public class Cell extends Place{
 
     public Cell(String id, String name) {
         super(id, name);
+        type = PlaceCategory.Cell;
     }
     
 }
