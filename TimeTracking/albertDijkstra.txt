@@ -46,3 +46,29 @@
 20/03 - added Skeleton classes manager
 20/03 - added Skeleton classes manager
 20/03 - added Skeleton classes manager
+25/03 - Meeting
+25/03 - Meeting
+25/03 - presentation
+25/03 - Trello fixen
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+26/03 - created database manager
+27/03 - created database manager
+27/03 - created database manager
+27/03 - created database manager
+27/03 - created database manager
+27/03 - created database manager
+27/03 - created database manager
+27/03 - Cleaned up files
+27/03 - Cleaned up files
+27/03 - Cleaned up files
+27/03 - Cleaned up files
+27/03 - Cleaned up files
+27/03 - Trello fixen
+27/03 - Architecture Document
+27/03 - Architecture Document

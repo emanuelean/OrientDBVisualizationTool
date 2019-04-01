@@ -1,29 +1,46 @@
 package com.mycompany.orientdbvisualizationtool;
 
+import com.mycompany.orientdbvisualizationtool.View.MainView;
+import java.util.List;
+
+//import com.mycompany.orientdbvisualizationtool.View.MainFrame;
+import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
-import com.mycompany.orientdbvisualizationtool.View.MainView;
+import com.tinkerpop.blueprints.Direction;
+import com.tinkerpop.blueprints.Edge;
+import com.tinkerpop.blueprints.Vertex;
 import javafx.application.Application;
+
+//import javafx.application.Application;
 
 /**
  *
  * @author Niels
  */
 public class VisTool {
-    
+
     public static void main(String[] args) {
-        testDataForFrontEnd();
-        //Test test = new Test();
-        //test.mainTestDB();
+        DatabaseManager db = DatabaseManager.getInstance();
+        db.refreshGraph("GSV.HQ");
         Application.launch(MainView.class, args);
+        
+        System.out.println("Database loaded");
+        List<Vertex> sensors;
+        sensors = db.getSensorsFromLocation("Energy Academy Europe");
+        System.out.println(sensors);
+        for (Vertex v: sensors) {
+        	System.out.printf(v.getProperty("id"));
+        }
+        db.shutdown();
     }
-    
+
     /**
      * This data is meant for the front end, so that they have some data
      */
-    public static PlaceManager testDataForFrontEnd() {
+    private static void testDataForFrontEnd() {
         PlaceManager manager = PlaceManager.getInstance();
-        
+
         Place location = new Location("L", "L");
         Place buildingA = new Building("L.A", "A");
         Place buildingB = new Building("L.B", "B");
@@ -41,7 +58,7 @@ public class VisTool {
         Place roomBAB = new Room("L.B.A.B", "BAB");
         Place roomBBA = new Room("L.B.B.A", "BBA");
         Place roomBBB = new Room("L.B.B.B", "BBB");
-        
+
         manager.addPlace(location, null);
         manager.addPlace(buildingA, location);
         manager.addPlace(buildingB, location);
@@ -59,6 +76,5 @@ public class VisTool {
         manager.addPlace(roomBAB, floorBA);
         manager.addPlace(roomBBA, floorBB);
         manager.addPlace(roomBBB, floorBB);
-        return manager;
     }
 }
