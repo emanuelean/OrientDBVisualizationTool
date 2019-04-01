@@ -5,12 +5,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
+import javafx.scene.shape.Line;
 
 /**
  * Represents the line that connects two nodes in view.
  * Connects two nodes from view.
  */
-public class Edge extends CubicCurve {
+public class Edge extends Line {
 
     private Node firstNode;
     private Node secondNode;
@@ -18,7 +19,7 @@ public class Edge extends CubicCurve {
 
     public Edge(Node firstNode, Node secondNode, AnchorPane anchorPane) {
         this.setStroke(Color.BLACK);
-        this.setFill(null);
+        //this.setFill(null);
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.anchorPane = anchorPane;
@@ -35,17 +36,20 @@ public class Edge extends CubicCurve {
         Bounds firstNodePoint = anchorPane.sceneToLocal(firstNodePane.localToScene(firstNodePane.getBoundsInLocal()));
         Bounds secondNodePoint = anchorPane.sceneToLocal(secondNodePane.localToScene(secondNodePane.getBoundsInLocal()));
 
-        double firstNodeOffset = (firstNodePane.getParent().getBoundsInLocal().getWidth() - firstNodePane.getWidth()) / 2;
+        double firstNodeOffset = (firstNodePane.getParent().getBoundsInLocal().getWidth() - firstNodePane.getBoundsInLocal().getWidth()) / 2;
         double secondNodeOffset = (secondNodePane.getParent().getBoundsInLocal().getWidth() - secondNodePane.getWidth()) / 2;
 
+//        this.setStartX(firstNodePoint.getMinX() + firstNodeOffset + firstNodePane.getWidth());
+        System.out.println(firstNodePane.getParent().getBoundsInLocal().getWidth() + " and " + firstNodePane.getWidth());
+        System.out.println(secondNodePane.getParent().getBoundsInLocal().getWidth() + " and " + secondNodePane.getWidth());
+        System.out.println(firstNodePane.getParent().getClass());
+        System.out.println(firstNodePoint.getMaxX() - firstNodeOffset);
+        
         this.setStartX(firstNodePoint.getMaxX() - firstNodeOffset);
         this.setStartY(firstNodePoint.getMaxY() - firstNodePane.getHeight() / 2);
         this.setEndX(secondNodePoint.getMinX() + secondNodeOffset);
         this.setEndY(secondNodePoint.getMaxY() - secondNodePane.getHeight() / 2);
-        this.setControlX1(secondNodePoint.getMinX() + secondNodeOffset);
-        this.setControlY1(firstNodePoint.getMaxY() - firstNodePane.getHeight() / 2);
-        this.setControlX2(firstNodePoint.getMaxX() - firstNodeOffset);
-        this.setControlY2(secondNodePoint.getMaxY() - secondNodePane.getHeight() / 2);
+        
     }
 
     public Node getFirstNode() {
