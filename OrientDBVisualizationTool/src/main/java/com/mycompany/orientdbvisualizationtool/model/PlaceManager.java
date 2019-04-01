@@ -130,7 +130,6 @@ public class PlaceManager {
      */
     public void printData() {
         for (Place p : places) {
-            //System.out.println("[Object] - " + p.getId() + " - " + p.getName() + " - " + p.getType());
             System.out.println(p.getDisplayName());
         }
     }
