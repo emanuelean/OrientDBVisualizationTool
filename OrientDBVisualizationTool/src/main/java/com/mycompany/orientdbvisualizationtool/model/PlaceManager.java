@@ -117,6 +117,15 @@ public class PlaceManager {
     }
 
     /**
+     * Gets the root of the tree
+     *
+     * @return The root of places tree
+     */
+    public Place getRoot() {     //TODO:: make it official
+        return places.get(0);
+    }
+
+    /**
      * prints some data for all the places
      */
     public void printData() {
