@@ -1,10 +1,15 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+import com.tinkerpop.blueprints.Direction;
 
 /**
  *
@@ -133,5 +138,26 @@ public class DatabaseManager {
     public void shutdown() {
         graph.shutdown();
     }
-
+    
+    /**
+     * Returns all the sensors from a location
+     * @param name the name of the location
+     * @return a list with all the sensors
+     */
+    public List<Vertex> getSensorsFromLocation(String name) {
+    	for (Vertex v : graph.getVerticesOfClass("v_location", false)) {
+    		if(v.getProperty("name").equals(name)) {
+    			System.out.println("Location found");
+    			Iterable<Edge> connections;
+    			List<Vertex> sensors = new ArrayList<>();
+    			connections = v.getEdges(Direction.IN, "has-a");
+    			for(Edge e: connections) {
+    				sensors.add(e.getVertex(Direction.OUT));
+    			}
+    			return sensors;
+    			}
+    		}
+    		System.out.println("Location not found");
+    		return null;
+    	}
 }
