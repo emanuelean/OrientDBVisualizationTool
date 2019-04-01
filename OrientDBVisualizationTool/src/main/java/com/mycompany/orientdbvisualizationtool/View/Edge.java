@@ -19,7 +19,6 @@ public class Edge extends Line {
 
     public Edge(Node firstNode, Node secondNode, AnchorPane anchorPane) {
         this.setStroke(Color.BLACK);
-        //this.setFill(null);
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.anchorPane = anchorPane;
@@ -39,12 +38,6 @@ public class Edge extends Line {
         double firstNodeOffset = (firstNodePane.getParent().getBoundsInLocal().getWidth() - firstNodePane.getBoundsInLocal().getWidth()) / 2;
         double secondNodeOffset = (secondNodePane.getParent().getBoundsInLocal().getWidth() - secondNodePane.getWidth()) / 2;
 
-//        this.setStartX(firstNodePoint.getMinX() + firstNodeOffset + firstNodePane.getWidth());
-        System.out.println(firstNodePane.getParent().getBoundsInLocal().getWidth() + " and " + firstNodePane.getWidth());
-        System.out.println(secondNodePane.getParent().getBoundsInLocal().getWidth() + " and " + secondNodePane.getWidth());
-        System.out.println(firstNodePane.getParent().getClass());
-        System.out.println(firstNodePoint.getMaxX() - firstNodeOffset);
-        
         this.setStartX(firstNodePoint.getMaxX() - firstNodeOffset);
         this.setStartY(firstNodePoint.getMaxY() - firstNodePane.getHeight() / 2);
         this.setEndX(secondNodePoint.getMinX() + secondNodeOffset);
