@@ -70,7 +70,7 @@ public class DatabaseManager {
         Vertex v = getPlace(id);
         addPlaceToModel(v);
         //For development purposes only
-        placeManager.printData();
+        //placeManager.printData();
     }
 
     /**

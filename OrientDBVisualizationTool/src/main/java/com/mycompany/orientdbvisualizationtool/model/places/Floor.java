@@ -8,6 +8,7 @@ public class Floor extends Place{
 
     public Floor(String id, String name) {
         super(id, name);
+        type = PlaceCategory.Floor;
     }
     
 }

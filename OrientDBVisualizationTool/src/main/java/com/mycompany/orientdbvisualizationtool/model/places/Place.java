@@ -13,6 +13,7 @@ public abstract class Place {
     private String name;
     private Place parent;
     private ArrayList<Place> children;
+    protected PlaceCategory type;
     
     /**
      * Constructor
@@ -77,10 +78,30 @@ public abstract class Place {
     }
     
     /**
+     * 
+     * @return the type of the place
+     */
+    public PlaceCategory getType(){
+        return type;
+    }
+    
+    /**
      * Dereferences the parent and the list of children
      */
     public void dereferenceAll() {
         parent = null;
         children = null;
+    }
+    
+    /**
+     * 
+     * @return the name to display on the graph
+     */
+    public String getDisplayName(){
+        int index = name.lastIndexOf(".");
+        if(index == -1){
+            return name;
+        }
+        return type + ": " + name.substring(index+1);
     }
 }

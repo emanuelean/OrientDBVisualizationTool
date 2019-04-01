@@ -8,6 +8,7 @@ public class Location extends Place {
 
     public Location(String id, String name) {
         super(id, name);
+        type = PlaceCategory.Location;
     }
     
 }
