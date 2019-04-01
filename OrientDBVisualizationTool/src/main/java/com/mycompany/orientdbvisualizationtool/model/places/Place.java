@@ -12,7 +12,8 @@ public abstract class Place {
     private String id;
     private String name;
     private Place parent;
-    private List<Place> children;
+    private ArrayList<Place> children;
+    protected PlaceCategory type;
     
     /**
      * Constructor
@@ -72,8 +73,16 @@ public abstract class Place {
      *
      * @return A list of children of this place
      */
-    public List<Place> getChildren() {
+    public ArrayList<Place> getChildren() {
         return children;
+    }
+    
+    /**
+     * 
+     * @return the type of the place
+     */
+    public PlaceCategory getType(){
+        return type;
     }
     
     /**

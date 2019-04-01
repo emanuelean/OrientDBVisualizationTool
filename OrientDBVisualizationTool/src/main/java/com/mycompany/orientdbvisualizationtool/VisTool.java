@@ -1,6 +1,6 @@
 package com.mycompany.orientdbvisualizationtool;
 
-import com.mycompany.orientdbvisualizationtool.View.MainFrame;
+//import com.mycompany.orientdbvisualizationtool.View.MainFrame;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
