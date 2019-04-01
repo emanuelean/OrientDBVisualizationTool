@@ -92,4 +92,16 @@ public abstract class Place {
         parent = null;
         children = null;
     }
+    
+    /**
+     * 
+     * @return the name to display on the graph
+     */
+    public String getDisplayName(){
+        int index = name.lastIndexOf(".");
+        if(index == -1){
+            return name;
+        }
+        return type + ": " + name.substring(index+1);
+    }
 }
