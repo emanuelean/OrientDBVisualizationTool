@@ -1,14 +1,14 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
-import com.mycompany.orientdbvisualizationtool.model.places.Location;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Niels
  */
-public class Orginazation {
+public class Organization {
 
     private String id;
     private List<Place> places;
@@ -16,17 +16,18 @@ public class Orginazation {
     /**
      * constructor
      */
-    public Orginazation(String id) {
+    public Organization(String id) {
         this.id = id;
+        places = new ArrayList<>();
     }
     
     /**
      * adds a location the list of locations
      * 
-     * @param location 
+     * @param place The place we want to add 
      */
-    public void addLocation(Location location) {
-        places.add(location);
+    public void addPlace(Place place) {
+        places.add(place);
     }
 
     /**
@@ -36,5 +37,12 @@ public class Orginazation {
     public String getId() {
         return id;
     }  
+    
+    /**
+     * Dereferences the list of places
+     */
+    public void dereferenceAll() {
+        places = null;
+    }
     
 }

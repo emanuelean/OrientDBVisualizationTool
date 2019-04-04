@@ -3,7 +3,7 @@ package com.mycompany.orientdbvisualizationtool.controller;
 import com.mycompany.orientdbvisualizationtool.View.Edge;
 import com.mycompany.orientdbvisualizationtool.View.MainView;
 import com.mycompany.orientdbvisualizationtool.View.Node;
-import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
+import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
 import javafx.event.ActionEvent;

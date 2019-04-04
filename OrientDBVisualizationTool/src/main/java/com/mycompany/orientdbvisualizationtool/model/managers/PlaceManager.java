@@ -1,4 +1,4 @@
-package com.mycompany.orientdbvisualizationtool.model;
+package com.mycompany.orientdbvisualizationtool.model.managers;
 
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.util.ArrayList;
