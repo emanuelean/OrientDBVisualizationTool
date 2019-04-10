@@ -230,7 +230,7 @@ public class MainController {
         StackPane nodeWithLabel = node.getRectangleAndLabel();
         Bounds parentBounds = node.getParent().getBoundsInLocal();
 
-        double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;
+        double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;;
         double sourceNodeX = nodeBounds.getMaxX() - horizontalOffset;
         double sourceNodeY = nodeBounds.getMaxY() - nodeWithLabel.getHeight() / 2;
 
@@ -252,7 +252,8 @@ public class MainController {
             Center_Anchor_Pane.getChildren().add(vbox);
 
             double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
-            double offsetFromSource = (parentBounds.getWidth() + vbox.getBoundsInLocal().getWidth()) / 2;
+            //maybe make constant?
+            double offsetFromSource = 100;// + vbox.getBoundsInLocal().getWidth()) / 2;
 
             vbox.setTranslateX(sourceNodeX + offsetFromSource);
             vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
@@ -290,7 +291,7 @@ public class MainController {
      */
     public void populateTreeView() {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getClass().getSimpleName() + ": " + rootPlace.getId() + ": " + rootPlace.getName();
+        String itemName = rootPlace.getClass().getSimpleName() + ":" + rootPlace.getName();
         TreeItem rootItem = new TreeItem<>(itemName);
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
     }
