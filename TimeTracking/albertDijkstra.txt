@@ -90,3 +90,22 @@
 01/04 - Merge backend and frontend together
 01/04 - Presentation Preperation
 01/04 - Presentation Preperation
+02/04 - Presentation Preperation
+02/04 - Presentation Preperation
+03/04 - Presentation Preperation
+03/04 - Presentation Preperation
+03/04 - Presentation Preperation
+03/04 - Presentation Preperation
+03/04 - Presentation Preperation
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+04/04 - Organization Manager and database query
+10/04 - Entity Manager and testData
+10/04 - Entity Manager and testData
+10/04 - Entity Manager and testData
+10/04 - Entity Manager and testData
