@@ -13,7 +13,7 @@ public class DatabaseManager {
     private OrientGraph graph;
     private OrganizationData organizationData;
     private PlaceData placeData;
-    private SensorData sensorData;
+    private EntityData entityData;
 
     /**
      * Makes sure only one instance of this class can exist
@@ -51,9 +51,9 @@ public class DatabaseManager {
         }
         organizationData = new OrganizationData(graph);
         placeData = new PlaceData(graph);
-        sensorData = new SensorData(graph);
+        entityData = new EntityData(graph);
     }
-    
+
     /**
      * closes the database connection
      */
@@ -61,15 +61,27 @@ public class DatabaseManager {
         graph.shutdown();
     }
 
+    /**
+     * 
+     * @return The organization data
+     */
     public OrganizationData getOrganizationData() {
         return organizationData;
     }
 
+    /**
+     * 
+     * @return The place data
+     */
     public PlaceData getPlaceData() {
         return placeData;
     }
 
-    public SensorData getSensorData() {
-        return sensorData;
+    /**
+     * 
+     * @return The entity data
+     */
+    public EntityData getEntityData() {
+        return entityData;
     }
 }

@@ -10,10 +10,15 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
  *
  * @author Niels
  */
-public class PlaceData extends Database{
+public class PlaceData extends Database {
 
     private PlaceManager placeManager;
-    
+
+    /**
+     * constructor
+     *
+     * @param graph The graph we want to load the data from
+     */
     public PlaceData(OrientGraph graph) {
         super(graph);
         placeManager = PlaceManager.getInstance();
@@ -22,12 +27,12 @@ public class PlaceData extends Database{
     @Override
     public void refresh(String id) {
         placeManager.emptyPlaces();
-        Vertex v = getVertexById("V_location.id",id);
+        Vertex v = getVertexById("V_location.id", id);
         addPlaceToModel(v);
         //For development purposes only
         //placeManager.printData();
     }
-    
+
     /**
      * Adds a place and all its children to the model
      *
@@ -57,5 +62,5 @@ public class PlaceData extends Database{
             addPlaceToModel(v, newPlace);
         }
     }
-    
+
 }

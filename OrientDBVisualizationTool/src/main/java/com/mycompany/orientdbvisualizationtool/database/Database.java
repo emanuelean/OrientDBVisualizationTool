@@ -12,14 +12,24 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
  */
 public abstract class Database {
 
+    /**
+     * The graph that is used to load data
+     */
     protected OrientGraph graph;
     
+    /**
+     * constructor
+     * 
+     * @param graph The graph we want to use to load data
+     */
     public Database(OrientGraph graph) {
         this.graph = graph;
     }
     
     /**
      * Loads the graph with the specific data
+     * 
+     * @param id The id of the vertex we want to refresh
      */
     public abstract void refresh(String id);
     

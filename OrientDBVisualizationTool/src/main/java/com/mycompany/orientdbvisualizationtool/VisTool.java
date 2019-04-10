@@ -15,6 +15,11 @@ import javafx.application.Application;
  */
 public class VisTool {
 
+    /**
+     * Main function
+     * 
+     * @param args Arguments
+     */
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
@@ -75,7 +80,7 @@ public class VisTool {
     private static void printSensors(DatabaseManager db) {
         System.out.println("Database loaded");
         List<Vertex> sensors;
-        sensors = db.getSensorData().getSensorsFromLocation("Energy Academy Europe");
+        sensors = db.getEntityData().getSensorsFromLocation("Energy Academy Europe");
         System.out.println(sensors);
         for (Vertex v : sensors) {
             System.out.printf(v.getProperty("id"));

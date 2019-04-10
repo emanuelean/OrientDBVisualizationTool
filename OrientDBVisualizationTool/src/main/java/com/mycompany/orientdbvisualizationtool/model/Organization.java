@@ -12,37 +12,39 @@ public class Organization {
 
     private String id;
     private List<Place> places;
-    
+
     /**
-     * constructor
+     * Constructor
+     *
+     * @param id The id of the organization
      */
     public Organization(String id) {
         this.id = id;
         places = new ArrayList<>();
     }
-    
+
     /**
      * adds a location the list of locations
-     * 
-     * @param place The place we want to add 
+     *
+     * @param place The place we want to add
      */
     public void addPlace(Place place) {
         places.add(place);
     }
 
     /**
-     * 
+     *
      * @return The id of the organization
      */
     public String getId() {
         return id;
-    }  
-    
+    }
+
     /**
      * Dereferences the list of places
      */
     public void dereferenceAll() {
         places = null;
     }
-    
+
 }

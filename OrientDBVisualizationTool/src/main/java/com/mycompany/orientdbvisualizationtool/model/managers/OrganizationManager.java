@@ -1,7 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.model.managers;
 
 import com.mycompany.orientdbvisualizationtool.model.Organization;
-import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +13,9 @@ public class OrganizationManager {
     private static OrganizationManager singletonInstance;
     private List<Organization> organizations;
 
+    /**
+     * constructor
+     */
     private OrganizationManager() {
         organizations = new ArrayList<>();
     }
@@ -29,26 +31,26 @@ public class OrganizationManager {
         }
         return singletonInstance;
     }
-    
+
     /**
      * Adds a new organization to the list of organizations
-     * 
+     *
      * @param newOrganization The organization we want to add
      */
     public void addOrganization(Organization newOrganization) {
         organizations.add(newOrganization);
     }
-    
+
     /**
      * Adds a new organization to the list of organizations
-     * 
+     *
      * @param id The id of the organization we want to add
      */
     public void addOrganization(String id) {
         Organization newOrganization = new Organization(id);
         addOrganization(newOrganization);
     }
-    
+
     /**
      * Destroys all instances of its classes to prevent all things existing at
      * the same time
@@ -60,4 +62,11 @@ public class OrganizationManager {
         organizations = new ArrayList<>();
     }
 
+    /**
+     *
+     * @return A list of organizations
+     */
+    public List<Organization> getOrganizations() {
+        return organizations;
+    }
 }
