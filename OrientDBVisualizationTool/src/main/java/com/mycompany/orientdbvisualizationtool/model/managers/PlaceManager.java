@@ -1,4 +1,4 @@
-package com.mycompany.orientdbvisualizationtool.model;
+package com.mycompany.orientdbvisualizationtool.model.managers;
 
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ public class PlaceManager {
     private static PlaceManager singletonInstance;
     private List<Place> places;
 
+    /**
+     * constructor
+     */
     private PlaceManager() {
         places = new ArrayList<>();
     }
@@ -103,6 +106,7 @@ public class PlaceManager {
     }
 
     /**
+     * Finds a place based on the id
      *
      * @param id The id of the class we want to find
      * @return The class with the id
