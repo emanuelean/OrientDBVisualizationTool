@@ -23,6 +23,7 @@ public class Node extends Rectangle {
     private StackPane rectangleAndLabel;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
     private MainController mainController;
+    private Boolean expanded;
 
     public Node(String id, String nodeName, String type) {
         this.nodeId = id;
@@ -35,6 +36,7 @@ public class Node extends Rectangle {
         this.selected = false;
         this.rectangleAndLabel = new StackPane();
         rectangleAndLabel.getChildren().addAll(this, this.getLabel());
+        this.expanded = false;
 
         //rounded rectangle
         this.setArcWidth(40);
@@ -154,5 +156,13 @@ public class Node extends Rectangle {
 
     public String getType() {
         return type;
+    }
+
+    public Boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
     }
 }
