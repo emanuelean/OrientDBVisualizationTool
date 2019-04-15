@@ -48,3 +48,35 @@
 12/03 - research javaFX dependencies for graph builder
 18/03 - research Gluon
 18/03 - research Gluon
+19/03 - meeting
+19/03 - meeting
+20/03 - contact client
+22/03 - search dependencies
+22/03 - search dependencies
+22/03 - search dependencies
+22/03 - search dependencies
+24/03 - tree structure
+24/03 - tree structure
+24/03 - tree structure
+28/03 - contact client
+30/03 - tree structure
+30/03 - tree structure
+30/03 - tree structure
+30/03 - tree structure
+30/03 - tree structure
+01/04 - class & component diagram
+01/04 - class & component diagram
+01/04 - class & component diagram
+01/04 - class & component diagram
+01/04 - class & component diagram
+01/04 - meeting
+01/04 - client meeting
+01/04 - meeting
+01/04 - meeting
+01/04 - slides presentation
+01/04 - slides presentation
+01/04 - slides presentation
+01/04 - slides presentation
+01/04 - slides presentation
+01/04 - try solve issues
+01/04 - hand in

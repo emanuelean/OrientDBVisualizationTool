@@ -19,3 +19,20 @@
 16/03 - Connecting Java to OrientDB
 16/03 - Connecting Java to OrientDB
 17/03 - Connecting Java to OrientDB
+25/03 - Meeting
+25/03 - Meeting
+26/03 - Working on navigating OrientDB
+26/03 - Working on navigating OrientDB
+26/03 - Working on navigating OrientDB
+29/03 - Functionality of sensors
+29/03 - Functionality of sensors
+29/03 - Functionality of sensors
+5/04 - Functionality of sensors
+5/04 - Functionality of sensors
+14/04 - Classifying entities
+14/04 - Classifying entities
+14/04 - Classifying entities
+14/04 - Classifying entities
+14/04 - Classifying entities
+14/04 - Classifying entities
+14/04 - Classifying entities

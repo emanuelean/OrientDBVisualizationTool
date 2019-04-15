@@ -1,5 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
+import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.lang.reflect.Field;
 import org.junit.After;
