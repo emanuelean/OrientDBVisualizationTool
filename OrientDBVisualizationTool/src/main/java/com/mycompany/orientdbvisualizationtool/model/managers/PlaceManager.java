@@ -1,4 +1,4 @@
-package com.mycompany.orientdbvisualizationtool.model;
+package com.mycompany.orientdbvisualizationtool.model.managers;
 
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ public class PlaceManager {
     private static PlaceManager singletonInstance;
     private List<Place> places;
 
+    /**
+     * constructor
+     */
     private PlaceManager() {
         places = new ArrayList<>();
     }
@@ -103,6 +106,7 @@ public class PlaceManager {
     }
 
     /**
+     * Finds a place based on the id
      *
      * @param id The id of the class we want to find
      * @return The class with the id
@@ -117,11 +121,20 @@ public class PlaceManager {
     }
 
     /**
+     * Gets the root of the tree
+     *
+     * @return The root of places tree
+     */
+    public Place getRoot() {     //TODO:: make it official
+        return places.get(0);
+    }
+
+    /**
      * prints some data for all the places
      */
     public void printData() {
         for (Place p : places) {
-            System.out.println("[Object] - " + p.getId() + " - " + p.getName() + " - " + p.getClass().getName());
+            System.out.println(p.getDisplayName());
         }
     }
 
