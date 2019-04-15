@@ -47,11 +47,9 @@ public class OrganizationData extends Database {
      * @param organization The organization of which we want to add the places
      */
     private void addPlacesToOrganization(Organization organization) {
-        System.out.println("All places for organization " + organization.getId());
         for (Vertex v : queryVertices("SELECT * FROM V_location WHERE @RID IN (SELECT out(owns)  FROM V_organization WHERE id == '" + organization.getId() + "')")) {
             Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
             organization.addPlace(newPlace);
-            System.out.println("location: " + newPlace.getDisplayName());
         }
     }
 
