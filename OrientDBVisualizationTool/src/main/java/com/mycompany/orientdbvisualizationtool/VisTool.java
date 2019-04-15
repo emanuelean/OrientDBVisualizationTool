@@ -3,8 +3,7 @@ package com.mycompany.orientdbvisualizationtool;
 import com.mycompany.orientdbvisualizationtool.View.MainView;
 import java.util.List;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
-import com.mycompany.orientdbvisualizationtool.model.places.*;
+import com.mycompany.orientdbvisualizationtool.database.EntityData;
 import com.tinkerpop.blueprints.Vertex;
 import javafx.application.Application;
 
@@ -17,16 +16,18 @@ public class VisTool {
 
     /**
      * Main function
-     * 
+     *
      * @param args Arguments
      */
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
+
         db.getPlaceData().refresh("GSV.HQ");
-        //db.refreshGraph("GSV.HQ");
         Application.launch(MainView.class, args);
 
+        //EntityData e = db.getEntityData();
+        //List<Vertex> lv = e.getSensorsFromLocation("Energy Academy Europe");
     }
 
     /**
