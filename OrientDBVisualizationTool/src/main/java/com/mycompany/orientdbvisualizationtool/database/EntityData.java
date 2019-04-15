@@ -8,20 +8,58 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import com.google.common.collect.Sets;
 
 /**
  *
- * @author Niels
+ * @author Niels & Carlos
  */
 public class EntityData extends Database {
+	
+	private static List<Vertex> sensorInitialization;
+	
+	
+	public static List<Vertex> getSensorEntities() {
+        return sensorInitialization;
+    }
 
     /**
-     * constructor
+     * Initializes the sensor comparer list
      * 
      * @param graph The graph we want to load the data from
      */
     public EntityData(OrientGraph graph) {
         super(graph);
+        int flag = 0;
+        List<Vertex> entities = new ArrayList<>();
+        Set<Vertex> bufferVertex = Sets.newHashSet(graph.getVertices("V_category", new String[] {"id"}, new Object[] {"sensor"})); //we initialize the nodes to explore
+        Iterable<Edge> bufferConnections; //buffer for the connections
+        
+        while(bufferVertex.size()!=0) { //while we still have elements to explore
+        	Vertex v = bufferVertex.iterator().next();
+        	bufferVertex.remove(v);
+        	bufferConnections = v.getEdges(Direction.IN, "is-a");
+        	
+        	if (bufferConnections != null) {
+	        	for (Edge e : bufferConnections) {
+	        		bufferVertex.add(e.getVertex(Direction.OUT)); //we add all the nodes connected with "is-a" to the explored node to the set of nodes to be explored
+	        	}
+        	}
+        	
+        	
+        	bufferConnections = v.getEdges(Direction.IN, "instance-of");
+        	        	
+        	for (Edge e : bufferConnections) {
+        			flag = 1;
+        			bufferVertex.add(e.getVertex(Direction.OUT));
+        	}
+        	if (flag == 1) {
+        		entities.add(v); //we know that a sensor will be an instance of the Vertex (or an instance of the Vertex) so we add it to the list of entities
+        		flag=0;
+        	}
+        }
+        sensorInitialization=entities;
     }
 
     @Override
@@ -43,13 +81,31 @@ public class EntityData extends Database {
                 List<Vertex> sensors = new ArrayList<>();
                 connections = v.getEdges(Direction.IN, "has-a");
                 for (Edge e : connections) {
-                    sensors.add(e.getVertex(Direction.OUT));
+                	Vertex s = e.getVertex(Direction.OUT);
+                	if (this.isSensor(s)) {
+                		sensors.add(s);
+                	}
                 }
                 return sensors;
             }
         }
         System.out.println("Location not found");
         return null;
+    }
+    /**
+     * Auxiliary function to check if a vertex is a sensor
+     * 
+     * @param v The vertex we want to know if it is a sensor or not
+     * @return True if it is, false if it isn't
+     */
+    private boolean isSensor(Vertex v) {
+    	Iterable<Edge> connections = v.getEdges(Direction.OUT, "instance-of");
+    	for (Edge e: connections) {
+    		if (sensorInitialization.contains(e.getVertex(Direction.IN))) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
 
     /**
