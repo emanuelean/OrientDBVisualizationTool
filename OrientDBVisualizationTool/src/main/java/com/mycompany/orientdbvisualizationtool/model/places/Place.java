@@ -33,6 +33,8 @@ public abstract class Place {
         this.name = name;
         parent = null;
         children = new ArrayList<>();
+        entities = new ArrayList<>();
+        childrenEntities = new ArrayList<>();
     }
 
     /**
@@ -146,5 +148,13 @@ public abstract class Place {
             return;
         }
         entities = DatabaseManager.getInstance().getEntityData().queryEntities();
+    }
+    
+    /**
+     * adds an entity to the entities list
+     * @param newEntity the new entity to be added
+     */
+    public void addEntity(Entity newEntity){
+        entities.add(newEntity);
     }
 }
