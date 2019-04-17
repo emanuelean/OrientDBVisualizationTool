@@ -61,38 +61,38 @@ public class MainController {
     }
 
     /**
-     * The Hide_Check_Box hides/shows nodes and its corresponding edges.
-     * The property of Hide_Check_Box is defined here.
+     * The Hide_Check_Box hides/shows nodes and its corresponding edges. The
+     * property of Hide_Check_Box is defined here.
      */
     private void setHideCheckBoxActionProperty() {
         Hide_Check_Box.setOnAction(event -> {
-                    if (Hide_Check_Box.isSelected()) {
-                        for (Node node : nodes) {
-                            if (node.isSelected()) {
-                                node.getRectangleAndLabel().setVisible(false);
-                                for (Edge edge : edges) {
-                                    if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                        edge.setVisible(false);
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        for (Node node : nodes) {
-                            node.getRectangleAndLabel().setVisible(true);
-                        }
+            if (Hide_Check_Box.isSelected()) {
+                for (Node node : nodes) {
+                    if (node.isSelected()) {
+                        node.getRectangleAndLabel().setVisible(false);
                         for (Edge edge : edges) {
-                            edge.setVisible(true);
+                            if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
+                                edge.setVisible(false);
+                            }
                         }
                     }
                 }
+            } else {
+                for (Node node : nodes) {
+                    node.getRectangleAndLabel().setVisible(true);
+                }
+                for (Edge edge : edges) {
+                    edge.setVisible(true);
+                }
+            }
+        }
         );
     }
 
-
     /**
      * Center anchor pane controls
-     **/
+     *
+     */
     @FXML
     public AnchorPane Center_Anchor_Pane;
 
@@ -143,9 +143,9 @@ public class MainController {
     }
 
     /**
-     * Action taken in the anchor pane in the center.
-     * Used for deselection when clicking and
-     * records start point of a mouse position for function centerPaneDragged();
+     * Action taken in the anchor pane in the center. Used for deselection when
+     * clicking and records start point of a mouse position for function
+     * centerPaneDragged();
      *
      * @param mouseEvent Mouse event for mouse pressed
      */
@@ -201,7 +201,11 @@ public class MainController {
         Place rootPlace = placeManager.getRoot();
         VBox rootVBox = new VBox();
         rootVBox.setSpacing(14);
-        Node rootNode = new Node(rootPlace.getId(), rootPlace.getName(), rootPlace.getClass().getSimpleName());
+        String id = rootPlace.getId();
+        String name = rootPlace.getName();
+        String type = rootPlace.getType().toString();
+        String displayName = rootPlace.getDisplayName();
+        Node rootNode = new Node(id, name, type, displayName);
         rootNode.setController(this);
         rootNode.addToVBox(rootVBox);
         nodes.add(rootNode);
@@ -247,7 +251,11 @@ public class MainController {
 //                vbox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
                 for (Place place : childrenPlaces) {
-                    Node childNode = new Node(place.getId(), place.getName(), place.getClass().getSimpleName());
+                    String id = place.getId();
+                    String name = place.getName();
+                    String type = place.getType().toString();
+                    String displayName = place.getDisplayName();
+                    Node childNode = new Node(id, name, type,displayName);
                     childNode.setController(this);
                     childNode.addToVBox(vbox);
                     nodes.add(childNode);
@@ -258,7 +266,6 @@ public class MainController {
                 double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
                 //TODO:: make constant?
                 double offsetFromSource = 100;  // + vbox.getBoundsInLocal().getWidth()) / 2;
-
 
                 vbox.setTranslateX(sourceNodeX + offsetFromSource);
                 vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
@@ -275,13 +282,13 @@ public class MainController {
         }
     }
 
-
     /**
-     * recursively populates tree view items with data from model.
-     * An auxiliary function for populateTreeView();
+     * recursively populates tree view items with data from model. An auxiliary
+     * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items are added
+     * @param sourceItem a source treeView-item to which children treeView-items
+     * are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
@@ -289,7 +296,7 @@ public class MainController {
             return sourceItem;
         }
         for (Place place : sourcePlace.getChildren()) {
-            TreeItem childItem = new TreeItem<>(place.getClass().getSimpleName() + ": " + place.getId() + ": " + place.getName());
+            TreeItem childItem = new TreeItem<>(place.getType().toString() + ": " + place.getId() + ": " + place.getName());
             sourceItem.getChildren().add(recursePopulateTreeView(place, childItem));
         }
         return sourceItem;
@@ -300,7 +307,7 @@ public class MainController {
      */
     public void populateTreeView() {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getClass().getSimpleName() + ":" + rootPlace.getName();
+        String itemName = rootPlace.getType().toString() + ":" + rootPlace.getName();
         TreeItem rootItem = new TreeItem<>(itemName);
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
     }

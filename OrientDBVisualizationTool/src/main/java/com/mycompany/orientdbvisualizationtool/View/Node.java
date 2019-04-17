@@ -24,12 +24,12 @@ public class Node extends Rectangle {
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
     private MainController mainController;
     private Boolean expanded;
-
-    public Node(String id, String nodeName, String type) {
+    
+    public Node(String id, String nodeName, String type, String displayName){
         this.nodeId = id;
         this.nodeName = nodeName;
         this.type = type;
-        this.label = new Text(type + ": " + id + ":" + nodeName);
+        this.label = new Text(displayName);
         this.label.setFont(new Font(13));
         this.setWidth(label.getLayoutBounds().getWidth() + 30);
         this.setHeight(40.0f);
@@ -45,6 +45,10 @@ public class Node extends Rectangle {
         this.setStroke(Color.DARKGREY);
 
         this.setMouseListenerProperties();
+    }
+
+    public Node(String id, String nodeName, String type) {
+        this(id, nodeName, type, nodeName);
     }
 
     /**
