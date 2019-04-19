@@ -21,6 +21,7 @@ public class MainView extends Application {
 
     /**
      * Scene is created and the fxml file is loaded.
+     *
      * @param primaryStage The basic underlying frame
      * @throws Exception for Application error handling
      */
@@ -36,8 +37,7 @@ public class MainView extends Application {
         primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
         primaryStage.setScene(scene);
-
-//TODO:: UNCOMMENT        primaryStage.setMaximized(true);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

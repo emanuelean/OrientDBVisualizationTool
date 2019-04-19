@@ -1,6 +1,8 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -16,19 +18,22 @@ import javafx.scene.text.Text;
 public class Node extends Rectangle {
 
     private Text label;
-    private String nodeName;
-    private String nodeId;
-    private String type;
+    private StringProperty nodeName;
+    private StringProperty nodeDisplayName;
+    private StringProperty nodeId;
+    private StringProperty NodeType;
     private boolean selected;
     private StackPane rectangleAndLabel;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
     private MainController mainController;
     private Boolean expanded;
     
-    public Node(String id, String nodeName, String type, String displayName){
-        this.nodeId = id;
-        this.nodeName = nodeName;
-        this.type = type;
+    public Node(String id, String nodeName, String NodeType, String displayName){
+        this.nodeId = new SimpleStringProperty(id);
+        this.nodeName = new SimpleStringProperty(nodeName);
+        this.nodeDisplayName = new SimpleStringProperty(displayName);
+        this.NodeType = new SimpleStringProperty(NodeType);
+
         this.label = new Text(displayName);
         this.label.setFont(new Font(13));
         this.setWidth(label.getLayoutBounds().getWidth() + 30);
@@ -47,8 +52,8 @@ public class Node extends Rectangle {
         this.setMouseListenerProperties();
     }
 
-    public Node(String id, String nodeName, String type) {
-        this(id, nodeName, type, nodeName);
+    public Node(String id, String nodeName, String NodeType) {
+        this(id, nodeName, NodeType, nodeName);
     }
 
     /**
@@ -142,7 +147,7 @@ public class Node extends Rectangle {
     }
 
     public String getNodeId() {
-        return nodeId;
+        return nodeId.get();
     }
 
     /**
@@ -155,11 +160,19 @@ public class Node extends Rectangle {
     }
 
     public String getNodeName() {
-        return nodeName;
+        return nodeName.get();
     }
 
-    public String getType() {
-        return type;
+    public String getDisplayName() {
+        return nodeDisplayName.get();
+    }
+
+    public StringProperty displayNameProperty() {
+        return nodeDisplayName;
+    }
+
+    public String getNodeType() {
+        return NodeType.get();
     }
 
     public Boolean isExpanded() {

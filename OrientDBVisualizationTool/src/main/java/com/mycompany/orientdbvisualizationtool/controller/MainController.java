@@ -6,11 +6,14 @@ import com.mycompany.orientdbvisualizationtool.View.Node;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -30,9 +33,19 @@ public class MainController {
     @FXML
     public TreeView Left_Tree_View;
     @FXML
-    public CheckBox Hide_Check_Box;
-    @FXML
     public ScrollPane Center_Scroll_Pane;
+    @FXML
+    public TableColumn Table_View_Name;
+    @FXML
+    public TableColumn Table_View_ID;
+    @FXML
+    public TableColumn Table_View_Type;
+    @FXML
+    public TableView Table_View;
+    @FXML
+    public Button Hide_Button;
+    @FXML
+    public Button Show_All_Button;
 
     private PlaceManager placeManager;
 
@@ -57,41 +70,49 @@ public class MainController {
         Center_Anchor_Pane.setPrefWidth(WIDTH * .60 + 300);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
 
-        setHideCheckBoxActionProperty();
+        setTableViewCellsProperty();
+        setHideActionProperty();
+    }
+
+    private void setTableViewCellsProperty() {
+        //TODO:: IS THIS STRING USAGE SAFE?
+        Table_View_Name.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeName"));
+        Table_View_ID.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeId"));
+        Table_View_Type.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeType"));
+        Table_View.setItems(tableViewObserveData);
     }
 
     /**
-     * The Hide_Check_Box hides/shows nodes and its corresponding edges. The
-     * property of Hide_Check_Box is defined here.
+     * The Hide_Button hides nodes on button pressed and its corresponding edges.
+     * The Show_All_Button shows all hidden nodes.
      */
-    private void setHideCheckBoxActionProperty() {
-        Hide_Check_Box.setOnAction(event -> {
-            if (Hide_Check_Box.isSelected()) {
-                for (Node node : nodes) {
-                    if (node.isSelected()) {
-                        node.getRectangleAndLabel().setVisible(false);
-                        for (Edge edge : edges) {
-                            if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                edge.setVisible(false);
+    private void setHideActionProperty() {
+        Hide_Button.setOnAction(event -> {
+                    for (Node node : nodes) {
+                        if (node.isSelected()) {
+                            node.getRectangleAndLabel().setVisible(false);
+                            for (Edge edge : edges) {
+                                if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
+                                    edge.setVisible(false);
+                                }
                             }
                         }
                     }
                 }
-            } else {
-                for (Node node : nodes) {
-                    node.getRectangleAndLabel().setVisible(true);
+        );
+        Show_All_Button.setOnAction(event -> {
+                    for (Node node : nodes) {
+                        node.getRectangleAndLabel().setVisible(true);
+                    }
+                    for (Edge edge : edges) {
+                        edge.setVisible(true);
+                    }
                 }
-                for (Edge edge : edges) {
-                    edge.setVisible(true);
-                }
-            }
-        }
         );
     }
 
     /**
      * Center anchor pane controls
-     *
      */
     @FXML
     public AnchorPane Center_Anchor_Pane;
@@ -144,7 +165,7 @@ public class MainController {
 
     /**
      * Action taken in the anchor pane in the center. Used for deselection when
-     * clicking and records start point of a mouse position for function
+     * clicking and in addition used for recording the start point of a mouse position for function
      * centerPaneDragged();
      *
      * @param mouseEvent Mouse event for mouse pressed
@@ -215,15 +236,31 @@ public class MainController {
 
     }
 
+    private final ObservableList<Node> tableViewObserveData = FXCollections.observableArrayList();
+
     /**
      * Sets the fields of a node/place object to be shown on right panel.
      *
      * @param node has properties to be shown.
      */
     public void showSelectedNodeDetails(Node node) {
-        Node_Name_Text_Field.setText(node.getNodeName());
+        Node_Name_Text_Field.setText(node.getDisplayName());
         Node_ID_Text_Field.setText(node.getNodeId());
-        Node_Type_Text_Field.setText(node.getType());
+        Node_Type_Text_Field.setText(node.getNodeType());
+        tableViewObserveData.clear();
+
+        PlaceManager placeManager = PlaceManager.getInstance();
+        Place place = placeManager.getPlace(node.getNodeId());
+        ArrayList<Place> childrenPlaces = place.getChildren();
+        for (Place childPlace : childrenPlaces) {
+            String id = childPlace.getId();
+            String name = childPlace.getName();
+            String type = childPlace.getType().toString();
+            String displayName = childPlace.getDisplayName();
+            Node childNode = new Node(id, name, type, displayName);
+
+            tableViewObserveData.add(childNode);
+        }
     }
 
     /**
@@ -255,7 +292,7 @@ public class MainController {
                     String name = place.getName();
                     String type = place.getType().toString();
                     String displayName = place.getDisplayName();
-                    Node childNode = new Node(id, name, type,displayName);
+                    Node childNode = new Node(id, name, type, displayName);
                     childNode.setController(this);
                     childNode.addToVBox(vbox);
                     nodes.add(childNode);
@@ -287,8 +324,8 @@ public class MainController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem a source treeView-item to which children treeView-items
-     * are added
+     * @param sourceItem  a source treeView-item to which children treeView-items
+     *                    are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
