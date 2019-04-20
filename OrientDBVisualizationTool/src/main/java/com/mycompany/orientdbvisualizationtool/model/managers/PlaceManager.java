@@ -125,7 +125,7 @@ public class PlaceManager {
      *
      * @return The root of places tree
      */
-    public Place getRoot() {     //TODO:: make it official
+    public Place getRoot() {
         return places.get(0);
     }
 

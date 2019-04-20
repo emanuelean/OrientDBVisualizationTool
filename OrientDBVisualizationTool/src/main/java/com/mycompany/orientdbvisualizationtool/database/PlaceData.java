@@ -1,4 +1,5 @@
 /* TODO :: UNCOMMENT CLASS */
+
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
@@ -9,9 +10,9 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 
 /**
- *
  * @author Niels
  */
+
 
 public class PlaceData extends Database {
 
@@ -23,6 +24,7 @@ public class PlaceData extends Database {
      *
      * @param graph The graph we want to load the data from
      */
+
 
     public PlaceData(OrientGraph graph) {
         super(graph);
@@ -45,6 +47,7 @@ public class PlaceData extends Database {
      * @param place The place we want to add
      */
 
+
     private void addPlaceToModel(Vertex place) {
         addPlaceToModel(place, null);
     }
@@ -57,6 +60,7 @@ public class PlaceData extends Database {
      * @param place  The place we want to add
      * @param parent The parent we want to link the place to
      */
+
 
     private void addPlaceToModel(Vertex place, Place parent) {
         String id = (String) place.getProperty("id");

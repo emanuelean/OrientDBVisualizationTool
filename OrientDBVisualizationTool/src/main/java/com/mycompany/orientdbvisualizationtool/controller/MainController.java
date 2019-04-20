@@ -33,8 +33,6 @@ public class MainController {
     @FXML
     public TreeView Left_Tree_View;
     @FXML
-    public ScrollPane Center_Scroll_Pane;
-    @FXML
     public TableColumn Table_View_Name;
     @FXML
     public TableColumn Table_View_ID;
@@ -66,14 +64,17 @@ public class MainController {
         selectionArea.setStroke(Color.LIGHTBLUE);
         Center_Anchor_Pane.getChildren().add(selectionArea);
 
-        //TODO:: FIX EXPANSION
-        Center_Anchor_Pane.setPrefWidth(WIDTH * .60 + 300);
+        Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
 
         setTableViewCellsProperty();
         setHideActionProperty();
     }
 
+    /**
+     * Table view listens to changes with respect to the properties that a Node has.
+     * The table view uses nodeName, nodeId and nodeType fields of Node.
+     */
     private void setTableViewCellsProperty() {
         //TODO:: IS THIS STRING USAGE SAFE?
         Table_View_Name.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeName"));
@@ -134,25 +135,25 @@ public class MainController {
         //area selection using blue rectangle
         if (mouseEvent.isControlDown()) {
             selectionArea.setVisible(true);
-            selectionArea.setTranslateX(mouseSourceX);
-            selectionArea.setTranslateY(mouseSourceY);
+            selectionArea.setLayoutX(mouseSourceX);
+            selectionArea.setLayoutY(mouseSourceY);
 
             double selectionAreaWidth = mouseEvent.getX() - mouseSourceX;
             double selectionAreaHeight = mouseEvent.getY() - mouseSourceY;
 
             if (selectionAreaHeight < 0 && selectionAreaWidth < 0) {
-                selectionArea.setTranslateX(mouseEvent.getX());
-                selectionArea.setTranslateY(mouseEvent.getY());
+                selectionArea.setLayoutX(mouseEvent.getX());
+                selectionArea.setLayoutY(mouseEvent.getY());
                 selectionArea.setWidth(-selectionAreaWidth);
                 selectionArea.setHeight(-selectionAreaHeight);
             } else if (selectionAreaHeight >= 0 && selectionAreaWidth < 0) {
-                selectionArea.setTranslateX(mouseEvent.getX());
-                selectionArea.setTranslateY(mouseSourceY);
+                selectionArea.setLayoutX(mouseEvent.getX());
+                selectionArea.setLayoutY(mouseSourceY);
                 selectionArea.setWidth(-selectionAreaWidth);
                 selectionArea.setHeight(selectionAreaHeight);
             } else if (selectionAreaHeight < 0 && selectionAreaWidth >= 0) {
-                selectionArea.setTranslateX(mouseSourceX);
-                selectionArea.setTranslateY(mouseEvent.getY());
+                selectionArea.setLayoutX(mouseSourceX);
+                selectionArea.setLayoutY(mouseEvent.getY());
                 selectionArea.setWidth(selectionAreaWidth);
                 selectionArea.setHeight(-selectionAreaHeight);
             } else if (selectionAreaHeight >= 0 && selectionAreaWidth >= 0) {
@@ -230,8 +231,9 @@ public class MainController {
         rootNode.setController(this);
         rootNode.addToVBox(rootVBox);
         nodes.add(rootNode);
-        rootVBox.setTranslateX(100);
-        rootVBox.setTranslateY(WIDTH / 4);
+
+        rootVBox.setLayoutX(100);
+        rootVBox.setLayoutY(WIDTH / 4);
         Center_Anchor_Pane.getChildren().add(rootVBox);
 
     }
@@ -258,7 +260,6 @@ public class MainController {
             String type = childPlace.getType().toString();
             String displayName = childPlace.getDisplayName();
             Node childNode = new Node(id, name, type, displayName);
-
             tableViewObserveData.add(childNode);
         }
     }
@@ -285,7 +286,7 @@ public class MainController {
             if (!childrenPlaces.isEmpty()) {
                 int vBoxSpacing = 14;
                 VBox vbox = new VBox(vBoxSpacing);
-//                vbox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                //vbox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
                 for (Place place : childrenPlaces) {
                     String id = place.getId();
@@ -302,10 +303,14 @@ public class MainController {
 
                 double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
                 //TODO:: make constant?
-                double offsetFromSource = 100;  // + vbox.getBoundsInLocal().getWidth()) / 2;
+                double offsetFromSource = 100;
 
-                vbox.setTranslateX(sourceNodeX + offsetFromSource);
-                vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
+                double yShift = sourceNodeY - vBoxHeight / 2;
+                vbox.setLayoutX(sourceNodeX + offsetFromSource);
+                vbox.setLayoutY(yShift);
+                if (yShift < 0) {
+                    repositionGraph(yShift);
+                }
 
                 //create and connect edges from node to node's children
                 for (int i = nodes.size() - 1; i > nodes.size() - 1 - totalPlaces; i--) {
@@ -315,6 +320,18 @@ public class MainController {
                     Center_Anchor_Pane.getChildren().add(edge);
                 }
                 node.setExpanded(true);
+            }
+        }
+    }
+
+    /**
+     *  horizontally repositions graph if the graph goes out of bounds in the y axis
+     * @param yValue negative vertical value used to reposition graph
+     */
+    private void repositionGraph(double yValue) {
+        for (javafx.scene.Node node : Center_Anchor_Pane.getChildren()) {
+            if(!(node instanceof Label)) {
+                node.setLayoutY(node.getLayoutY() - yValue + 30);
             }
         }
     }
