@@ -4,11 +4,9 @@ package com.mycompany.orientdbvisualizationtool.database;
 
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
-
 /**
  * @author Niels
  */
-
 
 public class DatabaseManager {
 
@@ -107,5 +105,6 @@ public class DatabaseManager {
         return entityData;
     }
 }
+
 
 

@@ -38,7 +38,7 @@ public class MainView extends Application {
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
         primaryStage.setScene(scene);
         //TODO:: UNCOMMENT
-//        primaryStage.setMaximized(true);
+        //primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

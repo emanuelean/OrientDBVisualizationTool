@@ -1,11 +1,10 @@
 package com.mycompany.orientdbvisualizationtool.controller;
 
-import com.mycompany.orientdbvisualizationtool.View.Edge;
-import com.mycompany.orientdbvisualizationtool.View.MainView;
-import com.mycompany.orientdbvisualizationtool.View.Node;
+import com.mycompany.orientdbvisualizationtool.View.*;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
+import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +13,8 @@ import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -73,7 +74,7 @@ public class MainController {
 
     /**
      * Table view listens to changes with respect to the properties that a Node has.
-     * The table view uses nodeName, nodeId and nodeType fields of Node.
+     * The table view uses the nodeName, nodeId and nodeType fields of Node class.
      */
     private void setTableViewCellsProperty() {
         //TODO:: IS THIS STRING USAGE SAFE?
@@ -91,7 +92,7 @@ public class MainController {
         Hide_Button.setOnAction(event -> {
                     for (Node node : nodes) {
                         if (node.isSelected()) {
-                            node.getRectangleAndLabel().setVisible(false);
+                            node.setVisible(false);
                             for (Edge edge : edges) {
                                 if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
                                     edge.setVisible(false);
@@ -103,7 +104,7 @@ public class MainController {
         );
         Show_All_Button.setOnAction(event -> {
                     for (Node node : nodes) {
-                        node.getRectangleAndLabel().setVisible(true);
+                        node.setVisible(true);
                     }
                     for (Edge edge : edges) {
                         edge.setVisible(true);
@@ -176,7 +177,7 @@ public class MainController {
         mouseSourceY = mouseEvent.getY();
 
         for (Node node : nodes) {
-            if (!node.getRectangleAndLabel().isPressed()) {
+            if (!node.isPressed()) {
                 node.setSelected(false);
             }
         }
@@ -192,9 +193,8 @@ public class MainController {
         if (mouseEvent.isControlDown()) {
             if (!nodes.isEmpty()) {
                 for (Node node : nodes) {
-                    StackPane pane = node.getRectangleAndLabel();
                     Bounds selectionAreaBounds = selectionArea.localToScene(selectionArea.getBoundsInLocal());
-                    Bounds nodeBounds = pane.localToScene(pane.getBoundsInLocal());
+                    Bounds nodeBounds = node.localToScene(node.getBoundsInLocal());
                     if (selectionAreaBounds.intersects(nodeBounds)) {
                         node.setSelected(true);
                     } else {
@@ -269,15 +269,15 @@ public class MainController {
      *
      * @param node source node for expansion
      */
+
     public void expandNode(Node node) {
         if (!node.isExpanded()) {
-            Bounds nodeBounds = Center_Anchor_Pane.sceneToLocal(node.localToScene(node.getBoundsInLocal()));
-            StackPane nodeWithLabel = node.getRectangleAndLabel();
-            Bounds parentBounds = node.getParent().getBoundsInLocal();
+            Bounds rectangleBounds = Center_Anchor_Pane.sceneToLocal(node.getRectangle().localToScene(node.getBoundsInLocal()));
+            Bounds nodeBounds = node.getBoundsInLocal();
 
-            double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;
-            double sourceNodeX = nodeBounds.getMaxX() - horizontalOffset;
-            double sourceNodeY = nodeBounds.getMaxY() - nodeWithLabel.getHeight() / 2;
+            double horizontalOffset = (nodeBounds.getWidth() - node.getWidth()) / 2;
+            double sourceNodeX = rectangleBounds.getMaxX() - horizontalOffset;
+            double sourceNodeY = rectangleBounds.getMaxY() - node.getHeight() / 2;
 
             Place sourcePlace = placeManager.getPlace(node.getNodeId());
             ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
@@ -319,18 +319,45 @@ public class MainController {
                     edges.add(edge);
                     Center_Anchor_Pane.getChildren().add(edge);
                 }
+                node.setChildrenVBox(vbox);
                 node.setExpanded(true);
             }
+        } else {
+            //contract node
+            removeNodeAndChildren(node);
         }
     }
 
     /**
-     *  horizontally repositions graph if the graph goes out of bounds in the y axis
+     * recursively removes the children in the subtree of given node
+     * Used  when the user contracts a node
+     * @param node the node to be contracted
+     */
+    private void removeNodeAndChildren(Node node) {
+        if(node.getChildrenVBox().getChildren().isEmpty()) {
+            node.setExpanded(false);
+            return;
+        }
+        for(javafx.scene.Node child : node.getChildrenVBox().getChildren()) {
+            removeNodeAndChildren((Node) child);
+            node.setExpanded(false);
+            for (Edge edge : edges) {
+                if (edge.getSecondNode().equals(child)) {
+                    Center_Anchor_Pane.getChildren().remove(edge);
+                }
+            }
+        }
+        Center_Anchor_Pane.getChildren().remove(node.getChildrenVBox());
+    }
+
+    /**
+     * horizontally repositions graph if the graph goes out of bounds in the y axis
+     *
      * @param yValue negative vertical value used to reposition graph
      */
     private void repositionGraph(double yValue) {
         for (javafx.scene.Node node : Center_Anchor_Pane.getChildren()) {
-            if(!(node instanceof Label)) {
+            if (!(node instanceof Label)) {
                 node.setLayoutY(node.getLayoutY() - yValue + 30);
             }
         }
@@ -349,11 +376,44 @@ public class MainController {
         if (sourcePlace.getChildren().isEmpty()) {
             return sourceItem;
         }
+
         for (Place place : sourcePlace.getChildren()) {
-            TreeItem childItem = new TreeItem<>(place.getType().toString() + ": " + place.getId() + ": " + place.getName());
+            TreeItem childItem = new TreeItem<>(place.getDisplayName());
             sourceItem.getChildren().add(recursePopulateTreeView(place, childItem));
+            childItem.setGraphic(iconize(place.getType()));
         }
         return sourceItem;
+    }
+
+    /**
+     * returns the correct icon for a given place type.
+     *
+     * @param placeType enum for the place type
+     * @return image view icon for given place type
+     */
+    private ImageView iconize(PlaceCategory placeType) {
+        ImageView view = new ImageView();
+        switch (placeType) {
+            case Location:
+                view.setImage(new Image("icons/location-icon.png"));
+                break;
+            case Building:
+                view.setImage(new Image("icons/building-icon.png"));
+                break;
+            case Floor:
+                view.setImage(new Image("icons/floor-icon.png"));
+                break;
+            case Room:
+                view.setImage(new Image("icons/room-icon.png"));
+                break;
+            case Area:
+                view.setImage(new Image("icons/area-icon.png"));
+                break;
+            case Cell:
+                view.setImage(new Image("icons/cell-icon.png"));
+                break;
+        }
+        return view;
     }
 
     /**
@@ -361,9 +421,18 @@ public class MainController {
      */
     public void populateTreeView() {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getType().toString() + ":" + rootPlace.getName();
+        String itemName = rootPlace.getType().toString() + ": " + rootPlace.getDisplayName();
         TreeItem rootItem = new TreeItem<>(itemName);
+        rootItem.setExpanded(true);
+        rootItem.setGraphic(new ImageView("icons/location-icon.png"));
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
+
+        /*
+        TODO:: USE FOR SELECTING SEARCHED NODE
+        int row = Left_Tree_View.getRow(rootItem);
+        Left_Tree_View.getSelectionModel().select(3);
+        Left_Tree_View.get
+        */
     }
 
     /**

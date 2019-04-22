@@ -15,35 +15,25 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-
 /**
  * @author Niels & Carlos
  */
-
-
 public class EntityData extends Database {
 
     private static List<Vertex> sensorInitialization;
-
-
     /**
      * Initializes the sensor comparer list
      *
      * @param graph The graph we want to load the data from
      */
-
-
     public EntityData(OrientGraph graph) {
         super(graph);
         initSensors();
     }
 
-
     /**
      * initialises a list of sensors
      */
-
-
     private void initSensors() {
         int flag = 0;
         List<Vertex> entities = new ArrayList<>();
@@ -80,16 +70,12 @@ public class EntityData extends Database {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-
     /**
      * @return A list of sensor entities
      */
-
-
     public static List<Vertex> getSensorEntities() {
         return sensorInitialization;
     }
-
 
     /**
      * Returns all the sensors from a location
@@ -97,8 +83,6 @@ public class EntityData extends Database {
      * @param name the name of the location
      * @return a list with all the sensors
      */
-
-
     public List<Vertex> getSensorsFromLocation(String name) {
         for (Vertex v : graph.getVerticesOfClass("v_location", false)) {
             if (v.getProperty("name").equals(name)) {
@@ -117,14 +101,12 @@ public class EntityData extends Database {
         return null;
     }
 
-
     /**
      * Auxiliary function to check if a vertex is a sensor
      *
      * @param v The vertex we want to know if it is a sensor or not
      * @return True if it is, false if it isn't
      */
-
 
     private boolean isSensor(Vertex v) {
         Iterable<Edge> connections = v.getEdges(Direction.OUT, "instance-of");
@@ -136,7 +118,6 @@ public class EntityData extends Database {
         return false;
     }
 
-
     /**
      * Generates a list of entities with randomized ids for testdata This is
      * only temporary, this will later be changed to query actual entities from
@@ -144,8 +125,6 @@ public class EntityData extends Database {
      *
      * @return A list of entities
      */
-
-
     public ArrayList<Entity> queryEntities() {
         Random random = new Random();
         ArrayList<Entity> entities = new ArrayList<>();
@@ -155,7 +134,4 @@ public class EntityData extends Database {
         }
         return entities;
     }
-
 }
-
-

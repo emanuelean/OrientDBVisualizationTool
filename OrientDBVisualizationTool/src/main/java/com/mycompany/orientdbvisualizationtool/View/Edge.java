@@ -2,7 +2,6 @@ package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -28,19 +27,17 @@ public class Edge extends Line {
      * Sets the start/end points for connecting nodes
      */
     private void setStartEndPoints() {
-        StackPane firstNodePane = firstNode.getRectangleAndLabel();
-        StackPane secondNodePane = secondNode.getRectangleAndLabel();
 
-        Bounds firstNodePoint = anchorPane.sceneToLocal(firstNodePane.localToScene(firstNodePane.getBoundsInLocal()));
-        Bounds secondNodePoint = anchorPane.sceneToLocal(secondNodePane.localToScene(secondNodePane.getBoundsInLocal()));
+        Bounds firstNodePoint = anchorPane.sceneToLocal(firstNode.localToScene(firstNode.getBoundsInLocal()));
+        Bounds secondNodePoint = anchorPane.sceneToLocal(secondNode.localToScene(secondNode.getBoundsInLocal()));
 
-        double firstNodeOffset = (firstNodePane.getParent().getBoundsInLocal().getWidth() - firstNode.getBoundsInLocal().getWidth()) / 2;
-        double secondNodeOffset = (secondNodePane.getParent().getBoundsInLocal().getWidth() - secondNodePane.getWidth()) / 2;
+        double firstNodeOffset = (firstNode.getParent().getBoundsInLocal().getWidth() - firstNode.getRectangle().getBoundsInLocal().getWidth()) / 2;
+        double secondNodeOffset = (secondNode.getParent().getBoundsInLocal().getWidth() - secondNode.getWidth()) / 2;
 
         this.setStartX(firstNodePoint.getMaxX() - firstNodeOffset);
-        this.setStartY(firstNodePoint.getMaxY() - firstNodePane.getHeight() / 2);
+        this.setStartY(firstNodePoint.getMaxY() - firstNode.getHeight() / 2);
         this.setEndX(secondNodePoint.getMinX() + secondNodeOffset);
-        this.setEndY(secondNodePoint.getMaxY() - secondNodePane.getHeight() / 2);
+        this.setEndY(secondNodePoint.getMaxY() - secondNode.getHeight() / 2);
     }
 
     public Node getFirstNode() {
