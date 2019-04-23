@@ -2,7 +2,9 @@ package com.mycompany.orientdbvisualizationtool.model.places;
 
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -145,6 +147,11 @@ public abstract class Place {
         if (!entities.isEmpty()) {
             return;
         }
-        entities = DatabaseManager.getInstance().getEntityData().queryEntities();
+        DatabaseManager db = DatabaseManager.getInstance();
+        List<Vertex> vertexEntities = db.getEntityData().getSensorsFromLocation(id);
+        for(Vertex v: vertexEntities){
+            Entity newEntity = new Entity((String)v.getProperty("id"));
+            entities.add(newEntity);
+        }
     }
 }

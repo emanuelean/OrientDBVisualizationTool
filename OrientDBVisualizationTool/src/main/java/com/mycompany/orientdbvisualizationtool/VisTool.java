@@ -25,12 +25,8 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
-        testDataForFrontEnd();
-        //db.getPlaceData().refresh("GSV.HQ");
+        db.getPlaceData().refresh("GSV.HQ");
         Application.launch(MainView.class, args);
-
-        //EntityData e = db.getEntityData();
-        //List<Vertex> lv = e.getSensorsFromLocation("Energy Academy Europe");
     }
 
     /**
@@ -79,20 +75,5 @@ public class VisTool {
         manager.addPlace(roomBAB, floorBA);
         manager.addPlace(roomBBA, floorBB);
         manager.addPlace(roomBBB, floorBB);
-    }
-
-    /**
-     * Prints some data of all sensors of a specific location
-     *
-     * @param db The DatabaseManager that handles the graph
-     */
-    private static void printSensors(DatabaseManager db) {
-        System.out.println("Database loaded");
-        List<Vertex> sensors;
-        sensors = db.getEntityData().getSensorsFromLocation("Energy Academy Europe");
-        System.out.println(sensors);
-        for (Vertex v : sensors) {
-            System.out.printf(v.getProperty("id"));
-        }
     }
 }
