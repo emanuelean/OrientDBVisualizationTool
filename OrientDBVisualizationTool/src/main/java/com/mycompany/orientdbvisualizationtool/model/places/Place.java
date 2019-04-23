@@ -113,7 +113,7 @@ public abstract class Place {
     public String getDisplayName() {
         int index = name.lastIndexOf(".");
         if (index == -1) {
-            return name;
+            return type + ": " + name;
         }
         return type + ": " + name.substring(index + 1);
     }
