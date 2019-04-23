@@ -109,3 +109,16 @@
 10/04 - Entity Manager and testData
 10/04 - Entity Manager and testData
 10/04 - Entity Manager and testData
+12/04 - Group/TA meeting
+12/04 - Group/TA meeting
+15/04 - refactored and merged some pull request
+17/04 - testData and refactoring
+17/04 - testData and refactoring
+17/04 - testData and refactoring
+17/04 - testData and refactoring
+18/04 - Group Meeting
+18/04 - Group Meeting
+23/04 - Refactoring
+23/04 - Refactoring
+23/04 - Refactoring
+23/04 - Refactoring
