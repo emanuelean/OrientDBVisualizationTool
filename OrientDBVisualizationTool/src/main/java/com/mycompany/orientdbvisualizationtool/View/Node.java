@@ -21,7 +21,7 @@ public class Node extends StackPane {
     private StringProperty nodeName;
     private StringProperty nodeDisplayName;
     private StringProperty nodeId;
-    private StringProperty NodeType;
+    private StringProperty nodeType;
     private boolean selected;
     private Rectangle rectangle;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
@@ -33,7 +33,7 @@ public class Node extends StackPane {
         this.nodeId = new SimpleStringProperty(id);
         this.nodeName = new SimpleStringProperty(nodeName);
         this.nodeDisplayName = new SimpleStringProperty(displayName);
-        this.NodeType = new SimpleStringProperty(NodeType);
+        this.nodeType = new SimpleStringProperty(NodeType);
         this.childrenVBox = new VBox();
 
         this.label = new Text(displayName);
@@ -154,7 +154,7 @@ public class Node extends StackPane {
     }
 
     public String getNodeType() {
-        return NodeType.get();
+        return nodeType.get();
     }
 
     public Boolean isExpanded() {

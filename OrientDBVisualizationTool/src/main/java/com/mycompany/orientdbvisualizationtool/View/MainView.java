@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  */
 public class MainView extends Application {
 
-    public static final int WIDTH = 1400;
+    private static final int WIDTH = 1400;
 
     /**
      * Scene is created and the fxml file is loaded.
@@ -42,4 +42,7 @@ public class MainView extends Application {
         primaryStage.show();
     }
 
+    public static int getWIDTH() {
+        return WIDTH;
+    }
 }

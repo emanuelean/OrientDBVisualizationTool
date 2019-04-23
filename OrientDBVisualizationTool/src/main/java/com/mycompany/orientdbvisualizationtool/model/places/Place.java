@@ -111,11 +111,23 @@ public abstract class Place {
      * @return the name to display on the graph
      */
     public String getDisplayName() {
-        int index = name.lastIndexOf(".");
+        int index = name.lastIndexOf('.');
         if (index == -1) {
             return type + ": " + name;
         }
         return type + ": " + name.substring(index + 1);
+    }
+    
+    /**
+     *
+     * @return the name to display in the list
+     */
+    public String getShortName() {
+        int index = name.lastIndexOf('.');
+        if (index == -1) {
+            return name;
+        }
+        return name.substring(index + 1);
     }
 
     /**

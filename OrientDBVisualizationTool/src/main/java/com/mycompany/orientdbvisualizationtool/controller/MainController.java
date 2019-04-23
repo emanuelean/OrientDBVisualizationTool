@@ -117,14 +117,14 @@ public class MainController {
      * Center anchor pane controls
      */
     @FXML
-    public AnchorPane Center_Anchor_Pane;
+    private AnchorPane Center_Anchor_Pane;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
     private double mouseSourceX = 0;
     private double mouseSourceY = 0;
     private Rectangle selectionArea;
-    private static final int WIDTH = MainView.WIDTH;
+    private static final int WIDTH = MainView.getWIDTH();
 
     /**
      * Action taken in the anchor pane in the center. Defines how a selection
@@ -256,7 +256,7 @@ public class MainController {
         ArrayList<Place> childrenPlaces = place.getChildren();
         for (Place childPlace : childrenPlaces) {
             String id = childPlace.getId();
-            String name = childPlace.getName();
+            String name = childPlace.getShortName();
             String type = childPlace.getType().toString();
             String displayName = childPlace.getDisplayName();
             Node childNode = new Node(id, name, type, displayName);
