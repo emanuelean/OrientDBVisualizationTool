@@ -74,6 +74,7 @@ public class MainController {
 
         setTableViewCellsProperty();
         setHideActionProperty();
+        zoomFunction();
     }
 
     /**
@@ -116,6 +117,34 @@ public class MainController {
                 }
         );
     }
+
+        /**
+     * Zoom functionality
+     * When scrolling up and down, the pane that contains the tree
+     * is zooming in and out on the current mouse point coordinates.
+     */
+
+    private void zoomFunction() {
+        Center_Anchor_Pane.setOnScroll(event -> {
+            double zoomFactor = 1.05;
+            double deltaY = event.getDeltaY();
+
+            if(deltaY < 0) {
+                zoomFactor = 2.0 - zoomFactor;
+            }
+
+            Scale scale = new Scale();
+            scale.setPivotX(event.getX());
+            scale.setPivotY(event.getY());
+            scale.setX( Center_Anchor_Pane.getScaleX() * zoomFactor );
+            scale.setY( Center_Anchor_Pane.getScaleY() * zoomFactor );
+
+            Center_Anchor_Pane.getTransforms().add(scale);
+
+            event.consume();
+        });
+    }
+
 
     /**
      * Center anchor pane controls
