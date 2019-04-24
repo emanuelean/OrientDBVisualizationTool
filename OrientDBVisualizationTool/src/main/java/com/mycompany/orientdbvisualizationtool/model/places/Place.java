@@ -174,4 +174,19 @@ public abstract class Place {
     public void addEntity(Entity newEntity){
         entities.add(newEntity);
     }
+
+    /**
+     * gets the full path of place from root.
+     * @return
+     */
+    public String getPath() {
+        Place place = this;
+        StringBuilder path = new StringBuilder();
+        path.insert(0, place.getDisplayName() + "/");
+        while (place.getParent() != null) {
+            place = place.getParent();
+            path.insert(0, place.getDisplayName() + "/");
+        }
+        return path.toString();
+    }
 }

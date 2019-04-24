@@ -3,6 +3,7 @@ package com.mycompany.orientdbvisualizationtool.View;
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -29,7 +30,7 @@ public class Node extends StackPane {
     private Boolean expanded;
     private VBox childrenVBox;
 
-    public Node(String id, String nodeName, String NodeType, String displayName){
+    public Node(String id, String nodeName, String NodeType, String displayName) {
         this.nodeId = new SimpleStringProperty(id);
         this.nodeName = new SimpleStringProperty(nodeName);
         this.nodeDisplayName = new SimpleStringProperty(displayName);
@@ -50,6 +51,7 @@ public class Node extends StackPane {
         this.rectangle.setStroke(Color.DARKGREY);
         this.getChildren().addAll(rectangle, this.getLabel());
         this.expanded = false;
+        Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
         this.setMouseListenerProperties();
     }
 
@@ -78,7 +80,29 @@ public class Node extends StackPane {
                     }
                 }
         );
+
+
+        this.setOnMouseEntered(event -> {
+                    if (!selected) {
+                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
+                    } else {
+                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 1 / 0.8, 1));
+                    }
+                }
+        );
+
+
+        this.setOnMouseExited(event -> {
+                    if (selected) {
+                        rectangle.setFill(Color.LAVENDER);
+                    } else {
+                        rectangle.setFill(DEFAULT_COLOR);
+                    }
+                }
+        );
+
     }
+
 
     /**
      * gets label

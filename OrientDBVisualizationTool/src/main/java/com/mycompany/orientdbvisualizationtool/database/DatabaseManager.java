@@ -4,6 +4,7 @@ package com.mycompany.orientdbvisualizationtool.database;
 
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
+
 /**
  * @author Niels
  */
@@ -17,13 +18,11 @@ public class DatabaseManager {
     private PlaceData placeData;
     private EntityData entityData;
 
-
     /**
      * Makes sure only one instance of this class can exist
      *
      * @return the current class
      */
-
 
     public static DatabaseManager getInstance() {
         if (singletonInstance == null) {
@@ -36,8 +35,6 @@ public class DatabaseManager {
     /**
      * constructor
      */
-
-
     private DatabaseManager() {
         this("plocal:localhost/Demo", "Foo", "bar");
     }
@@ -52,8 +49,6 @@ public class DatabaseManager {
      * @param password The password of the user you want to log in as(for the
      *                 database)
      */
-
-
     private DatabaseManager(String host, String user, String password) {
         if (user.equals("") || password.equals("")) {
             graph = new OrientGraph(host);
@@ -70,41 +65,30 @@ public class DatabaseManager {
      * closes the database connection
      */
 
-
     public void shutdown() {
         graph.shutdown();
     }
-
 
     /**
      * @return The organization data
      */
 
-
     public OrganizationData getOrganizationData() {
         return organizationData;
     }
-
 
     /**
      * @return The place data
      */
 
-
     public PlaceData getPlaceData() {
         return placeData;
     }
 
-
     /**
      * @return The entity data
      */
-
-
     public EntityData getEntityData() {
         return entityData;
     }
 }
-
-
-

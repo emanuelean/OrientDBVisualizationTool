@@ -15,12 +15,14 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+
 /**
  * @author Niels & Carlos
  */
 public class EntityData extends Database {
 
     private static List<Vertex> sensorInitialization;
+
     /**
      * Initializes the sensor comparer list
      *
@@ -77,12 +79,13 @@ public class EntityData extends Database {
         return sensorInitialization;
     }
 
-    /**
-     * Returns all the sensors from a location
-     *
-     * @param name the name of the location
-     * @return a list with all the sensors
-     */
+/**
+ * Returns all the sensors from a location
+ *
+ * @param name the name of the location
+ * @return a list with all the sensors
+ *//
+
     public List<Vertex> getSensorsFromLocation(String name) {
         for (Vertex v : graph.getVerticesOfClass("v_location", false)) {
             if (v.getProperty("name").equals(name)) {
@@ -107,7 +110,6 @@ public class EntityData extends Database {
      * @param v The vertex we want to know if it is a sensor or not
      * @return True if it is, false if it isn't
      */
-
     private boolean isSensor(Vertex v) {
         Iterable<Edge> connections = v.getEdges(Direction.OUT, "instance-of");
         for (Edge e : connections) {

@@ -45,6 +45,10 @@ public class MainController {
     public Button Hide_Button;
     @FXML
     public Button Show_All_Button;
+    @FXML
+    public Label Left_Status_Label;
+    @FXML
+    public Label Right_Status_Label;
 
     private PlaceManager placeManager;
 
@@ -246,11 +250,17 @@ public class MainController {
      * @param node has properties to be shown.
      */
     public void showSelectedNodeDetails(Node node) {
-        Node_Name_Text_Field.setText(node.getDisplayName());
-        Node_ID_Text_Field.setText(node.getNodeId());
-        Node_Type_Text_Field.setText(node.getNodeType());
-        tableViewObserveData.clear();
+        Place nodePlace = placeManager.getPlace(node.getNodeId());
+        Node_Name_Text_Field.setText(nodePlace.getDisplayName());
+        Node_ID_Text_Field.setText(nodePlace.getId());
+        Node_Type_Text_Field.setText(nodePlace.getType().toString());
 
+        Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
+        Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
+        Left_Status_Label.setText("/" + nodePlace.getPath());
+        Right_Status_Label.setText("Children | " + nodePlace.getChildren().size() + "   ");
+
+        tableViewObserveData.clear();
         PlaceManager placeManager = PlaceManager.getInstance();
         Place place = placeManager.getPlace(node.getNodeId());
         ArrayList<Place> childrenPlaces = place.getChildren();
