@@ -1,3 +1,11 @@
 .button {
     -fx-font-weight: bold;
 }
+
+#Center_Anchor_Pane{
+    -fx-background-color: #eeeeee,
+    linear-gradient(from 0px 0px to 20px 0px, repeat, rgba(114, 114, 114, 0.3) 0%, transparent 5%, transparent 95%, rgba(114, 114, 114, 0.3) 100% ),
+    linear-gradient(from 0px 0px to 0px 20px, repeat, rgba(65, 65, 65, 0.3) 0%, transparent 5%, transparent 95%, rgba(114, 114, 114, 0.3) 100% ),
+    linear-gradient(from 0px 0px to 100px 0px, repeat, #707070 0%, transparent 1%, transparent 99%, #707070 100% ),
+    linear-gradient(from 0px 0px to 0px 100px, repeat, #707070 0%, transparent 1%, transparent 99%, #707070 100% );
+}

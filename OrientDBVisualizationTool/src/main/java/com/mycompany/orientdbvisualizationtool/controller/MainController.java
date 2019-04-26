@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.controller;
 
 import com.mycompany.orientdbvisualizationtool.View.*;
+import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
@@ -19,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -34,11 +36,7 @@ public class MainController {
     @FXML
     public TreeView Left_Tree_View;
     @FXML
-    public TableColumn Table_View_Name;
-    @FXML
-    public TableColumn Table_View_ID;
-    @FXML
-    public TableColumn Table_View_Type;
+    public TableColumn Table_View_Entity_ID;
     @FXML
     public TableView Table_View;
     @FXML
@@ -49,6 +47,8 @@ public class MainController {
     public Label Left_Status_Label;
     @FXML
     public Label Right_Status_Label;
+    @FXML
+    public CheckBox Dark_Mode_Check_Box;
 
     private PlaceManager placeManager;
 
@@ -71,21 +71,32 @@ public class MainController {
 
         Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
+        Center_Anchor_Pane.setId("Center_Anchor_Pane");
 
         setTableViewCellsProperty();
         setHideActionProperty();
+        setDarkModeCheckBoxProperty();
         zoomFunction();
+    }
+
+    private void setDarkModeCheckBoxProperty() {
+        Dark_Mode_Check_Box.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                Center_Anchor_Pane.getScene().getStylesheets().add("styles/DarkModeStyle.css");
+            } else {
+                Center_Anchor_Pane.getScene().getStylesheets().remove("styles/DarkModeStyle.css");
+            }
+        });
     }
 
     /**
      * Table view listens to changes with respect to the properties that a Node has.
-     * The table view uses the nodeName, nodeId and nodeType fields of Node class.
+     * The table view uses the id from Entity class.
      */
     private void setTableViewCellsProperty() {
+        Table_View_Entity_ID.setPrefWidth(240);
         //TODO:: IS THIS STRING USAGE SAFE?
-        Table_View_Name.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeName"));
-        Table_View_ID.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeId"));
-        Table_View_Type.setCellValueFactory(new PropertyValueFactory<Node, String>("nodeType"));
+        Table_View_Entity_ID.setCellValueFactory(new PropertyValueFactory<Entity, String>("id"));
         Table_View.setItems(tableViewObserveData);
     }
 
@@ -118,7 +129,7 @@ public class MainController {
         );
     }
 
-        /**
+    /**
      * Zoom functionality
      * When scrolling up and down, the pane that contains the tree
      * is zooming in and out on the current mouse point coordinates.
@@ -126,22 +137,24 @@ public class MainController {
 
     private void zoomFunction() {
         Center_Anchor_Pane.setOnScroll(event -> {
-            double zoomFactor = 1.05;
-            double deltaY = event.getDeltaY();
+            if (event.isControlDown()) {
+                double zoomFactor = 1.05;
+                double deltaY = event.getDeltaY();
 
-            if(deltaY < 0) {
-                zoomFactor = 2.0 - zoomFactor;
+                if (deltaY < 0) {
+                    zoomFactor = 2.0 - zoomFactor;
+                }
+
+                Scale scale = new Scale();
+                scale.setPivotX(event.getX());
+                scale.setPivotY(event.getY());
+                scale.setX(Center_Anchor_Pane.getScaleX() * zoomFactor);
+                scale.setY(Center_Anchor_Pane.getScaleY() * zoomFactor);
+
+                Center_Anchor_Pane.getTransforms().add(scale);
+
+                event.consume();
             }
-
-            Scale scale = new Scale();
-            scale.setPivotX(event.getX());
-            scale.setPivotY(event.getY());
-            scale.setX( Center_Anchor_Pane.getScaleX() * zoomFactor );
-            scale.setY( Center_Anchor_Pane.getScaleY() * zoomFactor );
-
-            Center_Anchor_Pane.getTransforms().add(scale);
-
-            event.consume();
         });
     }
 
@@ -271,7 +284,7 @@ public class MainController {
 
     }
 
-    private final ObservableList<Node> tableViewObserveData = FXCollections.observableArrayList();
+    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
 
     /**
      * Sets the fields of a node/place object to be shown on right panel.
@@ -292,15 +305,8 @@ public class MainController {
         tableViewObserveData.clear();
         PlaceManager placeManager = PlaceManager.getInstance();
         Place place = placeManager.getPlace(node.getNodeId());
-        ArrayList<Place> childrenPlaces = place.getChildren();
-        for (Place childPlace : childrenPlaces) {
-            String id = childPlace.getId();
-            String name = childPlace.getShortName();
-            String type = childPlace.getType().toString();
-            String displayName = childPlace.getDisplayName();
-            Node childNode = new Node(id, name, type, displayName);
-            tableViewObserveData.add(childNode);
-        }
+        ArrayList<Entity> placeEntities = place.getEntities();
+        tableViewObserveData.addAll(placeEntities);
     }
 
     /**
@@ -341,12 +347,12 @@ public class MainController {
                 Center_Anchor_Pane.getChildren().add(vbox);
 
                 double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
-                //TODO:: make constant?
-                double offsetFromSource = 100;
+                double horizontalOffsetFromSource = 100;
 
                 double yShift = sourceNodeY - vBoxHeight / 2;
-                vbox.setLayoutX(sourceNodeX + offsetFromSource);
+                vbox.setLayoutX(sourceNodeX + horizontalOffsetFromSource);
                 vbox.setLayoutY(yShift);
+                addAnchorPaneOffset(sourceNodeX, horizontalOffsetFromSource, yShift, vBoxHeight);
                 if (yShift < 0) {
                     repositionGraph(yShift);
                 }
@@ -368,16 +374,33 @@ public class MainController {
     }
 
     /**
+     * Inserts a rectangle node in Anchor pane/Scroll pane to add spacing
+     * between edge of a node that is near the boundary of Anchor pane/Scroll pane
+     * @param sourceNodeX x coordinate of source node
+     * @param offsetFromSource Horizontal offset from source node
+     * @param yShift Vertical offset from source node
+     * @param vBoxHeight the height of the container that holds children rectangle nodes
+     */
+    private void addAnchorPaneOffset(double sourceNodeX, double offsetFromSource, double yShift, double vBoxHeight) {
+        Rectangle temp = new Rectangle();
+        temp.setLayoutX(sourceNodeX + offsetFromSource + 200);
+        temp.setLayoutY(yShift + vBoxHeight + 100);
+        Center_Anchor_Pane.getChildren().add(temp);
+    }
+
+    /**
      * recursively removes the children in the subtree of given node
      * Used  when the user contracts a node
+     *
      * @param node the node to be contracted
      */
     private void removeNodeAndChildren(Node node) {
-        if(node.getChildrenVBox().getChildren().isEmpty()) {
+        if (node.getChildrenVBox().getChildren().isEmpty()) {
             node.setExpanded(false);
             return;
         }
-        for(javafx.scene.Node child : node.getChildrenVBox().getChildren()) {
+
+        for (javafx.scene.Node child : node.getChildrenVBox().getChildren()) {
             removeNodeAndChildren((Node) child);
             node.setExpanded(false);
             for (Edge edge : edges) {

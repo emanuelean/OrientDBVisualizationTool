@@ -1,5 +1,3 @@
-/* TODO :: UNCOMMENT CLASS */
-
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.Entity;
@@ -19,11 +17,12 @@ import com.google.common.collect.Sets;
 /**
  * @author Niels & Carlos
  */
+
 public class EntityData extends Database {
 
     private static List<Vertex> sensorInitialization;
 
-    /**
+/**
      * Initializes the sensor comparer list
      *
      * @param graph The graph we want to load the data from
@@ -32,8 +31,7 @@ public class EntityData extends Database {
         super(graph);
         initSensors();
     }
-
-    /**
+/**
      * initialises a list of sensors
      */
     private void initSensors() {
@@ -72,7 +70,7 @@ public class EntityData extends Database {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    /**
+/**
      * @return A list of sensor entities
      */
     public static List<Vertex> getSensorEntities() {
@@ -84,8 +82,7 @@ public class EntityData extends Database {
  *
  * @param name the name of the location
  * @return a list with all the sensors
- *//
-
+ */
     public List<Vertex> getSensorsFromLocation(String name) {
         for (Vertex v : graph.getVerticesOfClass("v_location", false)) {
             if (v.getProperty("name").equals(name)) {
@@ -104,7 +101,8 @@ public class EntityData extends Database {
         return null;
     }
 
-    /**
+
+/**
      * Auxiliary function to check if a vertex is a sensor
      *
      * @param v The vertex we want to know if it is a sensor or not
@@ -120,7 +118,8 @@ public class EntityData extends Database {
         return false;
     }
 
-    /**
+
+/**
      * Generates a list of entities with randomized ids for testdata This is
      * only temporary, this will later be changed to query actual entities from
      * the database

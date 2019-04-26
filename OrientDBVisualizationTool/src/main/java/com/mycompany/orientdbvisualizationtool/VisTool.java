@@ -3,7 +3,6 @@ package com.mycompany.orientdbvisualizationtool;
 import com.mycompany.orientdbvisualizationtool.View.MainView;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
-/* TODO :: UNCOMMENT IMPORT*/
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;

@@ -19,10 +19,10 @@ import javafx.scene.text.Text;
 public class Node extends StackPane {
 
     private Text label;
-    private StringProperty nodeName;
-    private StringProperty nodeDisplayName;
-    private StringProperty nodeId;
-    private StringProperty nodeType;
+    private String nodeName;
+    private String nodeDisplayName;
+    private String nodeId;
+    private String nodeType;
     private boolean selected;
     private Rectangle rectangle;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
@@ -31,10 +31,10 @@ public class Node extends StackPane {
     private VBox childrenVBox;
 
     public Node(String id, String nodeName, String NodeType, String displayName) {
-        this.nodeId = new SimpleStringProperty(id);
-        this.nodeName = new SimpleStringProperty(nodeName);
-        this.nodeDisplayName = new SimpleStringProperty(displayName);
-        this.nodeType = new SimpleStringProperty(NodeType);
+        this.nodeId = id;
+        this.nodeName = nodeName;
+        this.nodeDisplayName = displayName;
+        this.nodeType = NodeType;
         this.childrenVBox = new VBox();
 
         this.label = new Text(displayName);
@@ -80,8 +80,6 @@ public class Node extends StackPane {
                     }
                 }
         );
-
-
         this.setOnMouseEntered(event -> {
                     if (!selected) {
                         rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
@@ -90,8 +88,6 @@ public class Node extends StackPane {
                     }
                 }
         );
-
-
         this.setOnMouseExited(event -> {
                     if (selected) {
                         rectangle.setFill(Color.LAVENDER);
@@ -102,7 +98,6 @@ public class Node extends StackPane {
         );
 
     }
-
 
     /**
      * gets label
@@ -152,10 +147,6 @@ public class Node extends StackPane {
         return rectangle;
     }
 
-    public String getNodeId() {
-        return nodeId.get();
-    }
-
     /**
      * Assigns the controller instance to node in view
      *
@@ -163,26 +154,6 @@ public class Node extends StackPane {
      */
     public void setController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    public String getNodeName() {
-        return nodeName.get();
-    }
-
-    public String getDisplayName() {
-        return nodeDisplayName.get();
-    }
-
-    public StringProperty displayNameProperty() {
-        return nodeDisplayName;
-    }
-
-    public String getNodeType() {
-        return nodeType.get();
-    }
-
-    public Boolean isExpanded() {
-        return expanded;
     }
 
     public void setExpanded(Boolean expanded) {
@@ -193,7 +164,30 @@ public class Node extends StackPane {
         this.childrenVBox = vbox;
     }
 
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public String getDisplayName() {
+        return nodeDisplayName;
+    }
+
+    public String getNodeType() {
+        return nodeType;
+    }
     public VBox getChildrenVBox() {
         return childrenVBox;
     }
+
+    public Boolean isExpanded() {
+        return expanded;
+    }
+
+
+
+
 }

@@ -16,10 +16,11 @@ public class Edge extends Line {
     private AnchorPane anchorPane;
 
     public Edge(Node firstNode, Node secondNode, AnchorPane anchorPane) {
-        this.setStroke(Color.BLACK);
+        this.setStroke(Color.DIMGRAY);
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.anchorPane = anchorPane;
+        this.setId("Edge");
         this.setStartEndPoints();
     }
 

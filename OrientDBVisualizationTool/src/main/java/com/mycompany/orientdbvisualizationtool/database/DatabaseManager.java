@@ -1,5 +1,3 @@
-/* TODO :: UNCOMMENT CLASS */
-
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
@@ -8,7 +6,6 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 /**
  * @author Niels
  */
-
 public class DatabaseManager {
 
     private static DatabaseManager singletonInstance;
@@ -23,14 +20,12 @@ public class DatabaseManager {
      *
      * @return the current class
      */
-
     public static DatabaseManager getInstance() {
         if (singletonInstance == null) {
             singletonInstance = new DatabaseManager();
         }
         return singletonInstance;
     }
-
 
     /**
      * constructor
@@ -60,11 +55,9 @@ public class DatabaseManager {
         entityData = new EntityData(graph);
     }
 
-
     /**
      * closes the database connection
      */
-
     public void shutdown() {
         graph.shutdown();
     }
@@ -72,7 +65,6 @@ public class DatabaseManager {
     /**
      * @return The organization data
      */
-
     public OrganizationData getOrganizationData() {
         return organizationData;
     }
@@ -80,7 +72,6 @@ public class DatabaseManager {
     /**
      * @return The place data
      */
-
     public PlaceData getPlaceData() {
         return placeData;
     }

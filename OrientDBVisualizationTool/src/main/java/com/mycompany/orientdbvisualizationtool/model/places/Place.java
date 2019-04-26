@@ -1,6 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.model.places;
 
-// TODO :: UNCOMMENT IMPORT
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import javafx.beans.property.SimpleStringProperty;
@@ -163,7 +162,6 @@ public abstract class Place {
         if (!entities.isEmpty()) {
             return;
         }
-        //TODO :: UNCOMMENT THIS
         entities = DatabaseManager.getInstance().getEntityData().queryEntities();
     }
     

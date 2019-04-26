@@ -36,8 +36,8 @@ public class MainView extends Application {
         controller.populateTreeView();
         primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
+        scene.getStylesheets().add("styles/Styles.css");
         primaryStage.setScene(scene);
-        //TODO:: UNCOMMENT
         //primaryStage.setMaximized(true);
         primaryStage.show();
     }

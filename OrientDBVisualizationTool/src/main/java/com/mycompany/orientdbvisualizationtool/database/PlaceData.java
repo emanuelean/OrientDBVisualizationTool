@@ -1,5 +1,3 @@
-/*TODO :: UNCOMMENT CLASS */
-
 package com.mycompany.orientdbvisualizationtool.database;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
