@@ -77,3 +77,33 @@
 31/03 - Arch. document front-end diagram
 31/03 - Arch. document front-end section
 31/03 - Arch. document front-end section
+01/04 - presentation preparation
+01/04 - presentation preparation
+01/04 - presentation preparation
+01/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation
+03/04 - presentation
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+12/04 - Group meeting
+12/04 - Group meeting
+13/04 - Tweaking FXML layout
+13/04 - Tweaking FXML layout
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing

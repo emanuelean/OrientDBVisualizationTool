@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -34,6 +31,8 @@ public class MainController {
     public TreeView Left_Tree_View;
     @FXML
     public CheckBox Hide_Check_Box;
+    @FXML
+    public ScrollPane Center_Scroll_Pane;
 
     private PlaceManager placeManager;
 
@@ -53,6 +52,8 @@ public class MainController {
         selectionArea.setFill(Color.rgb(0, 70, 255, 0.1));
         selectionArea.setStroke(Color.LIGHTBLUE);
         Center_Anchor_Pane.getChildren().add(selectionArea);
+
+        //TODO:: FIX EXPANSION
         Center_Anchor_Pane.setPrefWidth(WIDTH * .60 + 300);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
 
@@ -207,6 +208,7 @@ public class MainController {
         rootVBox.setTranslateX(100);
         rootVBox.setTranslateY(WIDTH / 4);
         Center_Anchor_Pane.getChildren().add(rootVBox);
+
     }
 
     /**
@@ -226,46 +228,53 @@ public class MainController {
      * @param node source node for expansion
      */
     public void expandNode(Node node) {
-        Bounds nodeBounds = Center_Anchor_Pane.sceneToLocal(node.localToScene(node.getBoundsInLocal()));
-        StackPane nodeWithLabel = node.getRectangleAndLabel();
-        Bounds parentBounds = node.getParent().getBoundsInLocal();
+        if (!node.isExpanded()) {
+            Bounds nodeBounds = Center_Anchor_Pane.sceneToLocal(node.localToScene(node.getBoundsInLocal()));
+            StackPane nodeWithLabel = node.getRectangleAndLabel();
+            Bounds parentBounds = node.getParent().getBoundsInLocal();
 
-        double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;;
-        double sourceNodeX = nodeBounds.getMaxX() - horizontalOffset;
-        double sourceNodeY = nodeBounds.getMaxY() - nodeWithLabel.getHeight() / 2;
+            double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;
+            double sourceNodeX = nodeBounds.getMaxX() - horizontalOffset;
+            double sourceNodeY = nodeBounds.getMaxY() - nodeWithLabel.getHeight() / 2;
 
-        Place sourcePlace = placeManager.getPlace(node.getNodeId());
-        ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
-        int totalPlaces = childrenPlaces.size();
+            Place sourcePlace = placeManager.getPlace(node.getNodeId());
+            ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
+            int totalPlaces = childrenPlaces.size();
 
-        if (!childrenPlaces.isEmpty()) {
-            int vBoxSpacing = 14;
-            VBox vbox = new VBox(vBoxSpacing);
+            if (!childrenPlaces.isEmpty()) {
+                int vBoxSpacing = 14;
+                VBox vbox = new VBox(vBoxSpacing);
+//                vbox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
-            for (Place place : childrenPlaces) {
-                Node childNode = new Node(place.getId(), place.getName(), place.getClass().getSimpleName());
-                childNode.setController(this);
-                childNode.addToVBox(vbox);
-                nodes.add(childNode);
-            }
+                for (Place place : childrenPlaces) {
+                    Node childNode = new Node(place.getId(), place.getName(), place.getClass().getSimpleName());
+                    childNode.setController(this);
+                    childNode.addToVBox(vbox);
+                    nodes.add(childNode);
+                }
 
-            Center_Anchor_Pane.getChildren().add(vbox);
+                Center_Anchor_Pane.getChildren().add(vbox);
 
-            double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
-            //maybe make constant?
-            double offsetFromSource = 100;// + vbox.getBoundsInLocal().getWidth()) / 2;
+                double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
+                //TODO:: make constant?
+                double offsetFromSource = 100;  // + vbox.getBoundsInLocal().getWidth()) / 2;
 
-            vbox.setTranslateX(sourceNodeX + offsetFromSource);
-            vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
 
-            for (int i = nodes.size() - 1; i > nodes.size() - 1 - totalPlaces; i--) {
-                Node childNode = nodes.get(i);
-                Edge edge = new Edge(node, childNode, Center_Anchor_Pane);
-                edges.add(edge);
-                Center_Anchor_Pane.getChildren().add(edge);
+                vbox.setTranslateX(sourceNodeX + offsetFromSource);
+                vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
+
+                //create and connect edges from node to node's children
+                for (int i = nodes.size() - 1; i > nodes.size() - 1 - totalPlaces; i--) {
+                    Node childNode = nodes.get(i);
+                    Edge edge = new Edge(node, childNode, Center_Anchor_Pane);
+                    edges.add(edge);
+                    Center_Anchor_Pane.getChildren().add(edge);
+                }
+                node.setExpanded(true);
             }
         }
     }
+
 
     /**
      * recursively populates tree view items with data from model.
