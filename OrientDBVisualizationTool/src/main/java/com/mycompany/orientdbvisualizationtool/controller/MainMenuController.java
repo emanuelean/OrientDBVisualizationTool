@@ -1,6 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.controller;
 
-import static com.mycompany.orientdbvisualizationtool.View.MainFrame.WIDTH;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import java.net.URL;
 import java.util.ArrayList;

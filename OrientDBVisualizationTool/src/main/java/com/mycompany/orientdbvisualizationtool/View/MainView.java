@@ -1,9 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
-import com.mycompany.orientdbvisualizationtool.VisTool;
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
-//import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-//import com.mycompany.orientdbvisualizationtool.model.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +35,6 @@ public class MainView extends Application {
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
         scene.getStylesheets().add("styles/Styles.css");
         primaryStage.setScene(scene);
-        //primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

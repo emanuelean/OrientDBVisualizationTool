@@ -79,6 +79,9 @@ public class MainController {
         zoomFunction();
     }
 
+    /**
+     * Setting the check box action property to enable/disable Dark Mode theme
+     */
     private void setDarkModeCheckBoxProperty() {
         Dark_Mode_Check_Box.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
@@ -95,7 +98,6 @@ public class MainController {
      */
     private void setTableViewCellsProperty() {
         Table_View_Entity_ID.setPrefWidth(240);
-        //TODO:: IS THIS STRING USAGE SAFE?
         Table_View_Entity_ID.setCellValueFactory(new PropertyValueFactory<Entity, String>("id"));
         Table_View.setItems(tableViewObserveData);
     }
@@ -279,7 +281,7 @@ public class MainController {
         nodes.add(rootNode);
 
         rootVBox.setLayoutX(100);
-        rootVBox.setLayoutY(WIDTH / 4);
+        rootVBox.setLayoutY(WIDTH * 9 / (16 * 2));
         Center_Anchor_Pane.getChildren().add(rootVBox);
 
     }
@@ -376,10 +378,11 @@ public class MainController {
     /**
      * Inserts a rectangle node in Anchor pane/Scroll pane to add spacing
      * between edge of a node that is near the boundary of Anchor pane/Scroll pane
-     * @param sourceNodeX x coordinate of source node
+     *
+     * @param sourceNodeX      x coordinate of source node
      * @param offsetFromSource Horizontal offset from source node
-     * @param yShift Vertical offset from source node
-     * @param vBoxHeight the height of the container that holds children rectangle nodes
+     * @param yShift           Vertical offset from source node
+     * @param vBoxHeight       the height of the container that holds children rectangle nodes
      */
     private void addAnchorPaneOffset(double sourceNodeX, double offsetFromSource, double yShift, double vBoxHeight) {
         Rectangle temp = new Rectangle();
@@ -490,7 +493,7 @@ public class MainController {
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
 
         /*
-        TODO:: USE FOR SELECTING SEARCHED NODE
+        TODO:: TO BE USED IN UPCOMING ITERATIONS
         int row = Left_Tree_View.getRow(rootItem);
         Left_Tree_View.getSelectionModel().select(3);
         Left_Tree_View.get

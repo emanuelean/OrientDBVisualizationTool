@@ -20,6 +20,7 @@ public class Edge extends Line {
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.anchorPane = anchorPane;
+        //id for css
         this.setId("Edge");
         this.setStartEndPoints();
     }

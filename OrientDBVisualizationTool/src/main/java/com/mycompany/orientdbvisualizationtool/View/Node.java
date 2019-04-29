@@ -41,6 +41,14 @@ public class Node extends StackPane {
         this.label.setFont(new Font(13));
         this.selected = false;
 
+        this.setRectangleProperty();
+        this.getChildren().addAll(rectangle, this.getLabel());
+        this.expanded = false;
+        Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
+        this.setMouseListenerProperties();
+    }
+
+    private void setRectangleProperty() {
         //rounded rectangle
         this.rectangle = new Rectangle();
         this.rectangle.setWidth(label.getLayoutBounds().getWidth() + 30);
@@ -49,10 +57,6 @@ public class Node extends StackPane {
         this.rectangle.setArcHeight(40);
         this.rectangle.setFill(DEFAULT_COLOR);
         this.rectangle.setStroke(Color.DARKGREY);
-        this.getChildren().addAll(rectangle, this.getLabel());
-        this.expanded = false;
-        Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
-        this.setMouseListenerProperties();
     }
 
     public Node(String id, String nodeName, String NodeType) {
@@ -61,6 +65,9 @@ public class Node extends StackPane {
 
     /**
      * Sets properties for mouse events.
+     * Mouse pressed -> selection
+     * 2x Mouse click -> expansion of node
+     * Mouse entered/exited -> highlight node
      */
     private void setMouseListenerProperties() {
         this.setOnMousePressed(event -> {
@@ -186,8 +193,5 @@ public class Node extends StackPane {
     public Boolean isExpanded() {
         return expanded;
     }
-
-
-
 
 }

@@ -96,7 +96,6 @@ public class VisTool {
             currentPlace.addEntity(newEntity);
         }
     }
-    /*TODO :: UNCOMMENT FUNCTION*/
     /**
      * Prints some data of all sensors of a specific location
      *
