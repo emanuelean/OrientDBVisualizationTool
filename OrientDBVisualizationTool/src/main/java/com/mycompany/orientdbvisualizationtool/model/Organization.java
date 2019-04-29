@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains all the data about an organization
- * Has a list of places that are connected to the organization
- * 
+ * Contains all the data about an organization Has a list of places that are
+ * connected to the organization
+ *
  * @author Niels
  */
 public class Organization {
