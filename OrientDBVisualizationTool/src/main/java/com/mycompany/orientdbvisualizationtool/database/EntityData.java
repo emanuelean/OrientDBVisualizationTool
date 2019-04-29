@@ -4,10 +4,13 @@ import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import com.google.common.collect.Sets;
+
 
 /**
  * Responsible for retrieving specific information about entities from the
@@ -15,11 +18,12 @@ import com.google.common.collect.Sets;
  * 
  * @author Niels & Carlos
  */
+
 public class EntityData extends Database {
 
     private static List<Vertex> sensorInitialization;
 
-    /**
+/**
      * Initializes the sensor comparer list
      *
      * @param graph The graph we want to load the data from
@@ -28,8 +32,7 @@ public class EntityData extends Database {
         super(graph);
         initSensors();
     }
-    
-    /**
+/**
      * initialises a list of sensors
      */
     private void initSensors() {
@@ -77,15 +80,14 @@ public class EntityData extends Database {
     public void refresh(String id) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
-    
-    
-    /**
-     * 
+
+/**
      * @return A list of sensor entities
      */
     public static List<Vertex> getSensorEntities() {
         return sensorInitialization;
     }
+
 
     /**
      * Returns all the sensors from a location
@@ -114,7 +116,8 @@ public class EntityData extends Database {
         return sensors;
     }
 
-    /**
+
+/**
      * Auxiliary function to check if a vertex is a sensor
      *
      * @param v The vertex we want to know if it is a sensor or not
@@ -129,5 +132,3 @@ public class EntityData extends Database {
         }
         return false;
     }
-
-}

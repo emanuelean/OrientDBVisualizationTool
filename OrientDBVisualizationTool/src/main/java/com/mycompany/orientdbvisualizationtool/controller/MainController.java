@@ -1,20 +1,26 @@
 package com.mycompany.orientdbvisualizationtool.controller;
 
-import com.mycompany.orientdbvisualizationtool.View.Edge;
-import com.mycompany.orientdbvisualizationtool.View.MainView;
-import com.mycompany.orientdbvisualizationtool.View.Node;
+import com.mycompany.orientdbvisualizationtool.View.*;
+import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
+import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -30,9 +36,19 @@ public class MainController {
     @FXML
     public TreeView Left_Tree_View;
     @FXML
-    public CheckBox Hide_Check_Box;
+    public TableColumn Table_View_Entity_ID;
     @FXML
-    public ScrollPane Center_Scroll_Pane;
+    public TableView Table_View;
+    @FXML
+    public Button Hide_Button;
+    @FXML
+    public Button Show_All_Button;
+    @FXML
+    public Label Left_Status_Label;
+    @FXML
+    public Label Right_Status_Label;
+    @FXML
+    public CheckBox Dark_Mode_Check_Box;
 
     private PlaceManager placeManager;
 
@@ -53,55 +69,110 @@ public class MainController {
         selectionArea.setStroke(Color.LIGHTBLUE);
         Center_Anchor_Pane.getChildren().add(selectionArea);
 
-        //TODO:: FIX EXPANSION
-        Center_Anchor_Pane.setPrefWidth(WIDTH * .60 + 300);
+        Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
+        Center_Anchor_Pane.setId("Center_Anchor_Pane");
 
-        setHideCheckBoxActionProperty();
+        setTableViewCellsProperty();
+        setHideActionProperty();
+        setDarkModeCheckBoxProperty();
+        zoomFunction();
     }
 
     /**
-     * The Hide_Check_Box hides/shows nodes and its corresponding edges.
-     * The property of Hide_Check_Box is defined here.
+     * Setting the check box action property to enable/disable Dark Mode theme
      */
-    private void setHideCheckBoxActionProperty() {
-        Hide_Check_Box.setOnAction(event -> {
-                    if (Hide_Check_Box.isSelected()) {
-                        for (Node node : nodes) {
-                            if (node.isSelected()) {
-                                node.getRectangleAndLabel().setVisible(false);
-                                for (Edge edge : edges) {
-                                    if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                        edge.setVisible(false);
-                                    }
+    private void setDarkModeCheckBoxProperty() {
+        Dark_Mode_Check_Box.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
+            if (isSelected) {
+                Center_Anchor_Pane.getScene().getStylesheets().add("styles/DarkModeStyle.css");
+            } else {
+                Center_Anchor_Pane.getScene().getStylesheets().remove("styles/DarkModeStyle.css");
+            }
+        });
+    }
+
+    /**
+     * Table view listens to changes with respect to the properties that a Node has.
+     * The table view uses the id from Entity class.
+     */
+    private void setTableViewCellsProperty() {
+        Table_View_Entity_ID.setPrefWidth(240);
+        Table_View_Entity_ID.setCellValueFactory(new PropertyValueFactory<Entity, String>("id"));
+        Table_View.setItems(tableViewObserveData);
+    }
+
+    /**
+     * The Hide_Button hides nodes on button pressed and its corresponding edges.
+     * The Show_All_Button shows all hidden nodes.
+     */
+    private void setHideActionProperty() {
+        Hide_Button.setOnAction(event -> {
+                    for (Node node : nodes) {
+                        if (node.isSelected()) {
+                            node.setVisible(false);
+                            for (Edge edge : edges) {
+                                if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
+                                    edge.setVisible(false);
                                 }
                             }
                         }
-                    } else {
-                        for (Node node : nodes) {
-                            node.getRectangleAndLabel().setVisible(true);
-                        }
-                        for (Edge edge : edges) {
-                            edge.setVisible(true);
-                        }
+                    }
+                }
+        );
+        Show_All_Button.setOnAction(event -> {
+                    for (Node node : nodes) {
+                        node.setVisible(true);
+                    }
+                    for (Edge edge : edges) {
+                        edge.setVisible(true);
                     }
                 }
         );
     }
 
+    /**
+     * Zoom functionality
+     * When scrolling up and down, the pane that contains the tree
+     * is zooming in and out on the current mouse point coordinates.
+     */
+
+    private void zoomFunction() {
+        Center_Anchor_Pane.setOnScroll(event -> {
+            if (event.isControlDown()) {
+                double zoomFactor = 1.05;
+                double deltaY = event.getDeltaY();
+
+                if (deltaY < 0) {
+                    zoomFactor = 2.0 - zoomFactor;
+                }
+
+                Scale scale = new Scale();
+                scale.setPivotX(event.getX());
+                scale.setPivotY(event.getY());
+                scale.setX(Center_Anchor_Pane.getScaleX() * zoomFactor);
+                scale.setY(Center_Anchor_Pane.getScaleY() * zoomFactor);
+
+                Center_Anchor_Pane.getTransforms().add(scale);
+
+                event.consume();
+            }
+        });
+    }
+
 
     /**
      * Center anchor pane controls
-     **/
+     */
     @FXML
-    public AnchorPane Center_Anchor_Pane;
+    private AnchorPane Center_Anchor_Pane;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
     private double mouseSourceX = 0;
     private double mouseSourceY = 0;
     private Rectangle selectionArea;
-    private static final int WIDTH = MainView.WIDTH;
+    private static final int WIDTH = MainView.getWIDTH();
 
     /**
      * Action taken in the anchor pane in the center. Defines how a selection
@@ -113,25 +184,25 @@ public class MainController {
         //area selection using blue rectangle
         if (mouseEvent.isControlDown()) {
             selectionArea.setVisible(true);
-            selectionArea.setTranslateX(mouseSourceX);
-            selectionArea.setTranslateY(mouseSourceY);
+            selectionArea.setLayoutX(mouseSourceX);
+            selectionArea.setLayoutY(mouseSourceY);
 
             double selectionAreaWidth = mouseEvent.getX() - mouseSourceX;
             double selectionAreaHeight = mouseEvent.getY() - mouseSourceY;
 
             if (selectionAreaHeight < 0 && selectionAreaWidth < 0) {
-                selectionArea.setTranslateX(mouseEvent.getX());
-                selectionArea.setTranslateY(mouseEvent.getY());
+                selectionArea.setLayoutX(mouseEvent.getX());
+                selectionArea.setLayoutY(mouseEvent.getY());
                 selectionArea.setWidth(-selectionAreaWidth);
                 selectionArea.setHeight(-selectionAreaHeight);
             } else if (selectionAreaHeight >= 0 && selectionAreaWidth < 0) {
-                selectionArea.setTranslateX(mouseEvent.getX());
-                selectionArea.setTranslateY(mouseSourceY);
+                selectionArea.setLayoutX(mouseEvent.getX());
+                selectionArea.setLayoutY(mouseSourceY);
                 selectionArea.setWidth(-selectionAreaWidth);
                 selectionArea.setHeight(selectionAreaHeight);
             } else if (selectionAreaHeight < 0 && selectionAreaWidth >= 0) {
-                selectionArea.setTranslateX(mouseSourceX);
-                selectionArea.setTranslateY(mouseEvent.getY());
+                selectionArea.setLayoutX(mouseSourceX);
+                selectionArea.setLayoutY(mouseEvent.getY());
                 selectionArea.setWidth(selectionAreaWidth);
                 selectionArea.setHeight(-selectionAreaHeight);
             } else if (selectionAreaHeight >= 0 && selectionAreaWidth >= 0) {
@@ -143,9 +214,9 @@ public class MainController {
     }
 
     /**
-     * Action taken in the anchor pane in the center.
-     * Used for deselection when clicking and
-     * records start point of a mouse position for function centerPaneDragged();
+     * Action taken in the anchor pane in the center. Used for deselection when
+     * clicking and in addition used for recording the start point of a mouse position for function
+     * centerPaneDragged();
      *
      * @param mouseEvent Mouse event for mouse pressed
      */
@@ -154,7 +225,7 @@ public class MainController {
         mouseSourceY = mouseEvent.getY();
 
         for (Node node : nodes) {
-            if (!node.getRectangleAndLabel().isPressed()) {
+            if (!node.isPressed()) {
                 node.setSelected(false);
             }
         }
@@ -170,9 +241,8 @@ public class MainController {
         if (mouseEvent.isControlDown()) {
             if (!nodes.isEmpty()) {
                 for (Node node : nodes) {
-                    StackPane pane = node.getRectangleAndLabel();
                     Bounds selectionAreaBounds = selectionArea.localToScene(selectionArea.getBoundsInLocal());
-                    Bounds nodeBounds = pane.localToScene(pane.getBoundsInLocal());
+                    Bounds nodeBounds = node.localToScene(node.getBoundsInLocal());
                     if (selectionAreaBounds.intersects(nodeBounds)) {
                         node.setSelected(true);
                     } else {
@@ -201,15 +271,22 @@ public class MainController {
         Place rootPlace = placeManager.getRoot();
         VBox rootVBox = new VBox();
         rootVBox.setSpacing(14);
-        Node rootNode = new Node(rootPlace.getId(), rootPlace.getName(), rootPlace.getClass().getSimpleName());
+        String id = rootPlace.getId();
+        String name = rootPlace.getName();
+        String type = rootPlace.getType().toString();
+        String displayName = rootPlace.getDisplayName();
+        Node rootNode = new Node(id, name, type, displayName);
         rootNode.setController(this);
         rootNode.addToVBox(rootVBox);
         nodes.add(rootNode);
-        rootVBox.setTranslateX(100);
-        rootVBox.setTranslateY(WIDTH / 4);
+
+        rootVBox.setLayoutX(100);
+        rootVBox.setLayoutY(WIDTH * 9 / (16 * 2));
         Center_Anchor_Pane.getChildren().add(rootVBox);
 
     }
+
+    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
 
     /**
      * Sets the fields of a node/place object to be shown on right panel.
@@ -217,9 +294,21 @@ public class MainController {
      * @param node has properties to be shown.
      */
     public void showSelectedNodeDetails(Node node) {
-        Node_Name_Text_Field.setText(node.getNodeName());
-        Node_ID_Text_Field.setText(node.getNodeId());
-        Node_Type_Text_Field.setText(node.getType());
+        Place nodePlace = placeManager.getPlace(node.getNodeId());
+        Node_Name_Text_Field.setText(nodePlace.getDisplayName());
+        Node_ID_Text_Field.setText(nodePlace.getId());
+        Node_Type_Text_Field.setText(nodePlace.getType().toString());
+
+        Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
+        Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
+        Left_Status_Label.setText("/" + nodePlace.getPath());
+        Right_Status_Label.setText("Children | " + nodePlace.getChildren().size() + "   ");
+
+        tableViewObserveData.clear();
+        PlaceManager placeManager = PlaceManager.getInstance();
+        Place place = placeManager.getPlace(node.getNodeId());
+        ArrayList<Entity> placeEntities = place.getEntities();
+        tableViewObserveData.addAll(placeEntities);
     }
 
     /**
@@ -227,15 +316,15 @@ public class MainController {
      *
      * @param node source node for expansion
      */
+
     public void expandNode(Node node) {
         if (!node.isExpanded()) {
-            Bounds nodeBounds = Center_Anchor_Pane.sceneToLocal(node.localToScene(node.getBoundsInLocal()));
-            StackPane nodeWithLabel = node.getRectangleAndLabel();
-            Bounds parentBounds = node.getParent().getBoundsInLocal();
+            Bounds rectangleBounds = Center_Anchor_Pane.sceneToLocal(node.getRectangle().localToScene(node.getBoundsInLocal()));
+            Bounds nodeBounds = node.getBoundsInLocal();
 
-            double horizontalOffset = (parentBounds.getWidth() - nodeWithLabel.getWidth()) / 2;
-            double sourceNodeX = nodeBounds.getMaxX() - horizontalOffset;
-            double sourceNodeY = nodeBounds.getMaxY() - nodeWithLabel.getHeight() / 2;
+            double horizontalOffset = (nodeBounds.getWidth() - node.getWidth()) / 2;
+            double sourceNodeX = rectangleBounds.getMaxX() - horizontalOffset;
+            double sourceNodeY = rectangleBounds.getMaxY() - node.getHeight() / 2;
 
             Place sourcePlace = placeManager.getPlace(node.getNodeId());
             ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
@@ -244,10 +333,14 @@ public class MainController {
             if (!childrenPlaces.isEmpty()) {
                 int vBoxSpacing = 14;
                 VBox vbox = new VBox(vBoxSpacing);
-//                vbox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+                //vbox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
                 for (Place place : childrenPlaces) {
-                    Node childNode = new Node(place.getId(), place.getName(), place.getClass().getSimpleName());
+                    String id = place.getId();
+                    String name = place.getName();
+                    String type = place.getType().toString();
+                    String displayName = place.getDisplayName();
+                    Node childNode = new Node(id, name, type, displayName);
                     childNode.setController(this);
                     childNode.addToVBox(vbox);
                     nodes.add(childNode);
@@ -256,12 +349,15 @@ public class MainController {
                 Center_Anchor_Pane.getChildren().add(vbox);
 
                 double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
-                //TODO:: make constant?
-                double offsetFromSource = 100;  // + vbox.getBoundsInLocal().getWidth()) / 2;
+                double horizontalOffsetFromSource = 100;
 
-
-                vbox.setTranslateX(sourceNodeX + offsetFromSource);
-                vbox.setTranslateY(sourceNodeY - vBoxHeight / 2);
+                double yShift = sourceNodeY - vBoxHeight / 2;
+                vbox.setLayoutX(sourceNodeX + horizontalOffsetFromSource);
+                vbox.setLayoutY(yShift);
+                addAnchorPaneOffset(sourceNodeX, horizontalOffsetFromSource, yShift, vBoxHeight);
+                if (yShift < 0) {
+                    repositionGraph(yShift);
+                }
 
                 //create and connect edges from node to node's children
                 for (int i = nodes.size() - 1; i > nodes.size() - 1 - totalPlaces; i--) {
@@ -270,29 +366,119 @@ public class MainController {
                     edges.add(edge);
                     Center_Anchor_Pane.getChildren().add(edge);
                 }
+                node.setChildrenVBox(vbox);
                 node.setExpanded(true);
+            }
+        } else {
+            //contract node
+            removeNodeAndChildren(node);
+        }
+    }
+
+    /**
+     * Inserts a rectangle node in Anchor pane/Scroll pane to add spacing
+     * between edge of a node that is near the boundary of Anchor pane/Scroll pane
+     *
+     * @param sourceNodeX      x coordinate of source node
+     * @param offsetFromSource Horizontal offset from source node
+     * @param yShift           Vertical offset from source node
+     * @param vBoxHeight       the height of the container that holds children rectangle nodes
+     */
+    private void addAnchorPaneOffset(double sourceNodeX, double offsetFromSource, double yShift, double vBoxHeight) {
+        Rectangle temp = new Rectangle();
+        temp.setLayoutX(sourceNodeX + offsetFromSource + 200);
+        temp.setLayoutY(yShift + vBoxHeight + 100);
+        Center_Anchor_Pane.getChildren().add(temp);
+    }
+
+    /**
+     * recursively removes the children in the subtree of given node
+     * Used  when the user contracts a node
+     *
+     * @param node the node to be contracted
+     */
+    private void removeNodeAndChildren(Node node) {
+        if (node.getChildrenVBox().getChildren().isEmpty()) {
+            node.setExpanded(false);
+            return;
+        }
+
+        for (javafx.scene.Node child : node.getChildrenVBox().getChildren()) {
+            removeNodeAndChildren((Node) child);
+            node.setExpanded(false);
+            for (Edge edge : edges) {
+                if (edge.getSecondNode().equals(child)) {
+                    Center_Anchor_Pane.getChildren().remove(edge);
+                }
+            }
+        }
+        Center_Anchor_Pane.getChildren().remove(node.getChildrenVBox());
+    }
+
+    /**
+     * horizontally repositions graph if the graph goes out of bounds in the y axis
+     *
+     * @param yValue negative vertical value used to reposition graph
+     */
+    private void repositionGraph(double yValue) {
+        for (javafx.scene.Node node : Center_Anchor_Pane.getChildren()) {
+            if (!(node instanceof Label)) {
+                node.setLayoutY(node.getLayoutY() - yValue + 30);
             }
         }
     }
 
-
     /**
-     * recursively populates tree view items with data from model.
-     * An auxiliary function for populateTreeView();
+     * recursively populates tree view items with data from model. An auxiliary
+     * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items are added
+     * @param sourceItem  a source treeView-item to which children treeView-items
+     *                    are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
         if (sourcePlace.getChildren().isEmpty()) {
             return sourceItem;
         }
+
         for (Place place : sourcePlace.getChildren()) {
-            TreeItem childItem = new TreeItem<>(place.getClass().getSimpleName() + ": " + place.getId() + ": " + place.getName());
+            TreeItem childItem = new TreeItem<>(place.getDisplayName());
             sourceItem.getChildren().add(recursePopulateTreeView(place, childItem));
+            childItem.setGraphic(iconize(place.getType()));
         }
         return sourceItem;
+    }
+
+    /**
+     * returns the correct icon for a given place type.
+     *
+     * @param placeType enum for the place type
+     * @return image view icon for given place type
+     */
+    private ImageView iconize(PlaceCategory placeType) {
+        ImageView view = new ImageView();
+        switch (placeType) {
+            case Location:
+                view.setImage(new Image("icons/location-icon.png"));
+                break;
+            case Building:
+                view.setImage(new Image("icons/building-icon.png"));
+                break;
+            case Floor:
+                view.setImage(new Image("icons/floor-icon.png"));
+                break;
+            case Room:
+                view.setImage(new Image("icons/room-icon.png"));
+                break;
+            case Area:
+                view.setImage(new Image("icons/area-icon.png"));
+                break;
+            case Cell:
+                view.setImage(new Image("icons/cell-icon.png"));
+                break;
+        }
+        return view;
     }
 
     /**
@@ -300,9 +486,18 @@ public class MainController {
      */
     public void populateTreeView() {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getClass().getSimpleName() + ":" + rootPlace.getName();
+        String itemName = rootPlace.getType().toString() + ": " + rootPlace.getDisplayName();
         TreeItem rootItem = new TreeItem<>(itemName);
+        rootItem.setExpanded(true);
+        rootItem.setGraphic(new ImageView("icons/location-icon.png"));
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
+
+        /*
+        TODO:: TO BE USED IN UPCOMING ITERATIONS
+        int row = Left_Tree_View.getRow(rootItem);
+        Left_Tree_View.getSelectionModel().select(3);
+        Left_Tree_View.get
+        */
     }
 
     /**

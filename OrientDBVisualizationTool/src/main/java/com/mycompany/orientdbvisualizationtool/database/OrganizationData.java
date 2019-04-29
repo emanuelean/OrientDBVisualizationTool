@@ -1,3 +1,4 @@
+
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.Organization;
@@ -64,5 +65,4 @@ public class OrganizationData extends Database {
             refresh(v);
         }
     }
-
 }
