@@ -4,15 +4,10 @@ import com.mycompany.orientdbvisualizationtool.View.MainView;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-import com.tinkerpop.blueprints.Direction;
-import com.tinkerpop.blueprints.Edge;
-import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-import com.mycompany.orientdbvisualizationtool.database.EntityData;
-import com.tinkerpop.blueprints.Vertex;
-import java.util.List;
 import javafx.application.Application;
 /**
- *
+ * Main class
+ * 
  * @author Niels
  */
 public class VisTool {

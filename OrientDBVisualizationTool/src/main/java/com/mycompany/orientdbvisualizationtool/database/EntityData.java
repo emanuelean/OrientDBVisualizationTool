@@ -1,18 +1,18 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
-import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 import com.google.common.collect.Sets;
 
 /**
- *
+ * Responsible for retrieving specific information about entities from the
+ * database
+ * 
  * @author Niels & Carlos
  */
 public class EntityData extends Database {

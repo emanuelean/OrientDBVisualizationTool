@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.model.places;
 
 /**
+ * Enumerator that can describe what kind of category a place is
  *
  * @author albert
  */
