@@ -8,6 +8,7 @@ import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.database.EntityData;
+import com.mycompany.orientdbvisualizationtool.database.PlaceAttributes;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,8 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 import java.util.Random;
 import javafx.application.Application;
 /**
- *
+ * Main class
+ * 
  * @author Niels
  */
 public class VisTool {
@@ -28,14 +30,14 @@ public class VisTool {
      * @param args Arguments
      */
     public static void main(String[] args) {
-        //DatabaseManager db = DatabaseManager.getInstance();
-        //db.getOrganizationData().refreshAll();
-        testDataForFrontEnd();
-        //db.getPlaceData().refresh("GSV.HQ");
-        Application.launch(MainView.class, args);
-
-        //EntityData e = db.getEntityData();
-        //List<Vertex> lv = e.getSensorsFromLocation("Energy Academy Europe");
+        DatabaseManager db = DatabaseManager.getInstance();
+        db.getOrganizationData().refreshAll();
+        db.getPlaceData().refresh("Demo4");
+        PlaceManager pm = PlaceManager.getInstance();
+        Place p = pm.getPlace("Demo4");
+        PlaceAttributes pa = db.getPlaceData().getAttributes(p);
+        System.out.print(pa.getName());
+        //Application.launch(MainView.class, args);
     }
 
     /**
@@ -94,20 +96,6 @@ public class VisTool {
         for (int i = 0; i < random.nextInt(100); i++) {
             Entity newEntity = new Entity("long_name_for_testdata_sensor_stuff_" + i);
             currentPlace.addEntity(newEntity);
-        }
-    }
-    /**
-     * Prints some data of all sensors of a specific location
-     *
-     * @param db The DatabaseManager that handles the graph
-     */
-    private static void printSensors(DatabaseManager db) {
-        System.out.println("Database loaded");
-        List<Vertex> sensors;
-        sensors = db.getEntityData().getSensorsFromLocation("Energy Academy Europe");
-        System.out.println(sensors);
-        for (Vertex v : sensors) {
-            System.out.printf(v.getProperty("id"));
         }
     }
 }

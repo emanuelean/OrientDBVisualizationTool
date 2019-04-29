@@ -2,8 +2,10 @@ package com.mycompany.orientdbvisualizationtool.database;
 
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
-
 /**
+ * Responsible for setting up the database connection and initializing the
+ * classes that take care of the retrieving the data
+ *
  * @author Niels
  */
 public class DatabaseManager {
@@ -34,15 +36,14 @@ public class DatabaseManager {
         this("plocal:localhost/Demo", "Foo", "bar");
     }
 
-
     /**
      * constructor
      *
-     * @param host     The file path of the database host
-     * @param user     The username of the user you want to log in as(for the
-     *                 database)
+     * @param host The file path of the database host
+     * @param user The username of the user you want to log in as(for the
+     * database)
      * @param password The password of the user you want to log in as(for the
-     *                 database)
+     * database)
      */
     private DatabaseManager(String host, String user, String password) {
         if (user.equals("") || password.equals("")) {
@@ -63,6 +64,7 @@ public class DatabaseManager {
     }
 
     /**
+     *
      * @return The organization data
      */
     public OrganizationData getOrganizationData() {
@@ -70,6 +72,7 @@ public class DatabaseManager {
     }
 
     /**
+     *
      * @return The place data
      */
     public PlaceData getPlaceData() {
@@ -77,6 +80,7 @@ public class DatabaseManager {
     }
 
     /**
+     *
      * @return The entity data
      */
     public EntityData getEntityData() {

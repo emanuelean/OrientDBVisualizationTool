@@ -77,3 +77,73 @@
 31/03 - Arch. document front-end diagram
 31/03 - Arch. document front-end section
 31/03 - Arch. document front-end section
+01/04 - presentation preparation
+01/04 - presentation preparation
+01/04 - presentation preparation
+01/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation
+03/04 - presentation
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+05/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+10/04 - Bug (edge disconnection problem)
+12/04 - Group meeting
+12/04 - Group meeting
+13/04 - Tweaking FXML layout
+13/04 - Tweaking FXML layout
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+14/04 - Research dependency for tree graphing
+16/04 - Scroll pane bug
+16/04 - Scroll pane bug
+18/04 - Group Meeting
+18/04 - Group Meeting
+19/04 - Display children in table view
+19/04 - Display children in table view
+19/04 - Display children in table view
+19/04 - Display children in table view
+19/04 - Display children in table view
+19/04 - Display children in table view
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+20/04 - Scroll pane bug
+21/04 - tree view icons
+21/04 - tree view icons
+21/04 - tree view icons
+21/04 - tree view icons
+21/04 - tree view search
+21/04 - tree view search
+21/04 - tree view search
+21/04 - tree view search
+22/04 - contract expanded node
+22/04 - contract expanded node
+22/04 - contract expanded node
+22/04 - contract expanded node
+22/04 - contract expanded node
+22/04 - contract expanded node
+24/04 - status bar
+24/04 - status bar
+24/04 - node highlight display
+24/04 - node highlight display
+25/04 - group meeting
+25/04 - group meeting
+26/04 - fixing table view
+26/04 - fixing table view
