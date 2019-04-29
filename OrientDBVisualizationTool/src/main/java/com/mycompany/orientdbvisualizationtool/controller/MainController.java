@@ -307,6 +307,7 @@ public class MainController {
         tableViewObserveData.clear();
         PlaceManager placeManager = PlaceManager.getInstance();
         Place place = placeManager.getPlace(node.getNodeId());
+        place.loadEntities();
         ArrayList<Entity> placeEntities = place.getEntities();
         tableViewObserveData.addAll(placeEntities);
     }
