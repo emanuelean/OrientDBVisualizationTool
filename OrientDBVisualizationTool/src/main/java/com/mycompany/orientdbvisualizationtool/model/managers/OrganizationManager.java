@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Singleton that is responsible for keeping track of all the organizations
  *
  * @author Niels
  */

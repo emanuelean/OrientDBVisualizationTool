@@ -7,6 +7,8 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
+ * Responsible for retrieving specific information about places from the
+ * database
  *
  * @author Niels
  */
@@ -62,5 +64,10 @@ public class PlaceData extends Database {
             addPlaceToModel(v, newPlace);
         }
     }
-
+    
+    public PlaceAttributes getAttributes(Place place) {
+    	Vertex v = getVertexById("V_location.id", place.getId());
+    	return new PlaceAttributes(v);
+    }
+   
 }

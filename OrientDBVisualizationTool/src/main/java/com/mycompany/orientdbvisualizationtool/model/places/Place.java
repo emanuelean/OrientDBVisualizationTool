@@ -2,9 +2,13 @@ package com.mycompany.orientdbvisualizationtool.model.places;
 
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Super class for places
+ * Contains all the functionality for locations, buildings, floors, rooms, area and cells
  *
  * @author albert
  */
@@ -16,7 +20,7 @@ public abstract class Place {
     private ArrayList<Place> children;
     private ArrayList<Entity> entities;
     private ArrayList<Entity> childrenEntities;
-    
+
     /**
      * The type/category of place
      */
@@ -145,6 +149,11 @@ public abstract class Place {
         if (!entities.isEmpty()) {
             return;
         }
-        entities = DatabaseManager.getInstance().getEntityData().queryEntities();
+        DatabaseManager db = DatabaseManager.getInstance();
+        List<Vertex> vertexEntities = db.getEntityData().getSensorsFromLocation(id);
+        for (Vertex v : vertexEntities) {
+            Entity newEntity = new Entity((String) v.getProperty("id"));
+            entities.add(newEntity);
+        }
     }
 }

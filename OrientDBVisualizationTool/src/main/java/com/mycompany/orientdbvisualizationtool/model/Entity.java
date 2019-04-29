@@ -1,7 +1,8 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
 /**
- *
+ * Contains all the data about an entity
+ * 
  * @author Niels
  */
 public class Entity {
