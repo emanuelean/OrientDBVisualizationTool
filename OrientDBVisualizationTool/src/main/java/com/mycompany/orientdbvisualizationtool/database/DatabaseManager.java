@@ -3,6 +3,8 @@ package com.mycompany.orientdbvisualizationtool.database;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
+ * Responsible for setting up the database connection and initializing the
+ * classes that take care of the retrieving the data
  *
  * @author Niels
  */
@@ -62,7 +64,7 @@ public class DatabaseManager {
     }
 
     /**
-     * 
+     *
      * @return The organization data
      */
     public OrganizationData getOrganizationData() {
@@ -70,7 +72,7 @@ public class DatabaseManager {
     }
 
     /**
-     * 
+     *
      * @return The place data
      */
     public PlaceData getPlaceData() {
@@ -78,7 +80,7 @@ public class DatabaseManager {
     }
 
     /**
-     * 
+     *
      * @return The entity data
      */
     public EntityData getEntityData() {

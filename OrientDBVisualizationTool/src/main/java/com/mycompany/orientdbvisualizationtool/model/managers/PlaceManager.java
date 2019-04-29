@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Singleton instance that is responsible for keeping track of all the places of
+ * a specific location
  *
  * @author Niels
  */

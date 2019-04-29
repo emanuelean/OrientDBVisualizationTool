@@ -1,7 +1,8 @@
 package com.mycompany.orientdbvisualizationtool.model.places;
 
 /**
- *
+ * Contains the information about a room
+ * 
  * @author albert
  */
 public class Room extends Place {
