@@ -62,5 +62,10 @@ public class PlaceData extends Database {
             addPlaceToModel(v, newPlace);
         }
     }
-
+    
+    public PlaceAttributes getAttributes(Place place) {
+    	Vertex v = getVertexById("V_location.id", place.getId());
+    	return new PlaceAttributes(v);
+    }
+   
 }

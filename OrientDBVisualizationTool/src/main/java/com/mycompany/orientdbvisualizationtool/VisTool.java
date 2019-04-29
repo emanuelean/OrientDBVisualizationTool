@@ -8,6 +8,7 @@ import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.database.EntityData;
+import com.mycompany.orientdbvisualizationtool.database.PlaceAttributes;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.List;
 import javafx.application.Application;
@@ -25,8 +26,12 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
-        db.getPlaceData().refresh("GSV.HQ");
-        Application.launch(MainView.class, args);
+        db.getPlaceData().refresh("Demo4");
+        PlaceManager pm = PlaceManager.getInstance();
+        Place p = pm.getPlace("Demo4");
+        PlaceAttributes pa = db.getPlaceData().getAttributes(p);
+        System.out.print(pa.getName());
+        //Application.launch(MainView.class, args);
     }
 
     /**
