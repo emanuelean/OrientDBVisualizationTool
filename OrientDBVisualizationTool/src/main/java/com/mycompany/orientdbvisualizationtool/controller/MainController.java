@@ -23,7 +23,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainController {
 
@@ -48,7 +50,7 @@ public class MainController {
     @FXML
     public Label Right_Status_Label;
     @FXML
-    public CheckBox Dark_Mode_Check_Box;
+    public ChoiceBox Theme_Choice_Box;
 
     private PlaceManager placeManager;
 
@@ -75,21 +77,23 @@ public class MainController {
 
         setTableViewCellsProperty();
         setHideActionProperty();
-        setDarkModeCheckBoxProperty();
+        setThemeChoiceBoxProperty();
         zoomFunction();
     }
 
     /**
      * Setting the check box action property to enable/disable Dark Mode theme
      */
-    private void setDarkModeCheckBoxProperty() {
-        Dark_Mode_Check_Box.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            if (isSelected) {
-                Center_Anchor_Pane.getScene().getStylesheets().add("styles/DarkModeStyle.css");
-            } else {
-                Center_Anchor_Pane.getScene().getStylesheets().remove("styles/DarkModeStyle.css");
-            }
-        });
+    private void setThemeChoiceBoxProperty() {
+        File folder = new File(getClass().getResource("/styles").getPath());
+        Theme_Choice_Box.getItems().addAll("Default Theme", "Dark Mode", "Natural Blue", "S.B. Green", "Crimson Red");
+        Theme_Choice_Box.getSelectionModel().selectFirst();
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    Center_Anchor_Pane.getScene().getStylesheets().remove("styles/" + Objects.requireNonNull(folder.listFiles())[oldValue.intValue()].getName());
+                    Center_Anchor_Pane.getScene().getStylesheets().add("styles/" + Objects.requireNonNull(folder.listFiles())[newValue.intValue()].getName());
+                }
+        );
     }
 
     /**

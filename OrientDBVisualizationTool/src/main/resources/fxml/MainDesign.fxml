@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -155,7 +155,7 @@
                 </Label>
                 <Pane HBox.hgrow="ALWAYS" />
                 <Label fx:id="Right_Status_Label" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
-            <CheckBox fx:id="Dark_Mode_Check_Box" mnemonicParsing="false" text="Dark Mode" />
+            <ChoiceBox fx:id="Theme_Choice_Box" prefHeight="25.0" prefWidth="103.0" />
             </children>
             <padding>
                 <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

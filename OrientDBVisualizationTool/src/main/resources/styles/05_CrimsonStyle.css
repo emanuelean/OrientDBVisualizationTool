@@ -1,0 +1,49 @@
+.root {
+    -fx-base: #3c3c3c;
+    -fx-accent: #1c1c1c;
+    -fx-default-button: #d4d3d3;
+    -fx-focus-color: #e6e6e6;
+    -fx-faint-focus-color: rgb(239, 239, 239);
+    -fx-focused-text-base-color : ladder(
+            -fx-selection-bar,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color 46%,
+            -fx-dark-text-color 59%,
+            -fx-mid-text-color 60%
+    );
+    -fx-focused-mark-color : -fx-focused-text-base-color;
+}
+
+.button {
+    -fx-text-fill: #c7c7c7;
+}
+
+.label {
+    -fx-text-fill: #f6f1f1;
+}
+
+.text-input:focused {
+    -fx-highlight-text-fill: ladder(
+            -fx-highlight-fill,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color  46%,
+            -fx-dark-text-color  59%,
+            -fx-mid-text-color   60%
+    );
+}
+
+#Center_Anchor_Pane{
+    -fx-background-color: #3d3d3d,
+    linear-gradient(from 0px 0px to 20px 0px, repeat, rgb(119, 0, 0) 0%, transparent 5%, transparent 95%, rgb(119, 0, 0) 100% ),
+    linear-gradient(from 0px 0px to 0px 20px, repeat, rgb(119, 0, 0) 0%, transparent 5%, transparent 95%, rgb(119, 0, 0) 100% ),
+    linear-gradient(from 0px 0px to 100px 0px, repeat, #d20000 0%, transparent 1%, transparent 99%, #d20000 100% ),
+    linear-gradient(from 0px 0px to 0px 100px, repeat, #d20000 0%, transparent 1%, rgba(100, 100, 100, 0) 99%, #d20000 100% );
+}
+
+#NodeLabel {
+    -fx-fill: #2b0000;
+}
+
+#Edge{
+    -fx-stroke: #c6a2a2;
+}

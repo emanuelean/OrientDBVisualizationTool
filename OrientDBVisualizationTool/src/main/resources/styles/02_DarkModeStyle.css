@@ -32,6 +32,14 @@
     linear-gradient(from 0px 0px to 0px 100px, repeat, #272727 0%, transparent 1%, rgba(100, 100, 100, 0) 99%, #272727 100% );
 }
 
+.text-field {
+    -fx-text-fill: #0b0b0a;
+}
+
+#NodeLabel {
+    -fx-fill: #000000;
+}
+
 #Edge{
     -fx-stroke: #a2a296;
 }

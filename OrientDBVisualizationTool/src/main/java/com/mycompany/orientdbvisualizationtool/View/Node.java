@@ -1,8 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
@@ -25,7 +23,8 @@ public class Node extends StackPane {
     private String nodeType;
     private boolean selected;
     private Rectangle rectangle;
-    private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
+    private Color DEFAULT_COLOR = Color.LIGHTGRAY;
+    private Color DEFAULT_SELECTED_COLOR = Color.LAVENDER;
     private MainController mainController;
     private Boolean expanded;
     private VBox childrenVBox;
@@ -39,6 +38,7 @@ public class Node extends StackPane {
 
         this.label = new Text(displayName);
         this.label.setFont(new Font(13));
+        this.label.setId("NodeLabel");
         this.selected = false;
 
         this.setRectangleProperty();
@@ -46,6 +46,7 @@ public class Node extends StackPane {
         this.expanded = false;
         Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
         this.setMouseListenerProperties();
+        this.setId("NodeStackPane");
     }
 
     private void setRectangleProperty() {
@@ -57,6 +58,7 @@ public class Node extends StackPane {
         this.rectangle.setArcHeight(40);
         this.rectangle.setFill(DEFAULT_COLOR);
         this.rectangle.setStroke(Color.DARKGREY);
+        this.rectangle.setId("NodeRectangle");
     }
 
     public Node(String id, String nodeName, String NodeType) {
@@ -186,6 +188,7 @@ public class Node extends StackPane {
     public String getNodeType() {
         return nodeType;
     }
+
     public VBox getChildrenVBox() {
         return childrenVBox;
     }
