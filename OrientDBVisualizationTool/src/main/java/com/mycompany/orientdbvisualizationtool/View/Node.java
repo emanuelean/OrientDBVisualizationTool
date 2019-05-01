@@ -1,6 +1,9 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -13,45 +16,61 @@ import javafx.scene.text.Text;
  *
  * @author Emanuel Nae, Yona Moreda
  */
-public class Node extends Rectangle {
+public class Node extends StackPane {
 
     private Text label;
     private String nodeName;
+    private String nodeDisplayName;
     private String nodeId;
-    private String type;
+    private String nodeType;
     private boolean selected;
-    private StackPane rectangleAndLabel;
+    private Rectangle rectangle;
     private final Color DEFAULT_COLOR = Color.LIGHTGRAY;
     private MainController mainController;
     private Boolean expanded;
+    private VBox childrenVBox;
 
-    public Node(String id, String nodeName, String type) {
+    public Node(String id, String nodeName, String NodeType, String displayName) {
         this.nodeId = id;
         this.nodeName = nodeName;
-        this.type = type;
-        this.label = new Text(type + ": " + id + ":" + nodeName);
+        this.nodeDisplayName = displayName;
+        this.nodeType = NodeType;
+        this.childrenVBox = new VBox();
+
+        this.label = new Text(displayName);
         this.label.setFont(new Font(13));
-        this.setWidth(label.getLayoutBounds().getWidth() + 30);
-        this.setHeight(40.0f);
         this.selected = false;
-        this.rectangleAndLabel = new StackPane();
-        rectangleAndLabel.getChildren().addAll(this, this.getLabel());
+
+        this.setRectangleProperty();
+        this.getChildren().addAll(rectangle, this.getLabel());
         this.expanded = false;
-
-        //rounded rectangle
-        this.setArcWidth(40);
-        this.setArcHeight(40);
-        this.setFill(DEFAULT_COLOR);
-        this.setStroke(Color.DARKGREY);
-
+        Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
         this.setMouseListenerProperties();
+    }
+
+    private void setRectangleProperty() {
+        //rounded rectangle
+        this.rectangle = new Rectangle();
+        this.rectangle.setWidth(label.getLayoutBounds().getWidth() + 30);
+        this.rectangle.setHeight(40.0f);
+        this.rectangle.setArcWidth(40);
+        this.rectangle.setArcHeight(40);
+        this.rectangle.setFill(DEFAULT_COLOR);
+        this.rectangle.setStroke(Color.DARKGREY);
+    }
+
+    public Node(String id, String nodeName, String NodeType) {
+        this(id, nodeName, NodeType, nodeName);
     }
 
     /**
      * Sets properties for mouse events.
+     * Mouse pressed -> selection
+     * 2x Mouse click -> expansion of node
+     * Mouse entered/exited -> highlight node
      */
     private void setMouseListenerProperties() {
-        rectangleAndLabel.setOnMousePressed(event -> {
+        this.setOnMousePressed(event -> {
                     if (!this.isSelected()) {
                         this.setSelected(true);
                     } else {
@@ -59,7 +78,7 @@ public class Node extends Rectangle {
                     }
                 }
         );
-        rectangleAndLabel.setOnMouseClicked(event -> {
+        this.setOnMouseClicked(event -> {
                     if (event.getButton().equals(MouseButton.PRIMARY)) {
                         //Double click
                         if (event.getClickCount() == 2) {
@@ -68,6 +87,23 @@ public class Node extends Rectangle {
                     }
                 }
         );
+        this.setOnMouseEntered(event -> {
+                    if (!selected) {
+                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
+                    } else {
+                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 1 / 0.8, 1));
+                    }
+                }
+        );
+        this.setOnMouseExited(event -> {
+                    if (selected) {
+                        rectangle.setFill(Color.LAVENDER);
+                    } else {
+                        rectangle.setFill(DEFAULT_COLOR);
+                    }
+                }
+        );
+
     }
 
     /**
@@ -79,28 +115,9 @@ public class Node extends Rectangle {
         return label;
     }
 
-    /**
-     * Moves node to point
-     *
-     * @param x horizontal position of node
-     * @param y vertical position of node
-     */
-    public void setLocation(double x, double y) {
-        this.rectangleAndLabel.setTranslateX(x);
-        this.rectangleAndLabel.setTranslateY(y);
-    }
-
-    /**
-     * Adds node to the central pane.
-     *
-     * @param centerPane parent pane on the center of scene.
-     */
-    public void addToParentPane(AnchorPane centerPane) {
-        centerPane.getChildren().add(rectangleAndLabel);
-    }
 
     public void addToVBox(VBox vBox) {
-        vBox.getChildren().add(rectangleAndLabel);
+        vBox.getChildren().add(this);
         vBox.layout();
     }
 
@@ -121,24 +138,20 @@ public class Node extends Rectangle {
     public void setSelected(boolean selected) {
         this.selected = selected;
         if (selected) {
-            this.setFill(Color.LAVENDER);
+            rectangle.setFill(Color.LAVENDER);
             this.mainController.showSelectedNodeDetails(this);
         } else {
-            this.setFill(DEFAULT_COLOR);
+            rectangle.setFill(DEFAULT_COLOR);
         }
     }
 
     /**
-     * encapsulates Rectangle and Text Label as Node
+     * Rectangle that represents node
      *
-     * @return Pane for representing a Node (rectangle + label)
+     * @return Rectangle for representing a Node
      */
-    public StackPane getRectangleAndLabel() {
-        return rectangleAndLabel;
-    }
-
-    public String getNodeId() {
-        return nodeId;
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
     /**
@@ -150,19 +163,35 @@ public class Node extends Rectangle {
         this.mainController = mainController;
     }
 
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public void setChildrenVBox(VBox vbox) {
+        this.childrenVBox = vbox;
+    }
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
     public String getNodeName() {
         return nodeName;
     }
 
-    public String getType() {
-        return type;
+    public String getDisplayName() {
+        return nodeDisplayName;
+    }
+
+    public String getNodeType() {
+        return nodeType;
+    }
+    public VBox getChildrenVBox() {
+        return childrenVBox;
     }
 
     public Boolean isExpanded() {
         return expanded;
     }
 
-    public void setExpanded(Boolean expanded) {
-        this.expanded = expanded;
-    }
 }

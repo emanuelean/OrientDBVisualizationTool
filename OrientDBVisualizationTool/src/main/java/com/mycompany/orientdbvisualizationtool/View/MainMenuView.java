@@ -1,7 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mycompany.orientdbvisualizationtool.View;
 
-import com.mycompany.orientdbvisualizationtool.controller.MainController;
-import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
+import com.mycompany.orientdbvisualizationtool.controller.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,35 +14,29 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- * MainView sets the view components from fxml file and adds scene
+ *
+ * @author User
  */
-public class MainView extends Application {
+public class MainMenuView extends Application {
 
-    private static final int WIDTH = 1400;
+    public static final int WIDTH = 1400;
 
     /**
      * Scene is created and the fxml file is loaded.
-     *
      * @param primaryStage The basic underlying frame
      * @throws Exception for Application error handling
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.getIcons().add(new Image("icons/sb-icon.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/MainDesign.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/MainMenu.fxml"));
         Parent root = fxmlLoader.load();
-        MainController controller = fxmlLoader.getController();
-        controller.setPlaceManager(PlaceManager.getInstance());
-        controller.addRootNodeToPane();
-        controller.populateTreeView();
+        MainMenuController controller = fxmlLoader.getController();
         primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
         Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
-        scene.getStylesheets().add("styles/Styles.css");
         primaryStage.setScene(scene);
+        //primaryStage.setMaximized(true);
         primaryStage.show();
     }
 
-    public static int getWIDTH() {
-        return WIDTH;
-    }
 }

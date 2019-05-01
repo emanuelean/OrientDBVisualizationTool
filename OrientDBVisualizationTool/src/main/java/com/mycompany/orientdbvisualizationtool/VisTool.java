@@ -4,17 +4,20 @@ import com.mycompany.orientdbvisualizationtool.View.MainView;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-<<<<<<< HEAD
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.database.EntityData;
 import com.mycompany.orientdbvisualizationtool.database.PlaceAttributes;
 import com.tinkerpop.blueprints.Vertex;
+import java.util.ArrayList;
 import java.util.List;
-=======
->>>>>>> 248d310236861d8d2fa2ac4608909ff9402e78e0
+import com.mycompany.orientdbvisualizationtool.model.Entity;
+import com.mycompany.orientdbvisualizationtool.model.Organization;
+
+import java.util.Random;
 import javafx.application.Application;
+import javax.swing.JOptionPane;
 /**
  * Main class
  * 
@@ -30,59 +33,74 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
-        db.getPlaceData().refresh("Demo4");
-        PlaceManager pm = PlaceManager.getInstance();
-        Place p = pm.getPlace("Demo4");
-        PlaceAttributes pa = db.getPlaceData().getAttributes(p);
-        System.out.print(pa.getName());
-        //Application.launch(MainView.class, args);
+        //temporary code to choose between 2 different locations for demo purposes
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to use gsv.hq choose yes, if you want to use demo.TopLevel choose no","Warning",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            db.getPlaceData().refresh("GSV.HQ");
+        }else{
+            db.getPlaceData().refresh("demo.TopLevel");
+        }
+        
+        Application.launch(MainView.class, args);
     }
 
     /**
      * Prints some data of all sensors of a specific location
      *
-     * @param db The databasemanager that handles the graph
      */
     private static void testDataForFrontEnd() {
         PlaceManager manager = PlaceManager.getInstance();
-
-        Place location = new com.mycompany.orientdbvisualizationtool.model.places.Location("L", "L");
-        Place buildingA = new Building("L.A", "A");
-        Place buildingB = new Building("L.B.M.O.L", "B");
-        Place buildingC = new Building("L.C.C.C.C.C", "C");
-        Place buildingD = new Building("L.D", "D");
-        Place floorAA = new Floor("L.A.A", "AA");
-        Place floorAB = new Floor("L.A.B", "AB");
-        Place floorBA = new Floor("L.B.A", "BA");
-        Place floorBB = new Floor("L.B.B", "BB");
-
-        Place roomAAA = new Room("L.A.A.A", "AAA");
-        Place roomAAB = new Room("L.A.A.B", "AAB");
-        Place roomABA = new Room("L.A.B.A", "ABA");
-        Place roomABB = new Room("L.A.B.B", "ABB");
-        Place roomBAA = new Room("L.B.A.A", "BAA");
-        Place roomBAB = new Room("L.B.A.B", "BAB");
-        Place roomBBA = new Room("L.B.B.A", "BBA");
-        Place roomBBB = new Room("L.B.B.B", "BBB");
-
-        manager.addPlace(location, null);
-        manager.addPlace(buildingA, location);
-        manager.addPlace(buildingB, location);
-        manager.addPlace(buildingC, location);
-        manager.addPlace(buildingD, location);
-        manager.addPlace(floorAA, buildingA);
-        manager.addPlace(floorAB, buildingA);
-        manager.addPlace(floorBA, buildingB);
-        manager.addPlace(floorBB, buildingB);
-
-
-        manager.addPlace(roomAAA, floorAA);
-        manager.addPlace(roomAAB, floorAA);
-        manager.addPlace(roomABA, floorAB);
-        manager.addPlace(roomABB, floorAB);
-        manager.addPlace(roomBAA, floorBA);
-        manager.addPlace(roomBAB, floorBA);
-        manager.addPlace(roomBBA, floorBB);
-        manager.addPlace(roomBBB, floorBB);
+        addTestPlaces(manager, null, 0);
+        addTestOrganizations();
+    }
+    
+    private static void addTestOrganizations(){
+        int organizationAmount = 8;
+        int placesAmount = 4;
+        for (int i = 0; i < organizationAmount; i++) {
+            Organization newOrg = new Organization("Organization" + Integer.toString(i));
+            for (int j = 0; j < placesAmount; j++) {
+                Location newPlace = new Location("Location"+Integer.toString(j), "Location"+Integer.toString(j));
+                newOrg.addPlace(newPlace);
+            }
+        }
+    }
+    
+    private static void addTestPlaces(PlaceManager manager, Place parent, int index){
+        
+        //base case
+        if(index >= PlaceCategory.values().length){
+            return;
+        }
+        
+        //get parent info
+        String prefix = "";
+        if(parent != null){
+            prefix = parent.getId() + ".";
+        }
+        
+        //create info for the newPlace
+        int number = (new Random()).nextInt(150);
+        String currentCategory = (PlaceCategory.values()[index]).toString().toLowerCase();
+        String name = prefix + currentCategory + Integer.toString(number);
+        String id =  prefix + currentCategory + Integer.toString(number);
+        
+        Place newPlace = manager.addPlace(id, name, currentCategory, parent);
+        addEntities(newPlace);
+        
+        //recursvily call it for all the children
+        int childrenAmount = 5;
+        for (int i = 0; i < childrenAmount; i++) {
+            addTestPlaces(manager,newPlace, index+1);
+        }
+    }
+    
+    private static void addEntities(Place currentPlace){
+        Random random = new Random();
+        for (int i = 0; i < random.nextInt(100); i++) {
+            Entity newEntity = new Entity("long_name_for_testdata_sensor_stuff_" + i);
+            currentPlace.addEntity(newEntity);
+        }
     }
 }
