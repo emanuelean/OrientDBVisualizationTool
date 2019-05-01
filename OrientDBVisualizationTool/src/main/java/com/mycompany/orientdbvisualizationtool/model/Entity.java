@@ -4,7 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- *
+ * Contains all the data about an entity
+ * 
  * @author Niels
  */
 public class Entity {

@@ -7,6 +7,10 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
+ * Super class that is responsible for retrieving specific data from the
+ * database 
+ * Can be used to retrieve vertices, edges or execute queries
+ *
  * @author Niels
  */
 public abstract class Database {
@@ -50,7 +54,7 @@ public abstract class Database {
     /**
      * retrieves a vertex based on a key and a value
      *
-     * @param key   The table and field name we want to compare
+     * @param key The table and field name we want to compare
      * @param value The value we want to find
      * @return The first vertex that is found based on this key and value
      */
@@ -71,7 +75,6 @@ public abstract class Database {
     protected Iterable<Edge> getEdgesByKey(String key) {
         return graph.getEdgesOfClass(key);
     }
-
 
     /**
      * Retrieves a list of vertices based on a specific query

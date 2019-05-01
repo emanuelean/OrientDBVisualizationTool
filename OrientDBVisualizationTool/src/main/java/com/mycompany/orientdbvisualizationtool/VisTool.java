@@ -8,6 +8,7 @@ import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.blueprints.Edge;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.database.EntityData;
+import com.mycompany.orientdbvisualizationtool.database.PlaceAttributes;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,10 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 
 import java.util.Random;
 import javafx.application.Application;
+import javax.swing.JOptionPane;
 /**
- *
+ * Main class
+ * 
  * @author Niels
  */
 public class VisTool {
@@ -28,14 +31,18 @@ public class VisTool {
      * @param args Arguments
      */
     public static void main(String[] args) {
-        //DatabaseManager db = DatabaseManager.getInstance();
-        //db.getOrganizationData().refreshAll();
-        testDataForFrontEnd();
-        //db.getPlaceData().refresh("GSV.HQ");
+        DatabaseManager db = DatabaseManager.getInstance();
+        db.getOrganizationData().refreshAll();
+        //temporary code to choose between 2 different locations for demo purposes
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to use gsv.hq choose yes, if you want to use demo.TopLevel choose no","Warning",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            db.getPlaceData().refresh("GSV.HQ");
+        }else{
+            db.getPlaceData().refresh("demo.TopLevel");
+        }
+        
         Application.launch(MainView.class, args);
-
-        //EntityData e = db.getEntityData();
-        //List<Vertex> lv = e.getSensorsFromLocation("Energy Academy Europe");
     }
 
     /**
@@ -94,20 +101,6 @@ public class VisTool {
         for (int i = 0; i < random.nextInt(100); i++) {
             Entity newEntity = new Entity("long_name_for_testdata_sensor_stuff_" + i);
             currentPlace.addEntity(newEntity);
-        }
-    }
-    /**
-     * Prints some data of all sensors of a specific location
-     *
-     * @param db The DatabaseManager that handles the graph
-     */
-    private static void printSensors(DatabaseManager db) {
-        System.out.println("Database loaded");
-        List<Vertex> sensors;
-        sensors = db.getEntityData().getSensorsFromLocation("Energy Academy Europe");
-        System.out.println(sensors);
-        for (Vertex v : sensors) {
-            System.out.printf(v.getProperty("id"));
         }
     }
 }

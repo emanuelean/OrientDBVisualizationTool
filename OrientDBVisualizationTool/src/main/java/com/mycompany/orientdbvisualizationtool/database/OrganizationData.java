@@ -9,6 +9,9 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
+ * Responsible for retrieving specific information about organizations from the
+ * database
+ *
  * @author Niels
  */
 public class OrganizationData extends Database {
