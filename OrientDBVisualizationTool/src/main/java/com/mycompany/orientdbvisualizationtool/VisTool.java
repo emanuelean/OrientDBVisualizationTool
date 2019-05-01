@@ -17,6 +17,7 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 
 import java.util.Random;
 import javafx.application.Application;
+import javax.swing.JOptionPane;
 /**
  * Main class
  * 
@@ -32,12 +33,16 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
-        db.getPlaceData().refresh("Demo4");
-        PlaceManager pm = PlaceManager.getInstance();
-        Place p = pm.getPlace("Demo4");
-        PlaceAttributes pa = db.getPlaceData().getAttributes(p);
-        System.out.print(pa.getName());
-        //Application.launch(MainView.class, args);
+        //temporary code to choose between 2 different locations for demo purposes
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog (null, "Would you like to use gsv.hq choose yes, if you want to use demo.TopLevel choose no","Warning",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+            db.getPlaceData().refresh("GSV.HQ");
+        }else{
+            db.getPlaceData().refresh("demo.TopLevel");
+        }
+        
+        Application.launch(MainView.class, args);
     }
 
     /**
