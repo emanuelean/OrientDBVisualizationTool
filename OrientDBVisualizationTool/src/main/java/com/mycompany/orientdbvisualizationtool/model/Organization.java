@@ -49,4 +49,7 @@ public class Organization {
         places = null;
     }
 
+    public List<Place> getPlaces() {
+        return places;
+    }
 }

@@ -70,4 +70,13 @@ public class OrganizationManager {
     public List<Organization> getOrganizations() {
         return organizations;
     }
+
+    public Organization getOrganization(String id) {
+        for (Organization o : organizations) {
+            if (o.getId().equals(id)) {
+                return o;
+            }
+        }
+        return null;
+    }
 }

@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool;
 
 import com.mycompany.orientdbvisualizationtool.View.MainView;
+import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
@@ -42,7 +43,7 @@ public class VisTool {
             db.getPlaceData().refresh("demo.TopLevel");
         }
         
-        Application.launch(MainView.class, args);
+        Application.launch(VisApplication.class, args);
     }
 
     /**

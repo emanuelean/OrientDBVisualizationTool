@@ -12,33 +12,24 @@ import javafx.stage.Stage;
 /**
  * MainView sets the view components from fxml file and adds scene
  */
-public class MainView extends Application {
+public class MainView extends View{
+    
+    private MainController controller;
 
-    private static final int WIDTH = 1400;
+    public MainView() {
+        super("fxml/MainDesign.fxml");
+        controller = fxmlLoader.getController();
+    }
 
     /**
      * Scene is created and the fxml file is loaded.
      *
-     * @param primaryStage The basic underlying frame
      * @throws Exception for Application error handling
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.getIcons().add(new Image("icons/sb-icon.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/MainDesign.fxml"));
-        Parent root = fxmlLoader.load();
-        MainController controller = fxmlLoader.getController();
+    public void start() {
         controller.setPlaceManager(PlaceManager.getInstance());
         controller.addRootNodeToPane();
         controller.populateTreeView();
-        primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
-        Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
-        scene.getStylesheets().add("styles/01_DefaultStyle.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static int getWIDTH() {
-        return WIDTH;
     }
 }
