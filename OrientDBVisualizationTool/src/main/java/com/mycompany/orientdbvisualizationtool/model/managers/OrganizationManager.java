@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Singleton that is responsible for keeping track of all the organizations
  *
- * @author Niels
+ * @author Niels, Albert
  */
 public class OrganizationManager {
 
@@ -71,6 +71,12 @@ public class OrganizationManager {
         return organizations;
     }
 
+    /**
+     * Retrieves an organization based on an id
+     * 
+     * @param id The id of the organization
+     * @return The organization
+     */
     public Organization getOrganization(String id) {
         for (Organization o : organizations) {
             if (o.getId().equals(id)) {

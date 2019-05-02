@@ -11,19 +11,17 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-
 /**
  * Responsible for retrieving specific information about entities from the
  * database
- * 
- * @author Niels & Carlos
+ *
+ * @author Niels, Carlos, Albert
  */
-
 public class EntityData extends Database {
 
     private static List<Vertex> sensorInitialization;
 
-/**
+    /**
      * Initializes the sensor comparer list
      *
      * @param graph The graph we want to load the data from
@@ -32,22 +30,23 @@ public class EntityData extends Database {
         super(graph);
         initSensors();
     }
-/**
+
+    /**
      * initialises a list of sensors
      */
     private void initSensors() {
         boolean isCategory = false;
         List<Vertex> entities = new ArrayList<>();
-        
-        //we initialize the nodes to explore
-        Vertex startVertex = getVertexById("V_category.id","sensor");
-        Set<Vertex> bufferVertex = Sets.newHashSet(); 
-        bufferVertex.add(startVertex);
-        
-        //buffer for the connections
-        Iterable<Edge> bufferConnections; 
 
-        while (!bufferVertex.isEmpty()) { 
+        //we initialize the nodes to explore
+        Vertex startVertex = getVertexById("V_category.id", "sensor");
+        Set<Vertex> bufferVertex = Sets.newHashSet();
+        bufferVertex.add(startVertex);
+
+        //buffer for the connections
+        Iterable<Edge> bufferConnections;
+
+        while (!bufferVertex.isEmpty()) {
             //while we still have elements to explore
             Vertex v = bufferVertex.iterator().next();
             bufferVertex.remove(v);
@@ -56,7 +55,7 @@ public class EntityData extends Database {
             if (bufferConnections != null) {
                 for (Edge e : bufferConnections) {
                     //we add all the nodes connected with "is-a" to the explored node to the set of nodes to be explored
-                    bufferVertex.add(e.getVertex(Direction.OUT)); 
+                    bufferVertex.add(e.getVertex(Direction.OUT));
                 }
             }
 
@@ -69,7 +68,7 @@ public class EntityData extends Database {
             if (isCategory) {
                 //we know that a sensor will be an instance of the Vertex 
                 //(or an instance of the Vertex) so we add it to the list of entities
-                entities.add(v); 
+                entities.add(v);
                 isCategory = false;
             }
         }
@@ -78,16 +77,15 @@ public class EntityData extends Database {
 
     @Override
     public void refresh(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); 
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-/**
+    /**
      * @return A list of sensor entities
      */
     public static List<Vertex> getSensorEntities() {
         return sensorInitialization;
     }
-
 
     /**
      * Returns all the sensors from a location
@@ -96,28 +94,27 @@ public class EntityData extends Database {
      * @return a list with all the sensors
      */
     public List<Vertex> getSensorsFromLocation(String id) {
-        Vertex currentVertex = getVertexById("v_location.id",id);
-        if(currentVertex == null){
+        Vertex currentVertex = getVertexById("v_location.id", id);
+        if (currentVertex == null) {
             return null;
         }
-        
+
         Iterable<Edge> connections;
         List<Vertex> sensors = new ArrayList<>();
         connections = currentVertex.getEdges(Direction.IN, "has-a");
-        
+
         for (Edge e : connections) {
             Vertex s = e.getVertex(Direction.OUT);
             //second statement is a temporary fix to prevent the place itself to
             //occur in the list
-            if (isSensor(s) && !((String)s.getProperty("id")).equals(id)) {
+            if (isSensor(s) && !((String) s.getProperty("id")).equals(id)) {
                 sensors.add(s);
             }
         }
         return sensors;
     }
 
-
-/**
+    /**
      * Auxiliary function to check if a vertex is a sensor
      *
      * @param v The vertex we want to know if it is a sensor or not

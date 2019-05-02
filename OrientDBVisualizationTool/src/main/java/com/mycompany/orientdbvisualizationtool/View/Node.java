@@ -23,13 +23,23 @@ public class Node extends StackPane {
     private String nodeType;
     private boolean selected;
     private Rectangle rectangle;
-    private Color DEFAULT_COLOR = Color.LIGHTGRAY;
-    private Color DEFAULT_SELECTED_COLOR = Color.LAVENDER;
+    private Color DEFAULT_COLOR;
+    private Color DEFAULT_SELECTED_COLOR;
     private MainController mainController;
     private Boolean expanded;
     private VBox childrenVBox;
 
+    /**
+     * Constructor
+     *
+     * @param id The id of the node
+     * @param nodeName The name of the node
+     * @param NodeType The type of the node
+     * @param displayName The display name of the node
+     */
     public Node(String id, String nodeName, String NodeType, String displayName) {
+        this.DEFAULT_COLOR = Color.LIGHTGRAY;
+        this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
         this.nodeId = id;
         this.nodeName = nodeName;
         this.nodeDisplayName = displayName;
@@ -49,6 +59,9 @@ public class Node extends StackPane {
         this.setId("NodeStackPane");
     }
 
+    /**
+     * Sets the properties of a rectangle
+     */
     private void setRectangleProperty() {
         //rounded rectangle
         this.rectangle = new Rectangle();
@@ -61,49 +74,56 @@ public class Node extends StackPane {
         this.rectangle.setId("NodeRectangle");
     }
 
+    /**
+     * Constructor
+     *
+     * @param id The id of the node
+     * @param nodeName The name of the node
+     * @param NodeType The type of the node
+     */
     public Node(String id, String nodeName, String NodeType) {
         this(id, nodeName, NodeType, nodeName);
+        this.DEFAULT_COLOR = Color.LIGHTGRAY;
+        this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
     }
 
     /**
-     * Sets properties for mouse events.
-     * Mouse pressed -> selection
-     * 2x Mouse click -> expansion of node
-     * Mouse entered/exited -> highlight node
+     * Sets properties for mouse events. Mouse pressed -> selection 2x Mouse
+     * click -> expansion of node Mouse entered/exited -> highlight node
      */
     private void setMouseListenerProperties() {
         this.setOnMousePressed(event -> {
-                    if (!this.isSelected()) {
-                        this.setSelected(true);
-                    } else {
-                        this.setSelected(false);
-                    }
-                }
+            if (!this.isSelected()) {
+                this.setSelected(true);
+            } else {
+                this.setSelected(false);
+            }
+        }
         );
         this.setOnMouseClicked(event -> {
-                    if (event.getButton().equals(MouseButton.PRIMARY)) {
-                        //Double click
-                        if (event.getClickCount() == 2) {
-                            mainController.expandNode(this);
-                        }
-                    }
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                //Double click
+                if (event.getClickCount() == 2) {
+                    mainController.expandNode(this);
                 }
+            }
+        }
         );
         this.setOnMouseEntered(event -> {
-                    if (!selected) {
-                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
-                    } else {
-                        rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 1 / 0.8, 1));
-                    }
-                }
+            if (!selected) {
+                rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
+            } else {
+                rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 1 / 0.8, 1));
+            }
+        }
         );
         this.setOnMouseExited(event -> {
-                    if (selected) {
-                        rectangle.setFill(Color.LAVENDER);
-                    } else {
-                        rectangle.setFill(DEFAULT_COLOR);
-                    }
-                }
+            if (selected) {
+                rectangle.setFill(Color.LAVENDER);
+            } else {
+                rectangle.setFill(DEFAULT_COLOR);
+            }
+        }
         );
 
     }
@@ -117,7 +137,10 @@ public class Node extends StackPane {
         return label;
     }
 
-
+    /**
+     * Adds aa vertical box to a vertical box
+     * @param vBox The vertical box that needs to be added
+     */
     public void addToVBox(VBox vBox) {
         vBox.getChildren().add(this);
         vBox.layout();
@@ -165,34 +188,66 @@ public class Node extends StackPane {
         this.mainController = mainController;
     }
 
+    /**
+     * 
+     * @param expanded The new expanded value
+     */
     public void setExpanded(Boolean expanded) {
         this.expanded = expanded;
     }
 
+    /**
+     * 
+     * @param vbox The new vertical box
+     */
     public void setChildrenVBox(VBox vbox) {
         this.childrenVBox = vbox;
     }
 
+    /**
+     * 
+     * @return The node id
+     */
     public String getNodeId() {
         return nodeId;
     }
 
+    /**
+     * 
+     * @return The node name
+     */
     public String getNodeName() {
         return nodeName;
     }
 
+    /**
+     * 
+     * @return The display name
+     */
     public String getDisplayName() {
         return nodeDisplayName;
     }
 
+    /**
+     * 
+     * @return The node type
+     */
     public String getNodeType() {
         return nodeType;
     }
 
+    /**
+     * 
+     * @return The vertical box for the children
+     */
     public VBox getChildrenVBox() {
         return childrenVBox;
     }
 
+    /**
+     * 
+     * @return If this is expanded
+     */
     public Boolean isExpanded() {
         return expanded;
     }

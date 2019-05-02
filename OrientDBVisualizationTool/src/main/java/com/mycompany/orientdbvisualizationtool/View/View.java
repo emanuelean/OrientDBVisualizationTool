@@ -5,17 +5,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 /**
+ * Super class for the view
  *
- * @author Albert
+ * @author Albert, Niels, Yona
  */
-public class View {
+public abstract class View {
+
+    /**
+     * Loader for the fxml file
+     */
+    protected FXMLLoader fxmlLoader;
 
     private static final int WIDTH = 1400;
-    protected FXMLLoader fxmlLoader; 
     private Scene scene;
 
+    /**
+     * Constructor
+     *
+     * @param resource File path of fxml class that needs to be loaded
+     */
     public View(String resource) {
-        try{
+        try {
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(resource));
             Parent root = fxmlLoader.load();
             scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
@@ -24,14 +34,28 @@ public class View {
             e.printStackTrace();
         }
     }
-    
+
+    /**
+     *
+     * @return The width
+     */
     public static int getWIDTH() {
         return WIDTH;
     }
+
+    /**
+     * Starts a view
+     */
+    public void start() {
+    }
+
+    ;
     
-    public void start(){};
-    
-    public Scene getScene(){
+    /**
+     * 
+     * @return The scene
+     */
+    public Scene getScene() {
         return scene;
     }
 }

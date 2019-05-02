@@ -3,7 +3,7 @@ package com.mycompany.orientdbvisualizationtool.model.places;
 /**
  * Contains the information about a cell
  * 
- * @author albert
+ * @author Albert, Niels
  */
 public class Cell extends Place {
 
