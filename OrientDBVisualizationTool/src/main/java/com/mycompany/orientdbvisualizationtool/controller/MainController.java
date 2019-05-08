@@ -508,6 +508,11 @@ public class MainController {
         Left_Tree_View.get
          */
     }
+    
+    public void switchToMainMenu() {
+        VisApplication.getInstance().changeToMenu();
+        //does not close anything yet, should maybe happen?
+    }
 
     /**
      * Quits program.
