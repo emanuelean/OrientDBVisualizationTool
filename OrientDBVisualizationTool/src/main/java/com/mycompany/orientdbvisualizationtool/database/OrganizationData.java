@@ -1,3 +1,4 @@
+
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.Organization;
@@ -8,6 +9,8 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
+ * Responsible for retrieving specific information about organizations from the
+ * database
  *
  * @author Niels
  */
@@ -62,5 +65,4 @@ public class OrganizationData extends Database {
             refresh(v);
         }
     }
-
 }

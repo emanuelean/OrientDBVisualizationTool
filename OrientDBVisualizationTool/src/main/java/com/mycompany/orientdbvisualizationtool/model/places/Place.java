@@ -2,9 +2,15 @@ package com.mycompany.orientdbvisualizationtool.model.places;
 
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * Super class for places
+ * Contains all the functionality for locations, buildings, floors, rooms, area and cells
  *
  * @author albert
  */
@@ -16,7 +22,7 @@ public abstract class Place {
     private ArrayList<Place> children;
     private ArrayList<Entity> entities;
     private ArrayList<Entity> childrenEntities;
-    
+
     /**
      * The type/category of place
      */
@@ -33,6 +39,8 @@ public abstract class Place {
         this.name = name;
         parent = null;
         children = new ArrayList<>();
+        entities = new ArrayList<>();
+        childrenEntities = new ArrayList<>();
     }
 
     /**
@@ -105,11 +113,23 @@ public abstract class Place {
      * @return the name to display on the graph
      */
     public String getDisplayName() {
-        int index = name.lastIndexOf(".");
+        int index = name.lastIndexOf('.');
+        if (index == -1) {
+            return type + ": " + name;
+        }
+        return type + ": " + name.substring(index + 1);
+    }
+    
+    /**
+     *
+     * @return the name to display in the list
+     */
+    public String getShortName() {
+        int index = name.lastIndexOf('.');
         if (index == -1) {
             return name;
         }
-        return type + ": " + name.substring(index + 1);
+        return name.substring(index + 1);
     }
 
     /**
@@ -145,6 +165,34 @@ public abstract class Place {
         if (!entities.isEmpty()) {
             return;
         }
-        entities = DatabaseManager.getInstance().getEntityData().queryEntities();
+        DatabaseManager db = DatabaseManager.getInstance();
+        List<Vertex> vertexEntities = db.getEntityData().getSensorsFromLocation(id);
+        for (Vertex v : vertexEntities) {
+            Entity newEntity = new Entity((String) v.getProperty("id"));
+            entities.add(newEntity);
+        }
+    }
+    
+    /**
+     * adds an entity to the entities list
+     * @param newEntity the new entity to be added
+     */
+    public void addEntity(Entity newEntity){
+        entities.add(newEntity);
+    }
+
+    /**
+     * gets the full path of place from root.
+     * @return
+     */
+    public String getPath() {
+        Place place = this;
+        StringBuilder path = new StringBuilder();
+        path.insert(0, place.getDisplayName() + "/");
+        while (place.getParent() != null) {
+            place = place.getParent();
+            path.insert(0, place.getDisplayName() + "/");
+        }
+        return path.toString();
     }
 }

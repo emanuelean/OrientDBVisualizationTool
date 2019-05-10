@@ -1,0 +1,37 @@
+.root {
+    -fx-base: #171717;
+    -fx-accent: #303234;
+    -fx-default-button: #6d737a;
+    -fx-focus-color: #3d3d3d;
+    -fx-faint-focus-color: rgba(110, 110, 110, 0.13);
+    -fx-focused-text-base-color : ladder(
+            -fx-selection-bar,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color 46%,
+            -fx-dark-text-color 59%,
+            -fx-mid-text-color 60%
+    );
+    -fx-focused-mark-color : -fx-focused-text-base-color;
+}
+
+.text-input:focused {
+    -fx-highlight-text-fill: ladder(
+            -fx-highlight-fill,
+            -fx-light-text-color 45%,
+            -fx-dark-text-color  46%,
+            -fx-dark-text-color  59%,
+            -fx-mid-text-color   60%
+    );
+}
+
+#Center_Anchor_Pane{
+    -fx-background-color: #393939,
+    linear-gradient(from 0px 0px to 20px 0px, repeat, rgba(46, 46, 46, 0.3) 0%, transparent 5%, transparent 95%, rgba(52, 52, 52, 0.3) 100% ),
+    linear-gradient(from 0px 0px to 0px 20px, repeat, rgba(46, 46, 46, 0.3) 0%, transparent 5%, transparent 95%, rgba(46, 46, 46, 0.3) 100% ),
+    linear-gradient(from 0px 0px to 100px 0px, repeat, #272727 0%, transparent 1%, transparent 99%, #272727 100% ),
+    linear-gradient(from 0px 0px to 0px 100px, repeat, #272727 0%, transparent 1%, rgba(100, 100, 100, 0) 99%, #272727 100% );
+}
+
+#Edge{
+    -fx-stroke: #a2a296;
+}

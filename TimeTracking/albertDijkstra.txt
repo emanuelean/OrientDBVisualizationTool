@@ -122,3 +122,22 @@
 23/04 - Refactoring
 23/04 - Refactoring
 23/04 - Refactoring
+25/04 - (TA) meeting
+25/04 - (TA) meeting
+26/04 - Started learning javafx
+26/04 - Started learning javafx
+26/04 - Started learning javafx
+26/04 - Started learning javafx
+26/04 - Started creating main menu
+26/04 - Started creating main menu
+26/04 - Started creating main menu
+26/04 - Started creating main menu
+27/04 - Started learning javafx
+27/04 - Started learning javafx
+27/04 - Started learning javafx
+27/04 - Started learning javafx
+29/04 - Started learning javafx
+29/04 - Started learning javafx
+29/04 - Started learning javafx
+29/04 - Started learning javafx
+29/04 - Merging

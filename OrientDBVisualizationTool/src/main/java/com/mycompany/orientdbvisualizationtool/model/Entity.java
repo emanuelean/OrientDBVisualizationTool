@@ -1,12 +1,16 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
- *
+ * Contains all the data about an entity
+ * 
  * @author Niels
  */
 public class Entity {
 
-    private String id;
+    private StringProperty id;
 
     /**
      * constructor
@@ -14,7 +18,7 @@ public class Entity {
      * @param id The id of the entity
      */
     public Entity(String id) {
-        this.id = id;
+        this.id = new SimpleStringProperty(id);
     }
 
     /**
@@ -22,6 +26,6 @@ public class Entity {
      * @return The id of the entity
      */
     public String getId() {
-        return id;
+        return id.get();
     }
 }

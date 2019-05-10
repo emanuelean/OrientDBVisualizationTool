@@ -36,3 +36,8 @@
 14/04 - Classifying entities
 14/04 - Classifying entities
 14/04 - Classifying entities
+26/04 - Retrieving attributes
+26/04 - Retrieving attributes
+28/04 - Solving issues with orientDB
+28/04 - Solving issues with orientDB
+28/04 - Retrieving attributes
