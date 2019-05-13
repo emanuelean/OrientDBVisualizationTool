@@ -1,4 +1,3 @@
-
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.Organization;
@@ -65,9 +64,15 @@ public class OrganizationData extends Database {
             refresh(v);
         }
     }
-    
+
+    /**
+     * Retrieves the attributes of a certain organization
+     *
+     * @param org The organization we want to know the attributes of
+     * @return An object containing the place attributes
+     */
     public OrganizationAttributes getAttributes(Organization org) {
-    	Vertex v = getVertexById("V_location.id", org.getId());
-    	return new OrganizationAttributes(v);
+        Vertex v = getVertexById("V_organization.id", org.getId());
+        return new OrganizationAttributes(v);
     }
 }

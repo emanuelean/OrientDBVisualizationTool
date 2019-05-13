@@ -65,6 +65,12 @@ public class PlaceData extends Database {
         }
     }
     
+    /**
+     * Retrieves the attributes of a certain place
+     *
+     * @param place The place we want to know the attributes of
+     * @return An object containing the place attributes
+     */
     public PlaceAttributes getAttributes(Place place) {
     	Vertex v = getVertexById("V_location.id", place.getId());
     	return new PlaceAttributes(v);

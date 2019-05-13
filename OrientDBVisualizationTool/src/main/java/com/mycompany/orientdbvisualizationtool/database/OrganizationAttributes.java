@@ -1,17 +1,13 @@
 package com.mycompany.orientdbvisualizationtool.database;
 
-import com.mycompany.orientdbvisualizationtool.model.Property;
 import com.tinkerpop.blueprints.Vertex;
-import java.util.ArrayList;
 
 /**
  * Retrieves the organization attributes from the database
  *
- * @author Niels, Albert
+ * @author Niels, Albert, Carlos
  */
-public class OrganizationAttributes {
-
-    private ArrayList<Property> properties;
+public class OrganizationAttributes extends Attributes {
 
     /**
      * Creates an object with the attributes of the organization
@@ -19,7 +15,6 @@ public class OrganizationAttributes {
      * @param v the vertex to get the attributes from
      */
     public OrganizationAttributes(Vertex v) {
-        properties = new ArrayList();
         addStringProperties(v);
         addBooleanProperties(v);
     }
@@ -34,7 +29,6 @@ public class OrganizationAttributes {
             "area",
             "username",
             "email",
-            "password",
             "job-title",
             "mobile",
             "first-name",
@@ -46,14 +40,7 @@ public class OrganizationAttributes {
             "working-hours-end",
             "oid"
         };
-        for (int i = 0; i < keys.length; i++) {
-            if (hasProperty(keys[i], v)) {
-                Property prop = new Property();
-                prop.key = keys[i];
-                prop.value = v.getProperty(keys[i]);
-                properties.add(prop);
-            }
-        }
+        addProperties(v, keys);
     }
 
     /**
@@ -70,32 +57,6 @@ public class OrganizationAttributes {
             "public-dashboards",
             "generation"
         };
-        for (int i = 0; i < keys.length; i++) {
-            if (hasProperty(keys[i], v)) {
-                Property prop = new Property();
-                prop.key = keys[i];
-                if (v.getProperty(keys[i])) {
-                    prop.value = "True";
-                } else {
-                    prop.value = "False";
-                }
-                properties.add(prop);
-            }
-        }
-    }
-
-    /**
-     * Checks if the vertex has a certain property
-     *
-     * @param key The property we want to check
-     * @param v The vertex we want the properties from
-     */
-    private boolean hasProperty(String key, Vertex v) {
-        try {
-            v.getProperty(key);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        addProperties(v, keys);
     }
 }
