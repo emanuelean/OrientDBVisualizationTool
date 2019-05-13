@@ -6,11 +6,11 @@ import javafx.beans.property.StringProperty;
 /**
  * Contains all the data about an entity
  * 
- * @author Niels
+ * @author Niels, Albert
  */
 public class Entity {
 
-    private StringProperty id;
+    private final StringProperty id;
 
     /**
      * constructor

@@ -1,4 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.database;
+
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.tinkerpop.blueprints.Direction;
@@ -9,14 +10,13 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
  * Responsible for retrieving specific information about places from the
  * database
  *
- * @author Niels
+ * @author Niels, Albert
  */
-
 public class PlaceData extends Database {
 
-    private PlaceManager placeManager;
+    private final PlaceManager placeManager;
 
-/**
+    /**
      * constructor
      *
      * @param graph The graph we want to load the data from
@@ -26,16 +26,19 @@ public class PlaceData extends Database {
         placeManager = PlaceManager.getInstance();
     }
 
+    /**
+     * Refreshes the data
+     *
+     * @param id The id of the place we want to refresh
+     */
     @Override
     public void refresh(String id) {
         placeManager.emptyPlaces();
         Vertex v = getVertexById("V_location.id", id);
         addPlaceToModel(v);
-        //For development purposes only
-        //placeManager.printData();
     }
 
-/**
+    /**
      * Adds a place and all its children to the model
      *
      * @param place The place we want to add
@@ -44,11 +47,11 @@ public class PlaceData extends Database {
         addPlaceToModel(place, null);
     }
 
-/**
+    /**
      * Adds a place and all its children to the model and connects all the
      * children to their respective parents
      *
-     * @param place  The place we want to add
+     * @param place The place we want to add
      * @param parent The parent we want to link the place to
      */
     private void addPlaceToModel(Vertex place, Place parent) {
@@ -64,10 +67,16 @@ public class PlaceData extends Database {
             addPlaceToModel(v, newPlace);
         }
     }
-    
+
+    /**
+     * Retrieves the attributes of a certain place
+     * 
+     * @param place The place we want to retrieve the attributes from
+     * @return A class containing all the attributes
+     */
     public PlaceAttributes getAttributes(Place place) {
-    	Vertex v = getVertexById("V_location.id", place.getId());
-    	return new PlaceAttributes(v);
+        Vertex v = getVertexById("V_location.id", place.getId());
+        return new PlaceAttributes(v);
     }
-   
+
 }

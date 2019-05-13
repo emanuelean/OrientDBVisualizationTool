@@ -2,43 +2,33 @@ package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 /**
- * MainView sets the view components from fxml file and adds scene
+ * MainView sets the view components from fxml file and adds scene for the tree
+ * view
+ *
+ * @author Yona, Niels, Albert
  */
-public class MainView extends Application {
+public class MainView extends View {
 
-    private static final int WIDTH = 1400;
+    private MainController controller;
 
     /**
-     * Scene is created and the fxml file is loaded.
+     * Constructor
+     */
+    public MainView() {
+        super("fxml/MainDesign.fxml");
+        controller = fxmlLoader.getController();
+    }
+
+    /**
+     * Sets the controller
      *
-     * @param primaryStage The basic underlying frame
-     * @throws Exception for Application error handling
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.getIcons().add(new Image("icons/sb-icon.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/MainDesign.fxml"));
-        Parent root = fxmlLoader.load();
-        MainController controller = fxmlLoader.getController();
+    public void start() {
         controller.setPlaceManager(PlaceManager.getInstance());
         controller.addRootNodeToPane();
         controller.populateTreeView();
-        primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
-        Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
-        scene.getStylesheets().add("styles/Styles.css");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static int getWIDTH() {
-        return WIDTH;
     }
 }

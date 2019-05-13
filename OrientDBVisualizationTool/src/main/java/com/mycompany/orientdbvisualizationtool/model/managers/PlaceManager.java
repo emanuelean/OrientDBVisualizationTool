@@ -136,7 +136,7 @@ public class PlaceManager {
      */
     public void printData() {
         for (Place p : places) {
-            System.out.println(p.getDisplayName());
+            System.out.println(p.toString());
         }
     }
 

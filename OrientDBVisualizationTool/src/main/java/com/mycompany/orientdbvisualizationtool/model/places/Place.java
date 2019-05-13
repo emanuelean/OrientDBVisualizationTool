@@ -2,22 +2,20 @@ package com.mycompany.orientdbvisualizationtool.model.places;
 
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Super class for places
- * Contains all the functionality for locations, buildings, floors, rooms, area and cells
+ * Super class for places Contains all the functionality for locations,
+ * buildings, floors, rooms, area and cells
  *
- * @author albert
+ * @author Albert, Niels
  */
 public abstract class Place {
 
-    private String id;
-    private String name;
+    private final String id;
+    private final String name;
     private Place parent;
     private ArrayList<Place> children;
     private ArrayList<Entity> entities;
@@ -112,14 +110,15 @@ public abstract class Place {
      *
      * @return the name to display on the graph
      */
-    public String getDisplayName() {
+    @Override
+    public String toString() {
         int index = name.lastIndexOf('.');
         if (index == -1) {
             return type + ": " + name;
         }
         return type + ": " + name.substring(index + 1);
     }
-    
+
     /**
      *
      * @return the name to display in the list
@@ -172,26 +171,28 @@ public abstract class Place {
             entities.add(newEntity);
         }
     }
-    
+
     /**
      * adds an entity to the entities list
+     *
      * @param newEntity the new entity to be added
      */
-    public void addEntity(Entity newEntity){
+    public void addEntity(Entity newEntity) {
         entities.add(newEntity);
     }
 
     /**
      * gets the full path of place from root.
-     * @return
+     *
+     * @return The path
      */
     public String getPath() {
         Place place = this;
         StringBuilder path = new StringBuilder();
-        path.insert(0, place.getDisplayName() + "/");
+        path.insert(0, place.toString() + "/");
         while (place.getParent() != null) {
             place = place.getParent();
-            path.insert(0, place.getDisplayName() + "/");
+            path.insert(0, place.toString() + "/");
         }
         return path.toString();
     }

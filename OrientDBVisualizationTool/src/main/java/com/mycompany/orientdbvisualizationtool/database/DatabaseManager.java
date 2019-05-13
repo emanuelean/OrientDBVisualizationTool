@@ -6,7 +6,7 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
  * Responsible for setting up the database connection and initializing the
  * classes that take care of the retrieving the data
  *
- * @author Niels
+ * @author Niels, Albert
  */
 public class DatabaseManager {
 
