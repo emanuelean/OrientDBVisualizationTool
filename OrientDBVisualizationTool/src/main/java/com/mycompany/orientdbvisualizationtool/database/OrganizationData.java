@@ -65,4 +65,9 @@ public class OrganizationData extends Database {
             refresh(v);
         }
     }
+    
+    public OrganizationAttributes getAttributes(Organization org) {
+    	Vertex v = getVertexById("V_location.id", org.getId());
+    	return new OrganizationAttributes(v);
+    }
 }
