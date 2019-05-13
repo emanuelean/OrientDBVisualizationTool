@@ -21,6 +21,8 @@ public class PlaceAttributes {
     private String elabel;
     private String buildingtype;
     private double eindex;
+    
+    
 
     /**
      * Creates an object with the attributes of the place
