@@ -5,11 +5,15 @@ import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 
 /**
+ * Class that can retrieve and save the attributes of a certain vertex
+ * 
  * @author Niels, Albert, Carlos
- *
  */
 public class Attributes {
 
+    /**
+     * A list of properties of a certain vertex
+     */
     protected ArrayList<Property> properties;
 
     /**
@@ -46,7 +50,7 @@ public class Attributes {
     private boolean hasProperty(String key, Vertex v) {
         try {
             String value = v.getProperty(key);
-            if(value == null) {
+            if (value == null) {
                 return false;
             }
         } catch (Exception e) {
@@ -56,7 +60,7 @@ public class Attributes {
     }
 
     /**
-     * 
+     *
      * @return A list of properties
      */
     public ArrayList<Property> getProperties() {
