@@ -8,10 +8,9 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 
 /**
  * Super class that is responsible for retrieving specific data from the
- * database 
- * Can be used to retrieve vertices, edges or execute queries
+ * database Can be used to retrieve vertices, edges or execute queries
  *
- * @author Niels
+ * @author Niels, Albert
  */
 public abstract class Database {
 

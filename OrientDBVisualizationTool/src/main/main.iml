@@ -21,5 +21,6 @@
     <orderEntry type="library" name="orientdb core" level="project" />
     <orderEntry type="library" name="orientdb graph" level="project" />
     <orderEntry type="library" name="org.junit:junit5-api:5.0.0-ALPHA" level="project" />
+    <orderEntry type="library" name="junit:junit:4.12" level="project" />
   </component>
 </module>

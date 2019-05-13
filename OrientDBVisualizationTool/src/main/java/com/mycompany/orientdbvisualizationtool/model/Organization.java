@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Organization {
 
-    private String id;
+    private final String id;
     private List<Place> places;
 
     /**
@@ -49,4 +49,11 @@ public class Organization {
         places = null;
     }
 
+    /**
+     *
+     * @return The list of places connected to this organization
+     */
+    public List<Place> getPlaces() {
+        return places;
+    }
 }

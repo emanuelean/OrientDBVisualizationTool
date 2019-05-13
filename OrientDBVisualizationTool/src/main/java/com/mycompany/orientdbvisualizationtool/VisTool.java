@@ -1,6 +1,6 @@
 package com.mycompany.orientdbvisualizationtool;
 
-import com.mycompany.orientdbvisualizationtool.View.MainView;
+import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
@@ -10,11 +10,10 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 import java.util.Random;
 import javafx.application.Application;
 import javax.swing.JOptionPane;
-
 /**
  * Main class
  *
- * @author Niels
+ * @author Niels, Albert, Yona
  */
 public class VisTool {
 
@@ -26,15 +25,7 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
-        //temporary code to choose between 2 different locations for demo purposes
-        int dialogButton = JOptionPane.YES_NO_OPTION;
-        int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to use gsv.hq choose yes, if you want to use demo.TopLevel choose no", "Warning", dialogButton);
-        if (dialogResult == JOptionPane.YES_OPTION) {
-            db.getPlaceData().refresh("GSV.HQ");
-        } else {
-            db.getPlaceData().refresh("demo.TopLevel");
-        }
-        Application.launch(MainView.class, args);
+        Application.launch(VisApplication.class, args);
     }
 
     /**
@@ -42,11 +33,14 @@ public class VisTool {
      *
      */
     private static void testDataForFrontEnd() {
-        PlaceManager manager = PlaceManager.getInstance();
-        addTestPlaces(manager, null, 0);
+        addTestPlaces(null, 0);
         addTestOrganizations();
     }
 
+
+    /**
+     * Adds test organization
+     */
     private static void addTestOrganizations() {
         int organizationAmount = 8;
         int placesAmount = 4;
@@ -59,8 +53,14 @@ public class VisTool {
         }
     }
 
-    private static void addTestPlaces(PlaceManager manager, Place parent, int index) {
-
+    /**
+     * Adds test places
+     *
+     * @param parent The parent of the places
+     * @param index The index of the place
+     */
+    private static void addTestPlaces(Place parent, int index) {
+        PlaceManager manager = PlaceManager.getInstance();
         //base case
         if (index >= PlaceCategory.values().length) {
             return;
@@ -84,14 +84,14 @@ public class VisTool {
         //recursvily call it for all the children
         int childrenAmount = 5;
         for (int i = 0; i < childrenAmount; i++) {
-            addTestPlaces(manager, newPlace, index + 1);
+            addTestPlaces(newPlace, index + 1);
         }
     }
 
     /**
-     * Adds the entities to a place
-     * 
-     * @param currentPlace 
+     * adds random test entities
+     *
+     * @param currentPlace The place that the entities are added to
      */
     private static void addEntities(Place currentPlace) {
         Random random = new Random();

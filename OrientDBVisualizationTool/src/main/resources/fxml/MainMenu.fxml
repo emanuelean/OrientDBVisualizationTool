@@ -37,10 +37,10 @@
                                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x2" />
                             </textFill>
                         </Label>
-                  <TreeView fx:id="Left_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
-                  <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
-                  <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
-                  <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
+                        <TreeView fx:id="Organization_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
+                        <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
+                        <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
+                        <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>
                         <Blend />
@@ -56,10 +56,10 @@
                                 <Color blue="0.624" green="0.624" red="0.624" fx:id="x4" />
                             </textFill>
                         </Label>
-                  <TreeView fx:id="Left_Tree_View1" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
-                  <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
-                  <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
-                  <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
+                        <TreeView fx:id="Location_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
+                        <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
+                        <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
+                        <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>
                         <Blend />
@@ -68,30 +68,36 @@
                 <AnchorPane>
                     <children>
                         <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="#9f9f9f" />
-                  <VBox layoutX="14.0" layoutY="41.0" prefHeight="481.0" prefWidth="237.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
-                     <children>
-                        <Label text="Name" textFill="#515151" />
-                        <TextField fx:id="Node_Name_Text_Field">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <Label text="ID" textFill="#515151" />
-                        <TextField fx:id="Node_ID_Text_Field">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <Label text="Type" textFill="#515151" />
-                        <TextField fx:id="Node_Type_Text_Field">
-                           <VBox.margin>
-                              <Insets bottom="10.0" top="5.0" />
-                           </VBox.margin></TextField>
-                     </children>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
-                  </VBox>
+                        <VBox layoutX="14.0" layoutY="41.0" prefHeight="481.0" prefWidth="237.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
+                            <children>
+                                <Label text="Name" textFill="#515151" />
+                                <TextField fx:id="Node_Name_Text_Field">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="5.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <Label text="ID" textFill="#515151" />
+                                <TextField fx:id="Node_ID_Text_Field">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="5.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <Label text="Type" textFill="#515151" />
+                                <TextField fx:id="Node_Type_Text_Field">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="5.0" />
+                                    </VBox.margin>
+                                </TextField>
+                                <Button text="View Tree" fx:id="Select_Field" onAction="#selectPlace">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="5.0" />
+                                    </VBox.margin>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                        </VBox>
                     </children>
                 </AnchorPane>
             </items>
