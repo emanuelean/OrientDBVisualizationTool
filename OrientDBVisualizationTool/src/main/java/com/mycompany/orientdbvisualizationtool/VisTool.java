@@ -9,7 +9,7 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 
 import java.util.Random;
 import javafx.application.Application;
-
+import javax.swing.JOptionPane;
 /**
  * Main class
  *
@@ -36,6 +36,7 @@ public class VisTool {
         addTestPlaces(null, 0);
         addTestOrganizations();
     }
+
 
     /**
      * Adds test organization
