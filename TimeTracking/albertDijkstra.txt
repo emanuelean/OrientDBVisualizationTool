@@ -162,8 +162,8 @@
 11/05 - Started learning javafx
 11/05 - Started learning javafx
 11/05 - Started learning javafx
-13/05 - Making main menu
-13/05 - Making main menu
-13/05 - Making main menu
-13/05 - Making main menu
-13/05 - Making main menu
+13/05 - refactoring and merging
+13/05 - refactoring and merging
+13/05 - refactoring and merging
+13/05 - refactoring and merging
+13/05 - refactoring and merging
