@@ -24,6 +24,7 @@ public class VisTool {
     public static void main(String[] args) {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getOrganizationData().refreshAll();
+        testDataForFrontEnd();
         Application.launch(VisApplication.class, args);
     }
 
@@ -79,7 +80,7 @@ public class VisTool {
         Place newPlace = manager.addPlace(id, name, currentCategory, parent);
         addEntities(newPlace);
         
-        //recursvily call it for all the children
+        //recursively call it for all the children
         int childrenAmount = 5;
         for (int i = 0; i < childrenAmount; i++) {
             addTestPlaces(newPlace, index+1);

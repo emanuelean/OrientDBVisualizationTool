@@ -22,5 +22,10 @@
     <orderEntry type="library" name="orientdb graph" level="project" />
     <orderEntry type="library" name="org.junit:junit5-api:5.0.0-ALPHA" level="project" />
     <orderEntry type="library" name="junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="com.orientechnologies:orientdb-tools:2.2.21" level="project" />
+    <orderEntry type="library" name="net.java.dev.jna:jna-platform:4.2.1" level="project" />
+    <orderEntry type="library" name="net.java.dev.jna:jna-platform:4.2.11" level="project" />
+    <orderEntry type="library" name="com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
+    <orderEntry type="library" name="com.orientechnologies:orientdb-enterprise:2.1.21" level="project" />
   </component>
 </module>

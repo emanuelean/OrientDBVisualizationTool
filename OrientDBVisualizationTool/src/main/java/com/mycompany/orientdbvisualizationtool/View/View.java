@@ -49,8 +49,7 @@ public abstract class View {
     public void start() {
     }
 
-    ;
-    
+
     /**
      * 
      * @return The scene

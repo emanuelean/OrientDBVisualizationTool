@@ -23,7 +23,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.orientdbvisualizationtool.controller.MainController">
+<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.orientdbvisualizationtool.controller.MainController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
@@ -65,7 +65,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <SplitPane dividerPositions="0.2, 0.8" focusTraversable="true" VBox.vgrow="ALWAYS">
+        <SplitPane fx:id="Center_Split_Pane" dividerPositions="0.2, 0.8" focusTraversable="true" VBox.vgrow="ALWAYS">
             <items>
                 <AnchorPane>
                     <children>
@@ -148,6 +148,7 @@
         </SplitPane>
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
             <children>
+            <Button fx:id="Left_Collapse_Button" layoutX="607.0" layoutY="13.0" mnemonicParsing="false" text="◀" />
                 <Label fx:id="Left_Status_Label" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <font>
                         <Font size="11.0" fx:id="x3" />
@@ -158,6 +159,7 @@
                 </Label>
                 <Pane HBox.hgrow="ALWAYS" />
                 <Label fx:id="Right_Status_Label" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
+            <Button fx:id="Right_Collapse_Button" mnemonicParsing="false" text="▶" />
                 <ChoiceBox fx:id="Theme_Choice_Box" prefHeight="25.0" prefWidth="103.0" />
             </children>
             <padding>

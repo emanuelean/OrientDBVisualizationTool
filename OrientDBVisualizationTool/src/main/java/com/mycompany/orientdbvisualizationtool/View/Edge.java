@@ -1,7 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.geometry.Bounds;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 
 /**
@@ -10,21 +10,18 @@ import javafx.scene.shape.Line;
  */
 public class Edge extends Line {
 
-    private final Node firstNode;
-    private final Node secondNode;
-    private AnchorPane anchorPane;
+    private Node firstNode;
+    private Node secondNode;
 
     /**
      * Constructor
      *
      * @param firstNode The first node that the edge is connected to
      * @param secondNode The second node that the edge is connected to
-     * @param anchorPane The anchor pane this edge is displayed at
      */
-    public Edge(Node firstNode, Node secondNode, AnchorPane anchorPane) {
+    public Edge(Node firstNode, Node secondNode) {
         this.firstNode = firstNode;
         this.secondNode = secondNode;
-        this.anchorPane = anchorPane;
         //id for css
         this.setId("Edge");
         this.setStartEndPoints();
@@ -34,17 +31,14 @@ public class Edge extends Line {
      * Sets the start/end points for connecting nodes
      */
     private void setStartEndPoints() {
+        Pane parentPane = firstNode.getContainerPane();
+        Bounds boundsInSceneParent = parentPane.sceneToLocal(firstNode.localToScene(firstNode.getBoundsInLocal()));
+        Bounds boundsInSceneChild = parentPane.sceneToLocal(secondNode.localToScene(secondNode.getBoundsInLocal()));
 
-        Bounds firstNodePoint = anchorPane.sceneToLocal(firstNode.localToScene(firstNode.getBoundsInLocal()));
-        Bounds secondNodePoint = anchorPane.sceneToLocal(secondNode.localToScene(secondNode.getBoundsInLocal()));
-
-        double firstNodeOffset = (firstNode.getParent().getBoundsInLocal().getWidth() - firstNode.getRectangle().getBoundsInLocal().getWidth()) / 2;
-        double secondNodeOffset = (secondNode.getParent().getBoundsInLocal().getWidth() - secondNode.getWidth()) / 2;
-
-        this.setStartX(firstNodePoint.getMaxX() - firstNodeOffset);
-        this.setStartY(firstNodePoint.getMaxY() - firstNode.getHeight() / 2);
-        this.setEndX(secondNodePoint.getMinX() + secondNodeOffset);
-        this.setEndY(secondNodePoint.getMaxY() - secondNode.getHeight() / 2);
+        this.setStartX(boundsInSceneParent.getMaxX());
+        this.setStartY(boundsInSceneParent.getMaxY() - firstNode.getHeight() / 2);
+        this.setEndX(boundsInSceneChild.getMinX());
+        this.setEndY(boundsInSceneChild.getMaxY() - secondNode.getHeight() / 2);
     }
 
     /**
@@ -61,5 +55,21 @@ public class Edge extends Line {
      */
     public Node getSecondNode() {
         return secondNode;
+    }
+
+    /**
+     *
+     * @param firstNode start node of edge line
+     */
+    public void setFirstNode(Node firstNode) {
+        this.firstNode = firstNode;
+    }
+
+    /**
+     *
+     * @param secondNode end node of edge line
+     */
+    public void setSecondNode(Node secondNode) {
+        this.secondNode = secondNode;
     }
 }

@@ -28,6 +28,8 @@ public class Node extends StackPane {
     private MainController mainController;
     private Boolean expanded;
     private VBox childrenVBox;
+    private Pane containerPane;
+
 
     /**
      * Constructor
@@ -38,25 +40,45 @@ public class Node extends StackPane {
      * @param displayName The display name of the node
      */
     public Node(String id, String nodeName, String NodeType, String displayName) {
+        this.nodeId = id;
+        this.selected = false;
+        this.expanded = false;
+        this.nodeName = nodeName;
+        this.nodeType = NodeType;
+        this.nodeDisplayName = displayName;
         this.DEFAULT_COLOR = Color.LIGHTGRAY;
         this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
-        this.nodeId = id;
-        this.nodeName = nodeName;
-        this.nodeDisplayName = displayName;
-        this.nodeType = NodeType;
-        this.childrenVBox = new VBox();
+
+        this.setId("NodeStackPane");
 
         this.label = new Text(displayName);
         this.label.setFont(new Font(13));
         this.label.setId("NodeLabel");
-        this.selected = false;
 
         this.setRectangleProperty();
-        this.getChildren().addAll(rectangle, this.getLabel());
-        this.expanded = false;
+        this.setLayoutProperties();
+
         Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
         this.setMouseListenerProperties();
-        this.setId("NodeStackPane");
+    }
+
+    /**
+     * Sets up the packing layout elements such as childrenVBox and containerPane
+     */
+    private void setLayoutProperties() {
+        this.getChildren().addAll(rectangle, this.getLabel());
+        this.layout();
+        //this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        this.childrenVBox = new VBox(15);
+        this.childrenVBox.setLayoutX(200);
+        this.childrenVBox.setLayoutY(0);
+        //this.childrenVBox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+        this.containerPane = new Pane();
+        this.containerPane.getChildren().addAll(this, childrenVBox);
+        this.containerPane.layout();
+        //this.containerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }
 
     /**
@@ -104,7 +126,7 @@ public class Node extends StackPane {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 //Double click
                 if (event.getClickCount() == 2) {
-                    mainController.expandNode(this);
+                    mainController.expandContractNode(this);
                 }
             }
         }
@@ -189,7 +211,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @param expanded The new expanded value
      */
     public void setExpanded(Boolean expanded) {
@@ -197,7 +219,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @param vbox The new vertical box
      */
     public void setChildrenVBox(VBox vbox) {
@@ -205,7 +227,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return The node id
      */
     public String getNodeId() {
@@ -213,7 +235,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return The node name
      */
     public String getNodeName() {
@@ -221,7 +243,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return The display name
      */
     public String getDisplayName() {
@@ -229,7 +251,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return The node type
      */
     public String getNodeType() {
@@ -237,7 +259,7 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return The vertical box for the children
      */
     public VBox getChildrenVBox() {
@@ -245,11 +267,19 @@ public class Node extends StackPane {
     }
 
     /**
-     * 
+     *
      * @return If this is expanded
      */
     public Boolean isExpanded() {
         return expanded;
+    }
+
+    /**
+     *
+     * @return the container pane that holds this node and its children (a subtree containing pane)
+     */
+    public Pane getContainerPane() {
+        return containerPane;
     }
 
 }
