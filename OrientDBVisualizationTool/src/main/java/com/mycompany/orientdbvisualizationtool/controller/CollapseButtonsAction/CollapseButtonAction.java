@@ -1,5 +1,6 @@
 package com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction;
 
+import com.mycompany.orientdbvisualizationtool.View.MainView;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
@@ -13,7 +14,7 @@ public abstract class CollapseButtonAction {
     private SplitPane Split_Pane;
     private AnchorPane Collapse_Anchor_Pane;
     private AnchorPane Center_Anchor_Pane;
-    private final int WIDTH = 1400;
+    private final int WIDTH = MainView.getWIDTH();
     private boolean left;
 
     /**

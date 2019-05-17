@@ -64,8 +64,16 @@ public class MainController extends ParentController {
     private Label Right_Status_Label;
     @FXML
     private ChoiceBox Theme_Choice_Box;
+    @FXML
+    private AnchorPane Center_Anchor_Pane;
 
+    private ArrayList<Node> nodes;
+    private ArrayList<Edge> edges;
+    private Double mouseSourceX = 0.;
+    private Double mouseSourceY = 0.;
+    private Rectangle selectionArea;
     private PlaceManager placeManager;
+    private static final int WIDTH = MainView.getWIDTH();
 
     /**
      * The main default properties of controller are initialized
@@ -158,34 +166,6 @@ public class MainController extends ParentController {
         Center_Anchor_Pane.setOnScroll(new ScrollZoomAction(Center_Anchor_Pane));
     }
 
-    /**
-     * Center anchor pane controls
-     */
-    @FXML
-    private AnchorPane Center_Anchor_Pane;
-
-    private ArrayList<Node> nodes;
-    private ArrayList<Edge> edges;
-    private Double mouseSourceX = 0.;
-    private Double mouseSourceY = 0.;
-    private Rectangle selectionArea;
-    private static final int WIDTH = MainView.getWIDTH();
-
-    public Double getMouseSourceX() {
-        return mouseSourceX;
-    }
-
-    public Double getMouseSourceY() {
-        return mouseSourceY;
-    }
-
-    public void setMouseSourceX(Double mouseSourceX) {
-        this.mouseSourceX = mouseSourceX;
-    }
-
-    public void setMouseSourceY(Double mouseSourceY) {
-        this.mouseSourceY = mouseSourceY;
-    }
 
     /**
      * Action taken when mouse dragged in center anchor pane
@@ -442,5 +422,33 @@ public class MainController extends ParentController {
     public void quitProgram(ActionEvent actionEvent) {
         Stage stage = (Stage) Center_Anchor_Pane.getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * @return mouseSourceX on mouse pressed
+     */
+    public Double getMouseSourceX() {
+        return mouseSourceX;
+    }
+
+    /**
+     * @return mouseSourceY on mouse pressed
+     */
+    public Double getMouseSourceY() {
+        return mouseSourceY;
+    }
+
+    /**
+     * @param mouseSourceX on mouse pressed
+     */
+    public void setMouseSourceX(Double mouseSourceX) {
+        this.mouseSourceX = mouseSourceX;
+    }
+
+    /**
+     * @param mouseSourceY on mouse pressed
+     */
+    public void setMouseSourceY(Double mouseSourceY) {
+        this.mouseSourceY = mouseSourceY;
     }
 }
