@@ -76,8 +76,11 @@ public class MainController extends ParentController {
         edges = new ArrayList<>();
 
         Node_Name_Text_Field.setDisable(true);
+        Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
         Node_ID_Text_Field.setDisable(true);
+        Node_ID_Text_Field.setStyle("-fx-opacity: 1;");
         Node_Type_Text_Field.setDisable(true);
+        Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
 
         selectionArea = new Rectangle();
         selectionArea.setFill(Color.rgb(0, 70, 255, 0.1));
@@ -258,8 +261,9 @@ public class MainController extends ParentController {
     }
 
     /**
-     * expands a node to add/show the children of the node, if node is not expanded and
-     * contracts a node to remove/hide the children of the node otherwise.
+     * expands a node to add/show the children of the node, if node is not
+     * expanded and contracts a node to remove/hide the children of the node
+     * otherwise.
      *
      * @param parentNode source node for expansion
      */
@@ -302,8 +306,8 @@ public class MainController extends ParentController {
     }
 
     /**
-     * clears and redraws the edge present in the central pane.
-     * used when nodes are moved around (when a node is expanded).
+     * clears and redraws the edge present in the central pane. used when nodes
+     * are moved around (when a node is expanded).
      */
     private void clearEdgeLinks() {
         edges.clear();
@@ -331,7 +335,8 @@ public class MainController extends ParentController {
     }
 
     /**
-     * recursively redraws the edges then nodes are moved around, (when a node is expanded).
+     * recursively redraws the edges then nodes are moved around, (when a node
+     * is expanded).
      *
      * @param startNode starting node of the subtree that needs to redraw edges.
      */
@@ -421,9 +426,12 @@ public class MainController extends ParentController {
         */
     }
 
+    /**
+     * Switches from the main view to the main menu
+     */
     public void switchToMainMenu() {
+        Center_Anchor_Pane.getChildren().clear();
         VisApplication.getInstance().changeToMenu();
-        //does not close anything yet, should maybe happen?
     }
 
     /**
