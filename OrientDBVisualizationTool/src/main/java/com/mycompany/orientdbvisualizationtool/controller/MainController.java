@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Objects;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class for the tree view
@@ -117,7 +118,7 @@ public class MainController {
                 Left_Collapse_Button.setText("▶");
             } else {
                 Center_Split_Pane.getItems().add(0, Left_Anchor_Pane);
-                if(Center_Split_Pane.getItems().size() == 2) {
+                if (Center_Split_Pane.getItems().size() == 2) {
                     Center_Split_Pane.setDividerPosition(0, 0.2);
                     Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
                 } else if (Center_Split_Pane.getItems().size() == 3) {
@@ -186,26 +187,26 @@ public class MainController {
      */
     private void setHideActionProperty() {
         Hide_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        if (node.isSelected()) {
-                            node.setVisible(false);
-                            for (Edge edge : edges) {
-                                if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                    edge.setVisible(false);
-                                }
-                            }
+            for (Node node : nodes) {
+                if (node.isSelected()) {
+                    node.setVisible(false);
+                    for (Edge edge : edges) {
+                        if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
+                            edge.setVisible(false);
                         }
                     }
                 }
+            }
+        }
         );
         Show_All_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        node.setVisible(true);
-                    }
-                    for (Edge edge : edges) {
-                        edge.setVisible(true);
-                    }
-                }
+            for (Node node : nodes) {
+                node.setVisible(true);
+            }
+            for (Edge edge : edges) {
+                edge.setVisible(true);
+            }
+        }
         );
     }
 
@@ -391,8 +392,9 @@ public class MainController {
     }
 
     /**
-     * expands a node to add/show the children of the node, if node is not expanded and
-     * contracts a node to remove/hide the children of the node otherwise.
+     * expands a node to add/show the children of the node, if node is not
+     * expanded and contracts a node to remove/hide the children of the node
+     * otherwise.
      *
      * @param parentNode source node for expansion
      */
@@ -435,8 +437,8 @@ public class MainController {
     }
 
     /**
-     * clears and redraws the edge present in the central pane.
-     * used when nodes are moved around (when a node is expanded).
+     * clears and redraws the edge present in the central pane. used when nodes
+     * are moved around (when a node is expanded).
      */
     private void clearEdgeLinks() {
         edges.clear();
@@ -464,9 +466,11 @@ public class MainController {
     }
 
     /**
-     * recursively redraws the edges then nodes are moved around, (when a node is expanded).
+     * recursively redraws the edges then nodes are moved around, (when a node
+     * is expanded).
      *
-     * @param startNode: starting node of the subtree that needs to redraw edges.
+     * @param startNode: starting node of the subtree that needs to redraw
+     * edges.
      */
     private void redrawEdges(Node startNode) {
         if (startNode.getChildrenVBox().getChildren().isEmpty()) {
@@ -520,8 +524,8 @@ public class MainController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items
-     *                    are added
+     * @param sourceItem a source treeView-item to which children treeView-items
+     * are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
@@ -587,9 +591,12 @@ public class MainController {
          */
     }
 
+    /**
+     * Switches from the main view to the main menu
+     */
     public void switchToMainMenu() {
+        Center_Anchor_Pane.getChildren().clear();
         VisApplication.getInstance().changeToMenu();
-        //does not close anything yet, should maybe happen?
     }
 
     /**
