@@ -41,3 +41,6 @@
 28/04 - Solving issues with orientDB
 28/04 - Solving issues with orientDB
 28/04 - Retrieving attributes
+11/05 - Retrieving attributes from orgs
+11/05 - Retrieving attributes from orgs
+13/05 - Retrieving attributes from orgs

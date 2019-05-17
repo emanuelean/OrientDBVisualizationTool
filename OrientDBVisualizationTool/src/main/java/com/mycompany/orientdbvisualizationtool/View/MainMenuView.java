@@ -1,42 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainMenuController;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 /**
+ * MainView sets the view components from fxml file and adds scene for the main
+ * menu
  *
- * @author User
+ * @author Niels
  */
-public class MainMenuView extends Application {
+public class MainMenuView extends View {
 
-    public static final int WIDTH = 1400;
+    private MainMenuController controller;
 
     /**
-     * Scene is created and the fxml file is loaded.
-     * @param primaryStage The basic underlying frame
-     * @throws Exception for Application error handling
+     * Constructor
      */
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.getIcons().add(new Image("icons/sb-icon.png"));
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/MainMenu.fxml"));
-        Parent root = fxmlLoader.load();
-        MainMenuController controller = fxmlLoader.getController();
-        primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
-        Scene scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
-        primaryStage.setScene(scene);
-        //primaryStage.setMaximized(true);
-        primaryStage.show();
+    public MainMenuView() {
+        super("fxml/MainMenu.fxml");
+        controller = fxmlLoader.getController();
     }
 
 }

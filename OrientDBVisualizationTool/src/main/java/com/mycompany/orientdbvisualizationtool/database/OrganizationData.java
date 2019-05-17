@@ -1,4 +1,3 @@
-
 package com.mycompany.orientdbvisualizationtool.database;
 
 import com.mycompany.orientdbvisualizationtool.model.Organization;
@@ -12,11 +11,11 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
  * Responsible for retrieving specific information about organizations from the
  * database
  *
- * @author Niels
+ * @author Niels, Albert
  */
 public class OrganizationData extends Database {
 
-    private OrganizationManager organizationManager;
+    private final OrganizationManager organizationManager;
 
     /**
      * constructor
@@ -64,5 +63,16 @@ public class OrganizationData extends Database {
         for (Vertex v : queryVertices("SELECT id FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)")) {
             refresh(v);
         }
+    }
+
+    /**
+     * Retrieves the attributes of a certain organization
+     *
+     * @param org The organization we want to know the attributes of
+     * @return An object containing the place attributes
+     */
+    public OrganizationAttributes getAttributes(Organization org) {
+        Vertex v = getVertexById("V_organization.id", org.getId());
+        return new OrganizationAttributes(v);
     }
 }

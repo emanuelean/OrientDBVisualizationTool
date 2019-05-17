@@ -23,8 +23,15 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
+/**
+ * FXML Controller class for the tree view
+ *
+ * @author Yona
+ */
 public class MainController {
 
     @FXML
@@ -48,7 +55,7 @@ public class MainController {
     @FXML
     public Label Right_Status_Label;
     @FXML
-    public CheckBox Dark_Mode_Check_Box;
+    public ChoiceBox Theme_Choice_Box;
 
     private PlaceManager placeManager;
 
@@ -75,26 +82,28 @@ public class MainController {
 
         setTableViewCellsProperty();
         setHideActionProperty();
-        setDarkModeCheckBoxProperty();
+        setThemeChoiceBoxProperty();
         zoomFunction();
     }
 
     /**
      * Setting the check box action property to enable/disable Dark Mode theme
      */
-    private void setDarkModeCheckBoxProperty() {
-        Dark_Mode_Check_Box.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
-            if (isSelected) {
-                Center_Anchor_Pane.getScene().getStylesheets().add("styles/DarkModeStyle.css");
-            } else {
-                Center_Anchor_Pane.getScene().getStylesheets().remove("styles/DarkModeStyle.css");
-            }
-        });
+    private void setThemeChoiceBoxProperty() {
+        File folder = new File(getClass().getResource("/styles").getPath());
+        Theme_Choice_Box.getItems().addAll("Default Theme", "Dark Mode", "Natural Blue", "S.B. Green", "Crimson Red");
+        Theme_Choice_Box.getSelectionModel().selectFirst();
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                    Center_Anchor_Pane.getScene().getStylesheets().remove("styles/" + Objects.requireNonNull(folder.listFiles())[oldValue.intValue()].getName());
+                    Center_Anchor_Pane.getScene().getStylesheets().add("styles/" + Objects.requireNonNull(folder.listFiles())[newValue.intValue()].getName());
+                }
+        );
     }
 
     /**
-     * Table view listens to changes with respect to the properties that a Node has.
-     * The table view uses the id from Entity class.
+     * Table view listens to changes with respect to the properties that a Node
+     * has. The table view uses the id from Entity class.
      */
     private void setTableViewCellsProperty() {
         Table_View_Entity_ID.setPrefWidth(240);
@@ -103,40 +112,38 @@ public class MainController {
     }
 
     /**
-     * The Hide_Button hides nodes on button pressed and its corresponding edges.
-     * The Show_All_Button shows all hidden nodes.
+     * The Hide_Button hides nodes on button pressed and its corresponding
+     * edges. The Show_All_Button shows all hidden nodes.
      */
     private void setHideActionProperty() {
         Hide_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        if (node.isSelected()) {
-                            node.setVisible(false);
-                            for (Edge edge : edges) {
-                                if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                    edge.setVisible(false);
-                                }
-                            }
+            for (Node node : nodes) {
+                if (node.isSelected()) {
+                    node.setVisible(false);
+                    for (Edge edge : edges) {
+                        if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
+                            edge.setVisible(false);
                         }
                     }
                 }
+            }
+        }
         );
         Show_All_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        node.setVisible(true);
-                    }
-                    for (Edge edge : edges) {
-                        edge.setVisible(true);
-                    }
-                }
+            for (Node node : nodes) {
+                node.setVisible(true);
+            }
+            for (Edge edge : edges) {
+                edge.setVisible(true);
+            }
+        }
         );
     }
 
     /**
-     * Zoom functionality
-     * When scrolling up and down, the pane that contains the tree
-     * is zooming in and out on the current mouse point coordinates.
+     * Zoom functionality When scrolling up and down, the pane that contains the
+     * tree is zooming in and out on the current mouse point coordinates.
      */
-
     private void zoomFunction() {
         Center_Anchor_Pane.setOnScroll(event -> {
             if (event.isControlDown()) {
@@ -159,7 +166,6 @@ public class MainController {
             }
         });
     }
-
 
     /**
      * Center anchor pane controls
@@ -215,8 +221,8 @@ public class MainController {
 
     /**
      * Action taken in the anchor pane in the center. Used for deselection when
-     * clicking and in addition used for recording the start point of a mouse position for function
-     * centerPaneDragged();
+     * clicking and in addition used for recording the start point of a mouse
+     * position for function centerPaneDragged();
      *
      * @param mouseEvent Mouse event for mouse pressed
      */
@@ -274,7 +280,7 @@ public class MainController {
         String id = rootPlace.getId();
         String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
-        String displayName = rootPlace.getDisplayName();
+        String displayName = rootPlace.toString();
         Node rootNode = new Node(id, name, type, displayName);
         rootNode.setController(this);
         rootNode.addToVBox(rootVBox);
@@ -295,7 +301,7 @@ public class MainController {
      */
     public void showSelectedNodeDetails(Node node) {
         Place nodePlace = placeManager.getPlace(node.getNodeId());
-        Node_Name_Text_Field.setText(nodePlace.getDisplayName());
+        Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
 
@@ -317,7 +323,6 @@ public class MainController {
      *
      * @param node source node for expansion
      */
-
     public void expandNode(Node node) {
         if (!node.isExpanded()) {
             Bounds rectangleBounds = Center_Anchor_Pane.sceneToLocal(node.getRectangle().localToScene(node.getBoundsInLocal()));
@@ -340,7 +345,7 @@ public class MainController {
                     String id = place.getId();
                     String name = place.getName();
                     String type = place.getType().toString();
-                    String displayName = place.getDisplayName();
+                    String displayName = place.toString();
                     Node childNode = new Node(id, name, type, displayName);
                     childNode.setController(this);
                     childNode.addToVBox(vbox);
@@ -378,12 +383,14 @@ public class MainController {
 
     /**
      * Inserts a rectangle node in Anchor pane/Scroll pane to add spacing
-     * between edge of a node that is near the boundary of Anchor pane/Scroll pane
+     * between edge of a node that is near the boundary of Anchor pane/Scroll
+     * pane
      *
-     * @param sourceNodeX      x coordinate of source node
+     * @param sourceNodeX x coordinate of source node
      * @param offsetFromSource Horizontal offset from source node
-     * @param yShift           Vertical offset from source node
-     * @param vBoxHeight       the height of the container that holds children rectangle nodes
+     * @param yShift Vertical offset from source node
+     * @param vBoxHeight the height of the container that holds children
+     * rectangle nodes
      */
     private void addAnchorPaneOffset(double sourceNodeX, double offsetFromSource, double yShift, double vBoxHeight) {
         Rectangle temp = new Rectangle();
@@ -393,8 +400,8 @@ public class MainController {
     }
 
     /**
-     * recursively removes the children in the subtree of given node
-     * Used  when the user contracts a node
+     * recursively removes the children in the subtree of given node Used when
+     * the user contracts a node
      *
      * @param node the node to be contracted
      */
@@ -417,7 +424,8 @@ public class MainController {
     }
 
     /**
-     * horizontally repositions graph if the graph goes out of bounds in the y axis
+     * horizontally repositions graph if the graph goes out of bounds in the y
+     * axis
      *
      * @param yValue negative vertical value used to reposition graph
      */
@@ -434,8 +442,8 @@ public class MainController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items
-     *                    are added
+     * @param sourceItem a source treeView-item to which children treeView-items
+     * are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
@@ -444,7 +452,7 @@ public class MainController {
         }
 
         for (Place place : sourcePlace.getChildren()) {
-            TreeItem childItem = new TreeItem<>(place.getDisplayName());
+            TreeItem childItem = new TreeItem<>(place.toString());
             sourceItem.getChildren().add(recursePopulateTreeView(place, childItem));
             childItem.setGraphic(iconize(place.getType()));
         }
@@ -487,7 +495,7 @@ public class MainController {
      */
     public void populateTreeView() {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getType().toString() + ": " + rootPlace.getDisplayName();
+        String itemName = rootPlace.getType().toString() + ": " + rootPlace.toString();
         TreeItem rootItem = new TreeItem<>(itemName);
         rootItem.setExpanded(true);
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
@@ -498,7 +506,12 @@ public class MainController {
         int row = Left_Tree_View.getRow(rootItem);
         Left_Tree_View.getSelectionModel().select(3);
         Left_Tree_View.get
-        */
+         */
+    }
+    
+    public void switchToMainMenu() {
+        VisApplication.getInstance().changeToMenu();
+        //does not close anything yet, should maybe happen?
     }
 
     /**

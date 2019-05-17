@@ -2,21 +2,26 @@ package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.geometry.Bounds;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 /**
- * Represents the line that connects two nodes in view.
- * Connects two nodes from view.
+ * Represents the line that connects two nodes in view. Connects two nodes from
+ * view.
  */
 public class Edge extends Line {
 
-    private Node firstNode;
-    private Node secondNode;
+    private final Node firstNode;
+    private final Node secondNode;
     private AnchorPane anchorPane;
 
+    /**
+     * Constructor
+     *
+     * @param firstNode The first node that the edge is connected to
+     * @param secondNode The second node that the edge is connected to
+     * @param anchorPane The anchor pane this edge is displayed at
+     */
     public Edge(Node firstNode, Node secondNode, AnchorPane anchorPane) {
-        this.setStroke(Color.DIMGRAY);
         this.firstNode = firstNode;
         this.secondNode = secondNode;
         this.anchorPane = anchorPane;
@@ -42,12 +47,19 @@ public class Edge extends Line {
         this.setEndY(secondNodePoint.getMaxY() - secondNode.getHeight() / 2);
     }
 
+    /**
+     *
+     * @return The first node
+     */
     public Node getFirstNode() {
         return firstNode;
     }
 
+    /**
+     *
+     * @return The second node
+     */
     public Node getSecondNode() {
         return secondNode;
     }
 }
-

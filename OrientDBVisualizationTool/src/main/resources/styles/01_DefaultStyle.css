@@ -9,3 +9,11 @@
     linear-gradient(from 0px 0px to 100px 0px, repeat, #707070 0%, transparent 1%, transparent 99%, #707070 100% ),
     linear-gradient(from 0px 0px to 0px 100px, repeat, #707070 0%, transparent 1%, transparent 99%, #707070 100% );
 }
+
+#NodeLabel {
+    -fx-fill: #000000;
+}
+
+#Edge{
+    -fx-stroke: dimgray;
+}
