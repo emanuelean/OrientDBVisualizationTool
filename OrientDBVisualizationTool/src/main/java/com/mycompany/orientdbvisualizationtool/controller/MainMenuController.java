@@ -5,14 +5,12 @@ import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
 import com.mycompany.orientdbvisualizationtool.model.managers.OrganizationManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
-import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**
@@ -20,7 +18,7 @@ import javafx.scene.image.ImageView;
  *
  * @author Niels, Albert
  */
-public class MainMenuController {
+public class MainMenuController extends ParentController {
 
     @FXML
     private TextField Node_Name_Text_Field;
@@ -60,36 +58,6 @@ public class MainMenuController {
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
     }
 
-    /**
-     * returns the correct icon for a given place type.
-     *
-     * @param placeType enum for the place type
-     * @return image view icon for given place type
-     */
-    private ImageView iconize(PlaceCategory placeType) {
-        ImageView view = new ImageView();
-        switch (placeType) {
-            case Location:
-                view.setImage(new Image("icons/location-icon.png"));
-                break;
-            case Building:
-                view.setImage(new Image("icons/building-icon.png"));
-                break;
-            case Floor:
-                view.setImage(new Image("icons/floor-icon.png"));
-                break;
-            case Room:
-                view.setImage(new Image("icons/room-icon.png"));
-                break;
-            case Area:
-                view.setImage(new Image("icons/area-icon.png"));
-                break;
-            case Cell:
-                view.setImage(new Image("icons/cell-icon.png"));
-                break;
-        }
-        return view;
-    }
 
     /**
      * populates the tree view with data from model

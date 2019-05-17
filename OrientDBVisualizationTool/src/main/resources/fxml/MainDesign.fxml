@@ -88,7 +88,7 @@
                 </AnchorPane>
                 <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
-                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane" onMouseDragged="#centerPaneDragged" onMousePressed="#centerPanePressed" onMouseReleased="#centerPaneReleased">
+                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane">
                             <children>
                                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Tree" textAlignment="CENTER" textFill="$x2" />
                             </children>
@@ -133,8 +133,8 @@
                                 </TableView>
                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                     <children>
-                                        <Button fx:id="Show_All_Button" mnemonicParsing="false" text="Show All" textFill="#515151" />
-                                        <Button fx:id="Hide_Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Hide" textFill="#515151" />
+                                        <Button fx:id="Show_All_Nodes_Button" mnemonicParsing="false" text="Show All" textFill="#515151" />
+                                        <Button fx:id="Hide_Nodes_Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Hide" textFill="#515151" />
                                     </children>
                                 </HBox>
                             </children>

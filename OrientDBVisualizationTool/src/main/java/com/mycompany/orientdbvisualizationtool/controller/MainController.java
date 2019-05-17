@@ -1,39 +1,40 @@
 package com.mycompany.orientdbvisualizationtool.controller;
 
 import com.mycompany.orientdbvisualizationtool.View.*;
+import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.CenterPaneDraggedAction;
+import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.CenterPanePressedAction;
+import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.CenterPaneReleasedAction;
+import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.ScrollZoomAction;
+import com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction.CollapseButtonActionBuilder;
+import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.HideNodesButtonAction;
+import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.ShowNodesButtonAction;
+import com.mycompany.orientdbvisualizationtool.controller.ThemeChoiceAction.ThemeChoiceBoxAction;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
-import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Objects;
 
 /**
  * FXML Controller class for the tree view
  *
  * @author Yona
  */
-public class MainController {
+public class MainController extends ParentController {
 
     @FXML
     private SplitPane Center_Split_Pane;
@@ -54,18 +55,15 @@ public class MainController {
     @FXML
     private TableView Table_View;
     @FXML
-    private Button Hide_Button;
+    private Button Hide_Nodes_Button;
     @FXML
-    private Button Show_All_Button;
+    private Button Show_All_Nodes_Button;
     @FXML
     private Label Left_Status_Label;
     @FXML
     private Label Right_Status_Label;
     @FXML
     private ChoiceBox Theme_Choice_Box;
-
-    private javafx.scene.Node Right_Anchor_Pane;
-    private javafx.scene.Node Left_Anchor_Pane;
 
     private PlaceManager placeManager;
 
@@ -91,10 +89,8 @@ public class MainController {
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
         Center_Anchor_Pane.setId("Center_Anchor_Pane");
 
-        Left_Anchor_Pane = Center_Split_Pane.getItems().get(0);
-        Right_Anchor_Pane = Center_Split_Pane.getItems().get(2);
-
-        setPanelCollapseButtonProperty();
+        setCenterAnchorMouseProperties();
+        setCollapseButtons();
         setTableViewCellsProperty();
         setHideActionProperty();
         setThemeChoiceBoxProperty();
@@ -102,72 +98,34 @@ public class MainController {
     }
 
     /**
-     * Sets up the properties of panel collapse or panel contract button
+     * Buttons for collapsing left and right panels are set up.
      */
-    private void setPanelCollapseButtonProperty() {
-        Left_Collapse_Button.setOnAction(event -> {
-            if (Center_Split_Pane.getItems().contains(Left_Anchor_Pane)) {
-                Center_Split_Pane.getItems().remove(Left_Anchor_Pane);
-                if (Center_Split_Pane.getItems().size() == 2) {
-                    Center_Split_Pane.setDividerPosition(0, 0.8);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                } else if (Center_Split_Pane.getItems().size() == 1) {
-                    Center_Anchor_Pane.setPrefWidth(WIDTH);
-                }
-                Left_Collapse_Button.setText("▶");
-            } else {
-                Center_Split_Pane.getItems().add(0, Left_Anchor_Pane);
-                if(Center_Split_Pane.getItems().size() == 2) {
-                    Center_Split_Pane.setDividerPosition(0, 0.2);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                } else if (Center_Split_Pane.getItems().size() == 3) {
-                    Center_Split_Pane.setDividerPosition(0, 0.2);
-                    Center_Split_Pane.setDividerPosition(1, 0.8);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
-                }
-                Left_Collapse_Button.setText("◀");
+    private void setCollapseButtons() {
+        AnchorPane left_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(0);
+        AnchorPane right_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(2);
 
-            }
-        });
-        Right_Collapse_Button.setOnAction(event -> {
-            if (Center_Split_Pane.getItems().contains(Right_Anchor_Pane)) {
-                Center_Split_Pane.getItems().remove(Right_Anchor_Pane);
-                if (Center_Split_Pane.getItems().size() == 2) {
-                    Center_Split_Pane.setDividerPosition(0, 0.2);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                } else if (Center_Split_Pane.getItems().size() == 1) {
-                    Center_Anchor_Pane.setPrefWidth(WIDTH);
-                }
-                Right_Collapse_Button.setText("◀");
+        new CollapseButtonActionBuilder()
+                .setCollapse_Button(Left_Collapse_Button)
+                .setSplit_Pane(Center_Split_Pane)
+                .setCollapse_Anchor_Pane(left_Anchor_Pane)
+                .setCenter_Anchor_Pane(Center_Anchor_Pane)
+                .setLeft(true)
+                .createCollapseButtonAction();
 
-            } else {
-                Center_Split_Pane.getItems().add(Center_Split_Pane.getItems().size(), Right_Anchor_Pane);
-                if (Center_Split_Pane.getItems().size() == 2) {
-                    Center_Split_Pane.setDividerPosition(0, 0.8);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                } else if (Center_Split_Pane.getItems().size() == 3) {
-                    Center_Split_Pane.setDividerPosition(0, 0.2);
-                    Center_Split_Pane.setDividerPosition(1, 0.8);
-                    Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
-                }
-                Right_Collapse_Button.setText("▶");
-            }
-        });
+        new CollapseButtonActionBuilder()
+                .setCollapse_Button(Right_Collapse_Button)
+                .setSplit_Pane(Center_Split_Pane)
+                .setCollapse_Anchor_Pane(right_Anchor_Pane)
+                .setCenter_Anchor_Pane(Center_Anchor_Pane)
+                .setLeft(false)
+                .createCollapseButtonAction();
     }
 
     /**
-     * Setting the check box action property to enable/disable Dark Mode theme
+     * Setting the check choice box property to enable different themes
      */
     private void setThemeChoiceBoxProperty() {
-        File folder = new File(getClass().getResource("/styles").getPath());
-        Theme_Choice_Box.getItems().addAll("Default Theme", "Dark Mode", "Natural Blue", "S.B. Green", "Crimson Red");
-        Theme_Choice_Box.getSelectionModel().selectFirst();
-        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(
-                (observable, oldValue, newValue) -> {
-                    Center_Anchor_Pane.getScene().getStylesheets().remove("styles/" + Objects.requireNonNull(folder.listFiles())[oldValue.intValue()].getName());
-                    Center_Anchor_Pane.getScene().getStylesheets().add("styles/" + Objects.requireNonNull(folder.listFiles())[newValue.intValue()].getName());
-                }
-        );
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Center_Anchor_Pane, Theme_Choice_Box));
     }
 
     /**
@@ -181,32 +139,12 @@ public class MainController {
     }
 
     /**
-     * The Hide_Button hides nodes on button pressed and its corresponding
-     * edges. The Show_All_Button shows all hidden nodes.
+     * The Hide_Nodes_Button hides nodes on button pressed and its corresponding
+     * edges. The Show_All_Nodes_Button shows all hidden nodes.
      */
     private void setHideActionProperty() {
-        Hide_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        if (node.isSelected()) {
-                            node.setVisible(false);
-                            for (Edge edge : edges) {
-                                if (edge.getFirstNode() == node || edge.getSecondNode() == node) {
-                                    edge.setVisible(false);
-                                }
-                            }
-                        }
-                    }
-                }
-        );
-        Show_All_Button.setOnAction(event -> {
-                    for (Node node : nodes) {
-                        node.setVisible(true);
-                    }
-                    for (Edge edge : edges) {
-                        edge.setVisible(true);
-                    }
-                }
-        );
+        Hide_Nodes_Button.setOnAction(new HideNodesButtonAction(nodes, edges));
+        Show_All_Nodes_Button.setOnAction(new ShowNodesButtonAction(nodes, edges));
     }
 
     /**
@@ -214,26 +152,7 @@ public class MainController {
      * tree is zooming in and out on the current mouse point coordinates.
      */
     private void zoomFunction() {
-        Center_Anchor_Pane.setOnScroll(event -> {
-            if (event.isControlDown()) {
-                double zoomFactor = 1.05;
-                double deltaY = event.getDeltaY();
-
-                if (deltaY < 0) {
-                    zoomFactor = 2.0 - zoomFactor;
-                }
-
-                Scale scale = new Scale();
-                scale.setPivotX(event.getX());
-                scale.setPivotY(event.getY());
-                scale.setX(Center_Anchor_Pane.getScaleX() * zoomFactor);
-                scale.setY(Center_Anchor_Pane.getScaleY() * zoomFactor);
-
-                Center_Anchor_Pane.getTransforms().add(scale);
-
-                event.consume();
-            }
-        });
+        Center_Anchor_Pane.setOnScroll(new ScrollZoomAction(Center_Anchor_Pane));
     }
 
     /**
@@ -244,90 +163,36 @@ public class MainController {
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
-    private double mouseSourceX = 0;
-    private double mouseSourceY = 0;
+    private Double mouseSourceX = 0.;
+    private Double mouseSourceY = 0.;
     private Rectangle selectionArea;
     private static final int WIDTH = MainView.getWIDTH();
 
-    /**
-     * Action taken in the anchor pane in the center. Defines how a selection
-     * area rectangle is drawn to select several nodes.
-     *
-     * @param mouseEvent Mouse event for mouse dragged
-     */
-    public void centerPaneDragged(MouseEvent mouseEvent) {
-        //area selection using blue rectangle
-        if (mouseEvent.isControlDown()) {
-            selectionArea.setVisible(true);
-            selectionArea.setLayoutX(mouseSourceX);
-            selectionArea.setLayoutY(mouseSourceY);
+    public Double getMouseSourceX() {
+        return mouseSourceX;
+    }
 
-            double selectionAreaWidth = mouseEvent.getX() - mouseSourceX;
-            double selectionAreaHeight = mouseEvent.getY() - mouseSourceY;
+    public Double getMouseSourceY() {
+        return mouseSourceY;
+    }
 
-            if (selectionAreaHeight < 0 && selectionAreaWidth < 0) {
-                selectionArea.setLayoutX(mouseEvent.getX());
-                selectionArea.setLayoutY(mouseEvent.getY());
-                selectionArea.setWidth(-selectionAreaWidth);
-                selectionArea.setHeight(-selectionAreaHeight);
-            } else if (selectionAreaHeight >= 0 && selectionAreaWidth < 0) {
-                selectionArea.setLayoutX(mouseEvent.getX());
-                selectionArea.setLayoutY(mouseSourceY);
-                selectionArea.setWidth(-selectionAreaWidth);
-                selectionArea.setHeight(selectionAreaHeight);
-            } else if (selectionAreaHeight < 0 && selectionAreaWidth >= 0) {
-                selectionArea.setLayoutX(mouseSourceX);
-                selectionArea.setLayoutY(mouseEvent.getY());
-                selectionArea.setWidth(selectionAreaWidth);
-                selectionArea.setHeight(-selectionAreaHeight);
-            } else if (selectionAreaHeight >= 0 && selectionAreaWidth >= 0) {
-                selectionArea.setWidth(selectionAreaWidth);
-                selectionArea.setHeight(selectionAreaHeight);
-            }
-            Center_Anchor_Pane.getScene().setCursor(Cursor.CROSSHAIR);
-        }
+    public void setMouseSourceX(Double mouseSourceX) {
+        this.mouseSourceX = mouseSourceX;
+    }
+
+    public void setMouseSourceY(Double mouseSourceY) {
+        this.mouseSourceY = mouseSourceY;
     }
 
     /**
-     * Action taken in the anchor pane in the center. Used for deselection when
-     * clicking and in addition used for recording the start point of a mouse
-     * position for function centerPaneDragged();
-     *
-     * @param mouseEvent Mouse event for mouse pressed
+     * Action taken when mouse dragged in center anchor pane
+     * Action taken when mouse pressed in center anchor pane
+     * Action taken when mouse released in center anchor pane
      */
-    public void centerPanePressed(MouseEvent mouseEvent) {
-        mouseSourceX = mouseEvent.getX();
-        mouseSourceY = mouseEvent.getY();
-
-        for (Node node : nodes) {
-            if (!node.isPressed()) {
-                node.setSelected(false);
-            }
-        }
-    }
-
-    /**
-     * Action taken in the anchor pane in the center.
-     *
-     * @param mouseEvent Mouse event for mouse drag released
-     */
-    public void centerPaneReleased(MouseEvent mouseEvent) {
-        //area selection
-        if (mouseEvent.isControlDown()) {
-            if (!nodes.isEmpty()) {
-                for (Node node : nodes) {
-                    Bounds selectionAreaBounds = selectionArea.localToScene(selectionArea.getBoundsInLocal());
-                    Bounds nodeBounds = node.localToScene(node.getBoundsInLocal());
-                    if (selectionAreaBounds.intersects(nodeBounds)) {
-                        node.setSelected(true);
-                    } else {
-                        node.setSelected(false);
-                    }
-                }
-                Center_Anchor_Pane.getScene().setCursor(Cursor.DEFAULT);
-            }
-        }
-        selectionArea.setVisible(false);
+    private void setCenterAnchorMouseProperties() {
+        Center_Anchor_Pane.setOnMouseDragged(new CenterPaneDraggedAction(Center_Anchor_Pane, selectionArea, this));
+        Center_Anchor_Pane.setOnMousePressed(new CenterPanePressedAction(this, nodes));
+        Center_Anchor_Pane.setOnMouseReleased(new CenterPaneReleasedAction(selectionArea, Center_Anchor_Pane, nodes));
     }
 
     /**
@@ -344,7 +209,6 @@ public class MainController {
      */
     public void addRootNodeToPane() {
         Place rootPlace = placeManager.getRoot();
-
         String id = rootPlace.getId();
         String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
@@ -367,16 +231,19 @@ public class MainController {
     private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
 
     /**
-     * Sets the fields of a node/place object to be shown on right panel.
+     * Sets the fields of a node/place object when the node is selected (to be shown on right panel).
      *
      * @param node has properties to be shown.
      */
     public void showSelectedNodeDetails(Node node) {
         Place nodePlace = placeManager.getPlace(node.getNodeId());
+
+        //setting the text fields on right panel
         Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
 
+        //setting the status bar contents
         Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
         Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
         Left_Status_Label.setText("/" + nodePlace.getPath());
@@ -466,7 +333,7 @@ public class MainController {
     /**
      * recursively redraws the edges then nodes are moved around, (when a node is expanded).
      *
-     * @param startNode: starting node of the subtree that needs to redraw edges.
+     * @param startNode starting node of the subtree that needs to redraw edges.
      */
     private void redrawEdges(Node startNode) {
         if (startNode.getChildrenVBox().getChildren().isEmpty()) {
@@ -487,7 +354,7 @@ public class MainController {
      * recursively removes the children in the subtree of given node. Used when
      * the user contracts a node
      *
-     * @param node: the node to be contracted
+     * @param node the node to be contracted
      */
     private void removeNodeAndChildren(Node node) {
         Pane container = node.getContainerPane();
@@ -520,8 +387,7 @@ public class MainController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items
-     *                    are added
+     * @param sourceItem  a source treeView-item to which children treeView-items are added
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
@@ -538,37 +404,6 @@ public class MainController {
     }
 
     /**
-     * returns the correct icon for a given place type.
-     *
-     * @param placeType enum for the place type
-     * @return image view icon for given place type
-     */
-    private ImageView iconize(PlaceCategory placeType) {
-        ImageView view = new ImageView();
-        switch (placeType) {
-            case Location:
-                view.setImage(new Image("icons/location-icon.png"));
-                break;
-            case Building:
-                view.setImage(new Image("icons/building-icon.png"));
-                break;
-            case Floor:
-                view.setImage(new Image("icons/floor-icon.png"));
-                break;
-            case Room:
-                view.setImage(new Image("icons/room-icon.png"));
-                break;
-            case Area:
-                view.setImage(new Image("icons/area-icon.png"));
-                break;
-            case Cell:
-                view.setImage(new Image("icons/cell-icon.png"));
-                break;
-        }
-        return view;
-    }
-
-    /**
      * populates the tree view with data from model
      */
     public void populateTreeView() {
@@ -579,12 +414,11 @@ public class MainController {
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
 
-        /*
-        TODO:: TO BE USED IN UPCOMING ITERATIONS
+        /* TODO:: TO BE USED IN UPCOMING ITERATIONS
         int row = Left_Tree_View.getRow(rootItem);
-        Left_Tree_View.getSelectionModel().select(3);
+        Left_Tree_View.getSelectionModel().select(4);
         Left_Tree_View.get
-         */
+        */
     }
 
     public void switchToMainMenu() {
