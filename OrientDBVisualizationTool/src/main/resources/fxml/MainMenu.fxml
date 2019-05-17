@@ -82,11 +82,6 @@
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Button text="View Tree" fx:id="Select_Field" onAction="#selectPlace">
-                                    <VBox.margin>
-                                        <Insets bottom="10.0" top="5.0" />
-                                    </VBox.margin>
-                                </Button>
                                 <TableView fx:id="Properties_Table" prefHeight="315.0" prefWidth="103.0">
                                     <columns>
                                         <TableColumn fx:id="Table_View_PropertyKey" prefWidth="${Properties_Table.width*0.5}" text="Property" />
@@ -96,6 +91,11 @@
                                         <Insets bottom="10.0" />
                                     </VBox.margin>
                                 </TableView> 
+                                <Button text="View Tree" fx:id="Select_Field" onAction="#selectPlace">
+                                    <VBox.margin>
+                                        <Insets bottom="10.0" top="5.0" />
+                                    </VBox.margin>
+                                </Button>
                             </children>
                             <padding>
                                 <Insets top="10.0" />

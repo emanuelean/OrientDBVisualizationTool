@@ -79,8 +79,11 @@ public class MainController {
         edges = new ArrayList<>();
 
         Node_Name_Text_Field.setDisable(true);
+        Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
         Node_ID_Text_Field.setDisable(true);
+        Node_ID_Text_Field.setStyle("-fx-opacity: 1;");
         Node_Type_Text_Field.setDisable(true);
+        Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
 
         selectionArea = new Rectangle();
         selectionArea.setFill(Color.rgb(0, 70, 255, 0.1));

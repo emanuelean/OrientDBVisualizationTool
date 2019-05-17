@@ -4,6 +4,7 @@ import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
+import com.mycompany.orientdbvisualizationtool.model.Property;
 import com.mycompany.orientdbvisualizationtool.model.managers.OrganizationManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
@@ -12,9 +13,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -35,8 +39,14 @@ public class MainMenuController {
     private TreeView Organization_Tree_View;
     @FXML
     private TreeView Location_Tree_View;
+    @FXML
+    private TableColumn Table_View_PropertyKey;
+    @FXML
+    private TableColumn Table_View_PropertyValue;
+    @FXML
+    private TableView Properties_Table;
 
-    //private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
+    private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
     private Place currentPlace;
 
@@ -47,10 +57,20 @@ public class MainMenuController {
     public void initialize() {
 
         Node_Name_Text_Field.setDisable(true);
+        Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
         Node_ID_Text_Field.setDisable(true);
+        Node_ID_Text_Field.setStyle("-fx-opacity: 1;");
         Node_Type_Text_Field.setDisable(true);
+        Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
+        Properties_Table.setSelectionModel(null);
         organizationManager = OrganizationManager.getInstance();
         populateOrganizationTreeView();
+        
+        Properties_Table.setPrefWidth(240);
+        Properties_Table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        Table_View_PropertyKey.setCellValueFactory(new PropertyValueFactory<Property, String>("key"));
+        Table_View_PropertyValue.setCellValueFactory(new PropertyValueFactory<Property, String>("value"));
+        Properties_Table.setItems(propertiesTable);
     }
 
     /**
@@ -62,7 +82,9 @@ public class MainMenuController {
         Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.toString());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
-        //propertiesTable.clear();
+        propertiesTable.clear();
+        nodePlace.loadAttributes();
+        propertiesTable.addAll(nodePlace.getAttributes().getProperties());
     }
 
     /**
@@ -106,7 +128,7 @@ public class MainMenuController {
             String itemName = o.getId();
             TreeItem<String> newItem = new TreeItem<>(itemName);
             newItem.setExpanded(true);
-            newItem.setGraphic(new ImageView("icons/location-icon.png"));
+            newItem.setGraphic(new ImageView("icons/organization-icon.png"));
             rootItem.getChildren().add(newItem);
         }
 
