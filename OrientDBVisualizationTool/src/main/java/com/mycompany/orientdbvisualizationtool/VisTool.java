@@ -9,7 +9,7 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 
 import java.util.Random;
 import javafx.application.Application;
-
+import javax.swing.JOptionPane;
 /**
  * Main class
  *
@@ -36,6 +36,7 @@ public class VisTool {
         addTestPlaces(null, 0);
         addTestOrganizations();
     }
+
 
     /**
      * Adds test organization
@@ -79,8 +80,8 @@ public class VisTool {
 
         Place newPlace = manager.addPlace(id, name, currentCategory, parent);
         addEntities(newPlace);
-        
-        //recursively call it for all the children
+
+        //recursvily call it for all the children
         int childrenAmount = 5;
         for (int i = 0; i < childrenAmount; i++) {
             addTestPlaces(newPlace, index + 1);
