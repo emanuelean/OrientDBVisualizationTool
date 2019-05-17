@@ -2,11 +2,14 @@ package com.mycompany.orientdbvisualizationtool.controller;
 
 import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
+import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
 import com.mycompany.orientdbvisualizationtool.model.managers.OrganizationManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -33,6 +36,7 @@ public class MainMenuController {
     @FXML
     private TreeView Location_Tree_View;
 
+    //private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
     private Place currentPlace;
 
@@ -58,6 +62,7 @@ public class MainMenuController {
         Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.toString());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
+        //propertiesTable.clear();
     }
 
     /**

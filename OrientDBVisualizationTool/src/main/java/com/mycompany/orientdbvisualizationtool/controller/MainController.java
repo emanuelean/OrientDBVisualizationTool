@@ -25,7 +25,9 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
+import javafx.stage.Modality;
 
 /**
  * FXML Controller class for the tree view
@@ -35,27 +37,36 @@ import java.util.Objects;
 public class MainController {
 
     @FXML
-    public TextField Node_Name_Text_Field;
+    private SplitPane Center_Split_Pane;
     @FXML
-    public TextField Node_ID_Text_Field;
+    private Button Left_Collapse_Button;
     @FXML
-    public TextField Node_Type_Text_Field;
+    private Button Right_Collapse_Button;
     @FXML
-    public TreeView Left_Tree_View;
+    private TextField Node_Name_Text_Field;
     @FXML
-    public TableColumn Table_View_Entity_ID;
+    private TextField Node_ID_Text_Field;
     @FXML
-    public TableView Table_View;
+    private TextField Node_Type_Text_Field;
     @FXML
-    public Button Hide_Button;
+    private TreeView Left_Tree_View;
     @FXML
-    public Button Show_All_Button;
+    private TableColumn Table_View_Entity_ID;
     @FXML
-    public Label Left_Status_Label;
+    private TableView Table_View;
     @FXML
-    public Label Right_Status_Label;
+    private Button Hide_Button;
     @FXML
-    public ChoiceBox Theme_Choice_Box;
+    private Button Show_All_Button;
+    @FXML
+    private Label Left_Status_Label;
+    @FXML
+    private Label Right_Status_Label;
+    @FXML
+    private ChoiceBox Theme_Choice_Box;
+
+    private javafx.scene.Node Right_Anchor_Pane;
+    private javafx.scene.Node Left_Anchor_Pane;
 
     private PlaceManager placeManager;
 
@@ -75,15 +86,74 @@ public class MainController {
         selectionArea.setFill(Color.rgb(0, 70, 255, 0.1));
         selectionArea.setStroke(Color.LIGHTBLUE);
         Center_Anchor_Pane.getChildren().add(selectionArea);
+        Center_Anchor_Pane.layout();
 
         Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
         Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
         Center_Anchor_Pane.setId("Center_Anchor_Pane");
 
+        Left_Anchor_Pane = Center_Split_Pane.getItems().get(0);
+        Right_Anchor_Pane = Center_Split_Pane.getItems().get(2);
+
+        setPanelCollapseButtonProperty();
         setTableViewCellsProperty();
         setHideActionProperty();
         setThemeChoiceBoxProperty();
         zoomFunction();
+    }
+
+    /**
+     * Sets up the properties of panel collapse or panel contract button
+     */
+    private void setPanelCollapseButtonProperty() {
+        Left_Collapse_Button.setOnAction(event -> {
+            if (Center_Split_Pane.getItems().contains(Left_Anchor_Pane)) {
+                Center_Split_Pane.getItems().remove(Left_Anchor_Pane);
+                if (Center_Split_Pane.getItems().size() == 2) {
+                    Center_Split_Pane.setDividerPosition(0, 0.8);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+                } else if (Center_Split_Pane.getItems().size() == 1) {
+                    Center_Anchor_Pane.setPrefWidth(WIDTH);
+                }
+                Left_Collapse_Button.setText("▶");
+            } else {
+                Center_Split_Pane.getItems().add(0, Left_Anchor_Pane);
+                if (Center_Split_Pane.getItems().size() == 2) {
+                    Center_Split_Pane.setDividerPosition(0, 0.2);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+                } else if (Center_Split_Pane.getItems().size() == 3) {
+                    Center_Split_Pane.setDividerPosition(0, 0.2);
+                    Center_Split_Pane.setDividerPosition(1, 0.8);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
+                }
+                Left_Collapse_Button.setText("◀");
+
+            }
+        });
+        Right_Collapse_Button.setOnAction(event -> {
+            if (Center_Split_Pane.getItems().contains(Right_Anchor_Pane)) {
+                Center_Split_Pane.getItems().remove(Right_Anchor_Pane);
+                if (Center_Split_Pane.getItems().size() == 2) {
+                    Center_Split_Pane.setDividerPosition(0, 0.2);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+                } else if (Center_Split_Pane.getItems().size() == 1) {
+                    Center_Anchor_Pane.setPrefWidth(WIDTH);
+                }
+                Right_Collapse_Button.setText("◀");
+
+            } else {
+                Center_Split_Pane.getItems().add(Center_Split_Pane.getItems().size(), Right_Anchor_Pane);
+                if (Center_Split_Pane.getItems().size() == 2) {
+                    Center_Split_Pane.setDividerPosition(0, 0.8);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+                } else if (Center_Split_Pane.getItems().size() == 3) {
+                    Center_Split_Pane.setDividerPosition(0, 0.2);
+                    Center_Split_Pane.setDividerPosition(1, 0.8);
+                    Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
+                }
+                Right_Collapse_Button.setText("▶");
+            }
+        });
     }
 
     /**
@@ -275,21 +345,24 @@ public class MainController {
      */
     public void addRootNodeToPane() {
         Place rootPlace = placeManager.getRoot();
-        VBox rootVBox = new VBox();
-        rootVBox.setSpacing(14);
+
         String id = rootPlace.getId();
         String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
         String displayName = rootPlace.toString();
         Node rootNode = new Node(id, name, type, displayName);
         rootNode.setController(this);
-        rootNode.addToVBox(rootVBox);
         nodes.add(rootNode);
+
+        VBox rootVBox = new VBox(15);
+        rootVBox.getChildren().add(rootNode.getContainerPane());
+        rootVBox.layout();
+        //rootVBox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         rootVBox.setLayoutX(100);
         rootVBox.setLayoutY(WIDTH * 9 / (16 * 2));
         Center_Anchor_Pane.getChildren().add(rootVBox);
-
+        Center_Anchor_Pane.layout();
     }
 
     private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
@@ -319,122 +392,131 @@ public class MainController {
     }
 
     /**
-     * expands a nodes to show the children of the node
+     * expands a node to add/show the children of the node, if node is not
+     * expanded and contracts a node to remove/hide the children of the node
+     * otherwise.
      *
-     * @param node source node for expansion
+     * @param parentNode source node for expansion
      */
-    public void expandNode(Node node) {
-        if (!node.isExpanded()) {
-            Bounds rectangleBounds = Center_Anchor_Pane.sceneToLocal(node.getRectangle().localToScene(node.getBoundsInLocal()));
-            Bounds nodeBounds = node.getBoundsInLocal();
-
-            double horizontalOffset = (nodeBounds.getWidth() - node.getWidth()) / 2;
-            double sourceNodeX = rectangleBounds.getMaxX() - horizontalOffset;
-            double sourceNodeY = rectangleBounds.getMaxY() - node.getHeight() / 2;
-
-            Place sourcePlace = placeManager.getPlace(node.getNodeId());
-            ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
-            int totalPlaces = childrenPlaces.size();
-
-            if (!childrenPlaces.isEmpty()) {
-                int vBoxSpacing = 14;
-                VBox vbox = new VBox(vBoxSpacing);
-                //vbox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
-                for (Place place : childrenPlaces) {
-                    String id = place.getId();
-                    String name = place.getName();
-                    String type = place.getType().toString();
-                    String displayName = place.toString();
-                    Node childNode = new Node(id, name, type, displayName);
-                    childNode.setController(this);
-                    childNode.addToVBox(vbox);
-                    nodes.add(childNode);
-                }
-
-                Center_Anchor_Pane.getChildren().add(vbox);
-
-                double vBoxHeight = (totalPlaces * node.getHeight()) + ((totalPlaces - 1) * vBoxSpacing);
-                double horizontalOffsetFromSource = 100;
-
-                double yShift = sourceNodeY - vBoxHeight / 2;
-                vbox.setLayoutX(sourceNodeX + horizontalOffsetFromSource);
-                vbox.setLayoutY(yShift);
-                addAnchorPaneOffset(sourceNodeX, horizontalOffsetFromSource, yShift, vBoxHeight);
-                if (yShift < 0) {
-                    repositionGraph(yShift);
-                }
-
-                //create and connect edges from node to node's children
-                for (int i = nodes.size() - 1; i > nodes.size() - 1 - totalPlaces; i--) {
-                    Node childNode = nodes.get(i);
-                    Edge edge = new Edge(node, childNode, Center_Anchor_Pane);
-                    edges.add(edge);
-                    Center_Anchor_Pane.getChildren().add(edge);
-                }
-                node.setChildrenVBox(vbox);
-                node.setExpanded(true);
-            }
+    public void expandContractNode(Node parentNode) {
+        if (!parentNode.isExpanded()) {
+            expandNode(parentNode);
+            parentNode.setExpanded(true);
+            clearEdgeLinks();
         } else {
-            //contract node
-            removeNodeAndChildren(node);
+            removeNodeAndChildren(parentNode);
+            parentNode.setExpanded(false);
         }
     }
 
     /**
-     * Inserts a rectangle node in Anchor pane/Scroll pane to add spacing
-     * between edge of a node that is near the boundary of Anchor pane/Scroll
-     * pane
+     * expands a nodes to show the children of the node
      *
-     * @param sourceNodeX x coordinate of source node
-     * @param offsetFromSource Horizontal offset from source node
-     * @param yShift Vertical offset from source node
-     * @param vBoxHeight the height of the container that holds children
-     * rectangle nodes
+     * @param parentNode source node for expansion
      */
-    private void addAnchorPaneOffset(double sourceNodeX, double offsetFromSource, double yShift, double vBoxHeight) {
-        Rectangle temp = new Rectangle();
-        temp.setLayoutX(sourceNodeX + offsetFromSource + 200);
-        temp.setLayoutY(yShift + vBoxHeight + 100);
-        Center_Anchor_Pane.getChildren().add(temp);
+    private void expandNode(Node parentNode) {
+        VBox childrenVBox = parentNode.getChildrenVBox();
+        Place sourcePlace = placeManager.getPlace(parentNode.getNodeId());
+        ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
+
+        if (!childrenPlaces.isEmpty()) {
+            for (Place place : childrenPlaces) {
+                String id = place.getId();
+                String name = place.getName();
+                String type = place.getType().toString();
+                String displayName = place.toString();
+                Node childNode = new Node(id, name, type, displayName);
+                childNode.setController(this);
+                nodes.add(childNode);
+                childrenVBox.getChildren().add(childNode.getContainerPane());
+                childrenVBox.layout();
+            }
+        }
+        parentNode.setLayoutY((childrenVBox.getBoundsInLocal().getHeight() + parentNode.getHeight()) / 2);
+        redrawEdges(parentNode);
     }
 
     /**
-     * recursively removes the children in the subtree of given node Used when
+     * clears and redraws the edge present in the central pane. used when nodes
+     * are moved around (when a node is expanded).
+     */
+    private void clearEdgeLinks() {
+        edges.clear();
+        //keep whole tree to maintain its position when it is expanded (within scroll pane bounds)
+        Node rootNode = nodes.get(0);
+        VBox rootVBox = (VBox) rootNode.getContainerPane().getParent();
+        Bounds rootNodeChildrenVBoxBounds = rootNode.getChildrenVBox().getBoundsInLocal();
+        rootVBox.setLayoutY(Math.abs(rootVBox.getLayoutY() - ((rootNodeChildrenVBoxBounds.getHeight()) - rootNode.getHeight()) / 2));
+
+        for (int i = 0; i < nodes.size(); i++) {
+            Pane containerPane = nodes.get(i).getContainerPane();
+            //reposition node to the center of its children
+            ObservableList<javafx.scene.Node> genericNodes = nodes.get(i).getChildrenVBox().getChildren();
+            if (!genericNodes.isEmpty()) {
+                nodes.get(i).setLayoutY(((nodes.get(i).getChildrenVBox().getBoundsInLocal().getHeight()) - rootNode.getHeight()) / 2);
+            }
+            for (int j = 0; j < containerPane.getChildren().size(); j++) {
+                if (containerPane.getChildren().get(j) instanceof Edge) {
+                    containerPane.getChildren().remove(j);
+                    j--;
+                }
+            }
+        }
+        redrawEdges(rootNode);
+    }
+
+    /**
+     * recursively redraws the edges then nodes are moved around, (when a node
+     * is expanded).
+     *
+     * @param startNode: starting node of the subtree that needs to redraw
+     * edges.
+     */
+    private void redrawEdges(Node startNode) {
+        if (startNode.getChildrenVBox().getChildren().isEmpty()) {
+            return;
+        }
+        for (javafx.scene.Node childGenericNode : startNode.getChildrenVBox().getChildren()) {
+            Pane containerPane = (Pane) childGenericNode;
+            Node childNode = (Node) containerPane.getChildren().get(0);
+            Edge edge = new Edge(startNode, childNode);
+            startNode.getContainerPane().getChildren().add(edge);
+            startNode.getContainerPane().layout();
+            edges.add(edge);
+            redrawEdges(childNode);
+        }
+    }
+
+    /**
+     * recursively removes the children in the subtree of given node. Used when
      * the user contracts a node
      *
-     * @param node the node to be contracted
+     * @param node: the node to be contracted
      */
     private void removeNodeAndChildren(Node node) {
-        if (node.getChildrenVBox().getChildren().isEmpty()) {
-            node.setExpanded(false);
+        Pane container = node.getContainerPane();
+
+        if (container.getChildren().size() < 2) {
             return;
         }
 
-        for (javafx.scene.Node child : node.getChildrenVBox().getChildren()) {
-            removeNodeAndChildren((Node) child);
-            node.setExpanded(false);
-            for (Edge edge : edges) {
-                if (edge.getSecondNode().equals(child)) {
-                    Center_Anchor_Pane.getChildren().remove(edge);
-                }
+        Iterator<javafx.scene.Node> iterator = container.getChildren().iterator();
+        while (iterator.hasNext()) {
+            javafx.scene.Node nextNode = iterator.next();
+            if (nextNode instanceof Edge) {
+                edges.remove(nextNode);
+                iterator.remove();
             }
         }
-        Center_Anchor_Pane.getChildren().remove(node.getChildrenVBox());
-    }
 
-    /**
-     * horizontally repositions graph if the graph goes out of bounds in the y
-     * axis
-     *
-     * @param yValue negative vertical value used to reposition graph
-     */
-    private void repositionGraph(double yValue) {
-        for (javafx.scene.Node node : Center_Anchor_Pane.getChildren()) {
-            if (!(node instanceof Label)) {
-                node.setLayoutY(node.getLayoutY() - yValue + 30);
-            }
+        for (javafx.scene.Node genericNode : node.getChildrenVBox().getChildren()) {
+            Pane containerPane = (Pane) genericNode;
+            Node childNode = (Node) containerPane.getChildren().get(0);
+            nodes.remove(childNode);
+            removeNodeAndChildren(childNode);
         }
+
+        node.getChildrenVBox().getChildren().clear();
     }
 
     /**
@@ -508,10 +590,13 @@ public class MainController {
         Left_Tree_View.get
          */
     }
-    
+
+    /**
+     * Switches from the main view to the main menu
+     */
     public void switchToMainMenu() {
+        Center_Anchor_Pane.getChildren().clear();
         VisApplication.getInstance().changeToMenu();
-        //does not close anything yet, should maybe happen?
     }
 
     /**
