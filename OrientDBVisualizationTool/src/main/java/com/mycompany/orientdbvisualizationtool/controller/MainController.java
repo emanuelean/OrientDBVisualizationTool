@@ -8,6 +8,7 @@ import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.Scro
 import com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction.CollapseButtonActionBuilder;
 import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.HideNodesButtonAction;
 import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.ShowNodesButtonAction;
+import com.mycompany.orientdbvisualizationtool.controller.TabelViewAction.TableViewItemClickedAction;
 import com.mycompany.orientdbvisualizationtool.controller.ThemeChoiceAction.ThemeChoiceBoxAction;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
@@ -147,6 +148,7 @@ public class MainController extends ParentController {
         Table_View_Entity_ID.setPrefWidth(240);
         Table_View_Entity_ID.setCellValueFactory(new PropertyValueFactory<Entity, String>("id"));
         Table_View.setItems(tableViewObserveData);
+        Table_View.setOnMouseClicked(new TableViewItemClickedAction(Table_View));
     }
 
     /**
@@ -220,6 +222,9 @@ public class MainController extends ParentController {
      */
     public void showSelectedNodeDetails(Node node) {
         Place nodePlace = placeManager.getPlace(node.getNodeId());
+
+        /*TODO:: HAVE A SHOW MORE BUTTON ON RIGHT PANEL
+        * System.out.println(nodePlace.getAttributes());*/
 
         //setting the text fields on right panel
         Node_Name_Text_Field.setText(nodePlace.toString());

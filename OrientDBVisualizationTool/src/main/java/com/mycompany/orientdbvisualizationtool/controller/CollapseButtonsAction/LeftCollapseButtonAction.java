@@ -1,6 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction;
 
-import com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction.CollapseButtonAction;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;

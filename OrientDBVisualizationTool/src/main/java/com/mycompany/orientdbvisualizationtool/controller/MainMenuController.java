@@ -2,7 +2,6 @@ package com.mycompany.orientdbvisualizationtool.controller;
 
 import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
-import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
 import com.mycompany.orientdbvisualizationtool.model.Property;
 import com.mycompany.orientdbvisualizationtool.model.managers.OrganizationManager;
@@ -18,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 /**

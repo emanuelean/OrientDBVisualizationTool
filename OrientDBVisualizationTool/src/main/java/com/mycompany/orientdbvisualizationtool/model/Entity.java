@@ -28,4 +28,9 @@ public class Entity {
     public String getId() {
         return id.get();
     }
+
+    @Override
+    public String toString(){
+        return id.get();
+    }
 }

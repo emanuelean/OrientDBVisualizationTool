@@ -27,5 +27,6 @@
     <orderEntry type="library" name="net.java.dev.jna:jna-platform:4.2.11" level="project" />
     <orderEntry type="library" name="com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
     <orderEntry type="library" name="com.orientechnologies:orientdb-enterprise:2.1.21" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
