@@ -28,7 +28,6 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
-     *
      * @param node       node to be clicked on
      * @param controller main controller
      * @param nodes      list for tracking edges when node expanded/contracted
@@ -97,6 +96,7 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
         rootVBox.layout();
         Bounds rootNodeChildrenVBoxBounds = rootNode.getChildrenVBox().getBoundsInLocal();
         rootVBox.setLayoutY(Math.abs(rootVBox.getLayoutY() - ((rootNodeChildrenVBoxBounds.getHeight()) - rootNode.getHeight()) / 2 + rootNode.getLayoutY()));
+        rootVBox.layout();
 
         for (int i = 0; i < nodes.size(); i++) {
             Pane containerPane = nodes.get(i).getContainerPane();
@@ -165,8 +165,8 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
             nodes.remove(childNode);
             removeNodeAndChildren(childNode);
         }
-
         node.getChildrenVBox().getChildren().clear();
+        clearEdgeLinks();
     }
 
     /**

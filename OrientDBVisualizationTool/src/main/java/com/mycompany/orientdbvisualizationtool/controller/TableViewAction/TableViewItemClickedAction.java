@@ -1,4 +1,4 @@
-package com.mycompany.orientdbvisualizationtool.controller.TabelViewAction;
+package com.mycompany.orientdbvisualizationtool.controller.TableViewAction;
 
 
 import com.mycompany.orientdbvisualizationtool.model.Entity;

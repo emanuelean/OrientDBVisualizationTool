@@ -8,7 +8,7 @@ import com.mycompany.orientdbvisualizationtool.controller.CenterPaneActions.Scro
 import com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction.CollapseButtonActionBuilder;
 import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.HideNodesButtonAction;
 import com.mycompany.orientdbvisualizationtool.controller.ShowHideNodeAction.ShowNodesButtonAction;
-import com.mycompany.orientdbvisualizationtool.controller.TabelViewAction.TableViewItemClickedAction;
+import com.mycompany.orientdbvisualizationtool.controller.TableViewAction.TableViewItemClickedAction;
 import com.mycompany.orientdbvisualizationtool.controller.ThemeChoiceAction.ThemeChoiceBoxAction;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
