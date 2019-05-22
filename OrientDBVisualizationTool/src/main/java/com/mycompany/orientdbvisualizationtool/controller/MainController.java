@@ -18,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Bounds;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
@@ -28,7 +27,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * FXML Controller class for the tree view
@@ -121,7 +119,7 @@ public class MainController extends ParentController {
                 .setSplit_Pane(Center_Split_Pane)
                 .setCollapse_Anchor_Pane(left_Anchor_Pane)
                 .setCenter_Anchor_Pane(Center_Anchor_Pane)
-                .setLeft(true)
+                .setIsLeft(true)
                 .createCollapseButtonAction();
 
         new CollapseButtonActionBuilder()
@@ -129,7 +127,7 @@ public class MainController extends ParentController {
                 .setSplit_Pane(Center_Split_Pane)
                 .setCollapse_Anchor_Pane(right_Anchor_Pane)
                 .setCenter_Anchor_Pane(Center_Anchor_Pane)
-                .setLeft(false)
+                .setIsLeft(false)
                 .createCollapseButtonAction();
     }
 
@@ -168,7 +166,6 @@ public class MainController extends ParentController {
         Center_Anchor_Pane.setOnScroll(new ScrollZoomAction(Center_Anchor_Pane));
     }
 
-
     /**
      * Action taken when mouse dragged in center anchor pane
      * Action taken when mouse pressed in center anchor pane
@@ -198,8 +195,7 @@ public class MainController extends ParentController {
         String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
         String displayName = rootPlace.toString();
-        Node rootNode = new Node(id, name, type, displayName);
-        rootNode.setController(this);
+        Node rootNode = new Node(id, name, type, displayName, this);
         nodes.add(rootNode);
 
         VBox rootVBox = new VBox(15);
@@ -235,7 +231,7 @@ public class MainController extends ParentController {
         Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
         Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
         Left_Status_Label.setText("/" + nodePlace.getPath());
-        Right_Status_Label.setText("Children | " + nodePlace.getChildren().size() + "   ");
+        Right_Status_Label.setText(nodePlace.getChildren().size() + " | children  ");
 
         tableViewObserveData.clear();
         PlaceManager placeManager = PlaceManager.getInstance();
@@ -246,130 +242,17 @@ public class MainController extends ParentController {
     }
 
     /**
-     * expands a node to add/show the children of the node, if node is not
-     * expanded and contracts a node to remove/hide the children of the node
-     * otherwise.
-     *
-     * @param parentNode source node for expansion
+     * @return list of nodes
      */
-    public void expandContractNode(Node parentNode) {
-        if (!parentNode.isExpanded()) {
-            expandNode(parentNode);
-            parentNode.setExpanded(true);
-            clearEdgeLinks();
-        } else {
-            removeNodeAndChildren(parentNode);
-            parentNode.setExpanded(false);
-        }
+    public ArrayList<Node> getNodes() {
+        return nodes;
     }
 
     /**
-     * expands a nodes to show the children of the node
-     *
-     * @param parentNode source node for expansion
+     * @return list of edges
      */
-    private void expandNode(Node parentNode) {
-        VBox childrenVBox = parentNode.getChildrenVBox();
-        Place sourcePlace = placeManager.getPlace(parentNode.getNodeId());
-        ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
-
-        if (!childrenPlaces.isEmpty()) {
-            for (Place place : childrenPlaces) {
-                String id = place.getId();
-                String name = place.getName();
-                String type = place.getType().toString();
-                String displayName = place.toString();
-                Node childNode = new Node(id, name, type, displayName);
-                childNode.setController(this);
-                nodes.add(childNode);
-                childrenVBox.getChildren().add(childNode.getContainerPane());
-                childrenVBox.layout();
-            }
-        }
-        parentNode.setLayoutY((childrenVBox.getBoundsInLocal().getHeight() + parentNode.getHeight()) / 2);
-        redrawEdges(parentNode);
-    }
-
-    /**
-     * clears and redraws the edge present in the central pane. used when nodes
-     * are moved around (when a node is expanded).
-     */
-    private void clearEdgeLinks() {
-        edges.clear();
-        //keep whole tree to maintain its position when it is expanded (within scroll pane bounds)
-        Node rootNode = nodes.get(0);
-        VBox rootVBox = (VBox) rootNode.getContainerPane().getParent();
-        Bounds rootNodeChildrenVBoxBounds = rootNode.getChildrenVBox().getBoundsInLocal();
-        rootVBox.setLayoutY(Math.abs(rootVBox.getLayoutY() - ((rootNodeChildrenVBoxBounds.getHeight()) - rootNode.getHeight()) / 2));
-
-        for (int i = 0; i < nodes.size(); i++) {
-            Pane containerPane = nodes.get(i).getContainerPane();
-            //reposition node to the center of its children
-            ObservableList<javafx.scene.Node> genericNodes = nodes.get(i).getChildrenVBox().getChildren();
-            if (!genericNodes.isEmpty()) {
-                nodes.get(i).setLayoutY(((nodes.get(i).getChildrenVBox().getBoundsInLocal().getHeight()) - rootNode.getHeight()) / 2);
-            }
-            for (int j = 0; j < containerPane.getChildren().size(); j++) {
-                if (containerPane.getChildren().get(j) instanceof Edge) {
-                    containerPane.getChildren().remove(j);
-                    j--;
-                }
-            }
-        }
-        redrawEdges(rootNode);
-    }
-
-    /**
-     * recursively redraws the edges then nodes are moved around, (when a node
-     * is expanded).
-     *
-     * @param startNode starting node of the subtree that needs to redraw edges.
-     */
-    private void redrawEdges(Node startNode) {
-        if (startNode.getChildrenVBox().getChildren().isEmpty()) {
-            return;
-        }
-        for (javafx.scene.Node childGenericNode : startNode.getChildrenVBox().getChildren()) {
-            Pane containerPane = (Pane) childGenericNode;
-            Node childNode = (Node) containerPane.getChildren().get(0);
-            Edge edge = new Edge(startNode, childNode);
-            startNode.getContainerPane().getChildren().add(edge);
-            startNode.getContainerPane().layout();
-            edges.add(edge);
-            redrawEdges(childNode);
-        }
-    }
-
-    /**
-     * recursively removes the children in the subtree of given node. Used when
-     * the user contracts a node
-     *
-     * @param node the node to be contracted
-     */
-    private void removeNodeAndChildren(Node node) {
-        Pane container = node.getContainerPane();
-
-        if (container.getChildren().size() < 2) {
-            return;
-        }
-
-        Iterator<javafx.scene.Node> iterator = container.getChildren().iterator();
-        while (iterator.hasNext()) {
-            javafx.scene.Node nextNode = iterator.next();
-            if (nextNode instanceof Edge) {
-                edges.remove(nextNode);
-                iterator.remove();
-            }
-        }
-
-        for (javafx.scene.Node genericNode : node.getChildrenVBox().getChildren()) {
-            Pane containerPane = (Pane) genericNode;
-            Node childNode = (Node) containerPane.getChildren().get(0);
-            nodes.remove(childNode);
-            removeNodeAndChildren(childNode);
-        }
-
-        node.getChildrenVBox().getChildren().clear();
+    public ArrayList<Edge> getEdges() {
+        return edges;
     }
 
     /**
