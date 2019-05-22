@@ -9,7 +9,7 @@ import com.mycompany.orientdbvisualizationtool.model.Organization;
 
 import java.util.Random;
 import javafx.application.Application;
-import javax.swing.JOptionPane;
+
 /**
  * Main class
  *
