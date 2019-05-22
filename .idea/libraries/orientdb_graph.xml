@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="orientdb graph">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/orientdb graph" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

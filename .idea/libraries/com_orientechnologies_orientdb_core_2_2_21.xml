@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="com.orientechnologies:orientdb-core:2.2.21" type="repository">
+    <properties maven-id="com.orientechnologies:orientdb-core:2.2.21" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/orientechnologies/orientdb-core/2.2.21/orientdb-core-2.2.21.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/xerial/snappy/snappy-java/1.1.0.1/snappy-java-1.1.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/googlecode/concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4.1/concurrentlinkedhashmap-lru-1.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -3,13 +3,10 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/java" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.orientechnologies:orientdb-graphdb:2.2.21" level="project" />
-    <orderEntry type="library" name="com.orientechnologies:orientdb-core:2.2.21" level="project" />
     <orderEntry type="library" name="com.google.guava:guava:27.0-jre" level="project" />
     <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-orient-graph:2.0.0" level="project" />
     <orderEntry type="library" name="orientdb graph" level="project" />
