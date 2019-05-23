@@ -65,6 +65,8 @@ public class MainController extends ParentController {
     private ChoiceBox Theme_Choice_Box;
     @FXML
     private AnchorPane Center_Anchor_Pane;
+    @FXML
+    private TextField Location_Search;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
@@ -105,6 +107,11 @@ public class MainController extends ParentController {
         setHideActionProperty();
         setThemeChoiceBoxProperty();
         zoomFunction();
+        
+        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            populateTreeView(newValue);
+        });
     }
 
     /**
@@ -261,31 +268,43 @@ public class MainController extends ParentController {
      *
      * @param sourcePlace source Place to create a parent treeView item
      * @param sourceItem  a source treeView-item to which children treeView-items are added
+     * @param searchKey the string to search for
      * @return source tree item populated with children tree items
      */
-    private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem) {
+    private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem, String searchKey) {
         if (sourcePlace.getChildren().isEmpty()) {
-            return sourceItem;
+            if(sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase())){ 
+                return sourceItem;
+            }else{
+                return null;
+            }
         }
 
         for (Place place : sourcePlace.getChildren()) {
             TreeItem childItem = new TreeItem<>(place.toString());
-            sourceItem.getChildren().add(recursePopulateTreeView(place, childItem));
-            childItem.setGraphic(iconize(place.getType()));
+            TreeItem children = recursePopulateTreeView(place, childItem, searchKey);
+            if(children != null || place.toString().toLowerCase().contains(searchKey.toLowerCase())){
+                sourceItem.getChildren().add(children);
+                childItem.setGraphic(iconize(place.getType()));
+            }
         }
-        return sourceItem;
+        if(sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase()) || !sourceItem.getChildren().isEmpty()){ 
+            return sourceItem;
+        }
+        return null;
     }
 
     /**
      * populates the tree view with data from model
+     * @param searchKey the string to search for
      */
-    public void populateTreeView() {
+    public void populateTreeView(String searchKey) {
         Place rootPlace = placeManager.getRoot();
         String itemName = rootPlace.getType().toString() + ": " + rootPlace.toString();
         TreeItem rootItem = new TreeItem<>(itemName);
         rootItem.setExpanded(true);
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
-        Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
+        Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem, searchKey));
 
         /* TODO:: TO BE USED IN UPCOMING ITERATIONS
         int row = Left_Tree_View.getRow(rootItem);
