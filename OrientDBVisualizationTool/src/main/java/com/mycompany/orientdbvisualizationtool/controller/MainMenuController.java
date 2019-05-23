@@ -42,10 +42,15 @@ public class MainMenuController extends ParentController {
     private TableColumn Table_View_PropertyValue;
     @FXML
     private TableView Properties_Table;
+    @FXML
+    private TextField Organization_Search;
+    @FXML
+    private TextField Location_Search;
 
     private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
     private Place currentPlace;
+    private Organization currentOrganization;
 
     /**
      * The main default properties of controller are initialized
@@ -61,6 +66,7 @@ public class MainMenuController extends ParentController {
         Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
         Properties_Table.setSelectionModel(null);
         organizationManager = OrganizationManager.getInstance();
+        initLocationTreeView();
         populateOrganizationTreeView();
 
         Properties_Table.setPrefWidth(240);
@@ -89,23 +95,22 @@ public class MainMenuController extends ParentController {
      * populates the tree view with data from model
      */
     public void populateOrganizationTreeView() {
-        TreeItem<String> rootItem = new TreeItem<>();
-        List<Organization> organizations = organizationManager.getOrganizations();
-        for (Organization o : organizations) {
-            String itemName = o.getId();
-            TreeItem<String> newItem = new TreeItem<>(itemName);
-            newItem.setExpanded(true);
-            newItem.setGraphic(new ImageView("icons/organization-icon.png"));
-            rootItem.getChildren().add(newItem);
-        }
-
-        Organization_Tree_View.setRoot(rootItem);
-        Organization_Tree_View.setShowRoot(false);
-
+        Organization_Tree_View.setRoot(new TreeItem<>());
+        searchOrganization("");
+        Organization_Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            searchOrganization(newValue);
+        });
+        
         Organization_Tree_View.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
+                    if (newValue == null) {
+                        return;
+                    }
                     populateLocationTreeView(((TreeItem<String>) newValue).getValue());
                 });
+        
+        Organization_Tree_View.setShowRoot(false);
     }
 
     /**
@@ -114,22 +119,13 @@ public class MainMenuController extends ParentController {
      * @param id The id of the organization we want the locations from
      */
     public void populateLocationTreeView(String id) {
-        TreeItem rootItem = Location_Tree_View.getRoot();
-        if (rootItem != null) {
-            rootItem.getChildren().clear();
-        } else {
-            rootItem = new TreeItem<>();
-        }
-        Organization currentOrganization = organizationManager.getOrganization(id);
-
-        List<Place> places = currentOrganization.getPlaces();
-        for (Place p : places) {
-            TreeItem newItem = new TreeItem<>(p);
-            newItem.setExpanded(true);
-            newItem.setGraphic(iconize(p.getType()));
-            rootItem.getChildren().add(newItem);
-        }
-
+        currentOrganization = organizationManager.getOrganization(id);
+        searchLocations("");
+    }
+    
+    private void initLocationTreeView(){
+        
+        TreeItem rootItem = new TreeItem<>();
         Location_Tree_View.setRoot(rootItem);
         Location_Tree_View.setShowRoot(false);
 
@@ -141,6 +137,11 @@ public class MainMenuController extends ParentController {
                     currentPlace = ((TreeItem<Place>) newValue).getValue();
                     showSelectedPlaceDetails(currentPlace);
                 });
+        
+        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            searchLocations(newValue);
+        });
     }
 
     /**
@@ -161,5 +162,48 @@ public class MainMenuController extends ParentController {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getPlaceData().refresh(currentPlace.getId());
         VisApplication.getInstance().changeToMain();
+    }
+    
+    /**
+     * Searches trough the organizations
+     * @param searchKey string to search for
+     */
+    public void searchOrganization(String searchKey){
+        TreeItem rootItem = Organization_Tree_View.getRoot();
+        rootItem.getChildren().clear();
+        List<Organization> organizations = organizationManager.getOrganizations();
+        for (Organization o : organizations) {
+            String itemName = o.getId();
+            if(itemName.toLowerCase().contains(searchKey.toLowerCase())){
+                TreeItem<String> newItem = new TreeItem<>(itemName);
+                newItem.setExpanded(true);
+                newItem.setGraphic(new ImageView("icons/organization-icon.png"));
+                rootItem.getChildren().add(newItem);
+            }
+        }
+    }
+    
+    /**
+     * Searches trough the locations
+     * @param searchKey string to search for
+     */
+    public void searchLocations(String searchKey){
+        
+        if(currentOrganization == null){
+            return;
+        }
+        
+        TreeItem rootItem = Location_Tree_View.getRoot();
+        rootItem.getChildren().clear();
+        
+        List<Place> places = currentOrganization.getPlaces();
+        for (Place p : places) {
+            if(p.getName().toLowerCase().contains(searchKey.toLowerCase())){
+                TreeItem newItem = new TreeItem<>(p);
+                newItem.setExpanded(true);
+                newItem.setGraphic(iconize(p.getType()));
+                rootItem.getChildren().add(newItem);
+            }
+        }
     }
 }
