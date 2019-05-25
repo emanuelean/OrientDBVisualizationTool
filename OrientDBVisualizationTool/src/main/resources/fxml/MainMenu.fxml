@@ -33,7 +33,7 @@
                         </Label>
                         <TreeView fx:id="Organization_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
                         <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
-                        <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
+                        <TextField fx:id="Organization_Search" layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
                         <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>
@@ -52,7 +52,7 @@
                         </Label>
                         <TreeView fx:id="Location_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
                         <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
-                        <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
+                        <TextField fx:id= "Location_Search" layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
                         <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>

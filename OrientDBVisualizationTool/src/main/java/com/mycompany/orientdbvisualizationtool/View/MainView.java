@@ -29,6 +29,6 @@ public class MainView extends View {
     public void start() {
         controller.setPlaceManager(PlaceManager.getInstance());
         controller.addRootNodeToPane();
-        controller.populateTreeView();
+        controller.populateTreeView("");
     }
 }
