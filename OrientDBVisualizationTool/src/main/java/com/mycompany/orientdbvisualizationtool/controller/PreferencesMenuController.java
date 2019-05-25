@@ -167,7 +167,7 @@ public class PreferencesMenuController {
      * @param selectedFile newly created and saved theme file.
      */
     private void showConfirmationDialog(File selectedFile) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Apply the saved theme?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Apply the saved theme?\nTheme file must be located under resources/styles", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         ImageView imageView = new ImageView("icons/sb-icon.png");
         imageView.setFitHeight(60);
         imageView.setFitWidth(80);
