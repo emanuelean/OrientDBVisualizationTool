@@ -29,6 +29,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
+                        <!--TODO remove menu items
                         <MenuItem mnemonicParsing="false" text="New" />
                         <MenuItem mnemonicParsing="false" text="Open…" />
                         <Menu mnemonicParsing="false" text="Open Recent" />
@@ -37,8 +38,8 @@
                         <MenuItem mnemonicParsing="false" text="Save" />
                         <MenuItem mnemonicParsing="false" text="Save As…" />
                         <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />-->
+                        <MenuItem mnemonicParsing="false" text="Preferences…" onAction="#openPreferences"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#switchToMainMenu" text="Main Menu" />
                         <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="Quit" />
@@ -48,11 +49,12 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Undo" />
                         <MenuItem mnemonicParsing="false" text="Redo" />
+                        <!-- TODO remove menu items
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Cut" />
                         <MenuItem mnemonicParsing="false" text="Copy" />
                         <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />-->
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Select All" />
                         <MenuItem mnemonicParsing="false" text="Unselect All" />

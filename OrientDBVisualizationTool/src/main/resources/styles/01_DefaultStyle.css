@@ -15,3 +15,8 @@
 #Edge{
     -fx-stroke: dimgray;
 }
+
+#NodeRectangle{
+    -fx-fill: lightgray;
+    -fx-stroke: lightgray;
+}

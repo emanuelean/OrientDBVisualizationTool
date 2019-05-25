@@ -71,19 +71,16 @@ public class Node extends StackPane {
      */
     private void setLayoutProperties() {
         this.getChildren().addAll(rectangle, this.getLabel());
-        this.layout();//TODO:: Remove
-        //this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        this.layout();
 
         this.childrenVBox = new VBox(15);
         this.childrenVBox.setLayoutX(this.getBoundsInLocal().getWidth() + 50);
-        this.childrenVBox.setLayoutY(0);//TODO:: Remove
+        this.childrenVBox.setLayoutY(0);
         this.childrenVBox.layout();
-        //this.childrenVBox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         this.containerPane = new Pane();
         this.containerPane.getChildren().addAll(this, childrenVBox);
-        this.containerPane.layout();//TODO:: Remove
-        // this.containerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        this.containerPane.layout();
     }
 
     /**

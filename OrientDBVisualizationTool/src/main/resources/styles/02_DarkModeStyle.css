@@ -41,11 +41,16 @@
 }
 
 .menu-bar {
-    -fx-background-color: #292929;
+    -fx-background-color: linear-gradient(#706e6a,#292929ff);
 }
 
 .text-field {
     -fx-text-fill: #0b0b0a;
+}
+
+#NodeRectangle{
+    -fx-fill: lightgray;
+    -fx-stroke: darkgray;
 }
 
 #NodeLabel {

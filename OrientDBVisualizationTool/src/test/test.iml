@@ -7,17 +7,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.google.guava:guava:27.0-jre" level="project" />
-    <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-orient-graph:2.0.0" level="project" />
-    <orderEntry type="library" name="orientdb graph" level="project" />
+    <orderEntry type="library" name="blueprints core" level="project" />
     <orderEntry type="library" name="orientdb core" level="project" />
+    <orderEntry type="library" name="orientdb graph" level="project" />
+    <orderEntry type="library" name="com.google.guava:guava:27.0-jre" level="project" />
     <orderEntry type="library" name="com.orientechnologies:orientdb-client:2.2.21" level="project" />
-    <orderEntry type="library" name="org.junit:junit5-api:5.0.0-ALPHA" level="project" />
-    <orderEntry type="library" name="org.junit:junit4-engine:5.0.0-ALPHA" level="project" />
+    <orderEntry type="library" name="com.orientechnologies:orientdb-core:2.2.21" level="project" />
+    <orderEntry type="library" name="com.orientechnologies:orientdb-graphdb:2.2.21" level="project" />
     <orderEntry type="library" name="com.orientechnologies:orientdb-object:2.2.21" level="project" />
-    <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-orient-graph:2.4.0" level="project" />
     <orderEntry type="library" name="com.orientechnologies:orientdb-server:2.2.21" level="project" />
     <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-core:2.6.0" level="project" />
-    <orderEntry type="library" name="blueprints core" level="project" />
+    <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-orient-graph:2.0.0" level="project" />
+    <orderEntry type="library" name="com.tinkerpop.blueprints:blueprints-orient-graph:2.4.0" level="project" />
+    <orderEntry type="library" name="org.junit:junit5-api:5.0.0-ALPHA" level="project" />
   </component>
 </module>

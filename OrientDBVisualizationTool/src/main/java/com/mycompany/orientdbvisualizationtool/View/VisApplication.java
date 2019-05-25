@@ -6,20 +6,21 @@ import javafx.stage.Stage;
 
 /**
  * Responsible for the main application
- * 
+ *
  * @author Niels, Albert
  */
 public class VisApplication extends Application {
 
     private View mainView;
     private View menuView;
+    private ApperancePrefView appearancePrefView;
     private Stage primaryStage;
     private static VisApplication singletonInstance;
 
     /**
      * Retrieves a singleton instance of VisApplication
-     * 
-     * @return 
+     *
+     * @return
      */
     public static VisApplication getInstance() {
         if (singletonInstance == null) {
@@ -27,11 +28,11 @@ public class VisApplication extends Application {
         }
         return singletonInstance;
     }
-    
+
     /**
      * Initialises stuff for a new application
-     * 
-     * @param primaryStage 
+     *
+     * @param primaryStage
      */
     public void startUp(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -39,6 +40,7 @@ public class VisApplication extends Application {
         primaryStage.setTitle("Sustainable Buildings orientDB Visualizing Tool");
         mainView = new MainView();
         menuView = new MainMenuView();
+        appearancePrefView = new ApperancePrefView();
         changeToMenu();
     }
 
@@ -48,6 +50,9 @@ public class VisApplication extends Application {
     public void changeToMain() {
         mainView.start();
         primaryStage.setScene(mainView.getScene());
+        primaryStage.setWidth(MainView.getWIDTH());
+        primaryStage.setHeight(MainView.getWIDTH() * 9 / 16);
+        primaryStage.centerOnScreen();
         primaryStage.show();
     }
 
@@ -61,9 +66,21 @@ public class VisApplication extends Application {
     }
 
     /**
+     * switches to preferences
+     */
+    public void changeToPreferences() {
+        appearancePrefView.start();
+        appearancePrefView.getController().setApplicationScene(mainView.getScene());
+        primaryStage.setScene(appearancePrefView.getScene());
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(490);
+        primaryStage.show();
+    }
+
+    /**
      * Starts a new application
-     * 
-     * @param primaryStage The stage that this application 
+     *
+     * @param primaryStage The stage that this application
      * @throws Exception Exception
      */
     @Override

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.effect.Blend?>
@@ -17,7 +17,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.orientdbvisualizationtool.controller.MainMenuController">
+<VBox alignment="center" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.orientdbvisualizationtool.controller.MainMenuController">
     <children>
         <SplitPane dividerPositions="0.2, 0.8" focusTraversable="true" VBox.vgrow="ALWAYS">
             <items>
@@ -84,14 +84,14 @@
                                 </TextField>
                                 <TableView fx:id="Properties_Table" prefHeight="315.0" prefWidth="103.0">
                                     <columns>
-                                        <TableColumn fx:id="Table_View_PropertyKey" prefWidth="${Properties_Table.width*0.5}" text="Property" />
-                                        <TableColumn fx:id="Table_View_PropertyValue" prefWidth="${Properties_Table.width*0.5}" text="Value" />
+                                        <TableColumn fx:id="Table_View_PropertyKey" editable="false" prefWidth="${Properties_Table.width*0.5}" text="Property" />
+                                        <TableColumn fx:id="Table_View_PropertyValue" editable="false" prefWidth="${Properties_Table.width*0.5}" text="Value" />
                                     </columns>
                                     <VBox.margin>
                                         <Insets bottom="10.0" />
                                     </VBox.margin>
                                 </TableView> 
-                                <Button text="View Tree" fx:id="Select_Field" onAction="#selectPlace">
+                                <Button fx:id="Select_Field" onAction="#selectPlace" text="View Tree">
                                     <VBox.margin>
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>

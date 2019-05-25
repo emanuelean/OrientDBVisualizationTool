@@ -35,36 +35,21 @@ import java.util.ArrayList;
  */
 public class MainController extends ParentController {
 
-    @FXML
-    private SplitPane Center_Split_Pane;
-    @FXML
-    private Button Left_Collapse_Button;
-    @FXML
-    private Button Right_Collapse_Button;
-    @FXML
-    private TextField Node_Name_Text_Field;
-    @FXML
-    private TextField Node_ID_Text_Field;
-    @FXML
-    private TextField Node_Type_Text_Field;
-    @FXML
-    private TreeView Left_Tree_View;
-    @FXML
-    private TableColumn Table_View_Entity_ID;
-    @FXML
-    private TableView Table_View;
-    @FXML
-    private Button Hide_Nodes_Button;
-    @FXML
-    private Button Show_All_Nodes_Button;
-    @FXML
-    private Label Left_Status_Label;
-    @FXML
-    private Label Right_Status_Label;
-    @FXML
-    private ChoiceBox Theme_Choice_Box;
-    @FXML
-    private AnchorPane Center_Anchor_Pane;
+    @FXML private SplitPane Center_Split_Pane;
+    @FXML private Button Left_Collapse_Button;
+    @FXML private Button Right_Collapse_Button;
+    @FXML private TextField Node_Name_Text_Field;
+    @FXML private TextField Node_ID_Text_Field;
+    @FXML private TextField Node_Type_Text_Field;
+    @FXML private TreeView Left_Tree_View;
+    @FXML private TableColumn Table_View_Entity_ID;
+    @FXML private TableView Table_View;
+    @FXML private Button Hide_Nodes_Button;
+    @FXML private Button Show_All_Nodes_Button;
+    @FXML private Label Left_Status_Label;
+    @FXML private Label Right_Status_Label;
+    @FXML private ChoiceBox Theme_Choice_Box;
+    @FXML private AnchorPane Center_Anchor_Pane;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
@@ -77,8 +62,7 @@ public class MainController extends ParentController {
     /**
      * The main default properties of controller are initialized
      */
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
 
@@ -219,9 +203,6 @@ public class MainController extends ParentController {
     public void showSelectedNodeDetails(Node node) {
         Place nodePlace = placeManager.getPlace(node.getNodeId());
 
-        /*TODO:: HAVE A SHOW MORE BUTTON ON RIGHT PANEL
-        * System.out.println(nodePlace.getAttributes());*/
-
         //setting the text fields on right panel
         Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.getId());
@@ -286,12 +267,6 @@ public class MainController extends ParentController {
         rootItem.setExpanded(true);
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
         Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
-
-        /* TODO:: TO BE USED IN UPCOMING ITERATIONS
-        int row = Left_Tree_View.getRow(rootItem);
-        Left_Tree_View.getSelectionModel().select(4);
-        Left_Tree_View.get
-        */
     }
 
     /**
@@ -338,5 +313,9 @@ public class MainController extends ParentController {
      */
     public void setMouseSourceY(Double mouseSourceY) {
         this.mouseSourceY = mouseSourceY;
+    }
+
+    public void openPreferences(ActionEvent actionEvent) {
+        VisApplication.getInstance().changeToPreferences();
     }
 }
