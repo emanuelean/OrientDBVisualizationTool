@@ -278,7 +278,9 @@ public class MainController extends ParentController {
 
         for (Place place : sourcePlace.getChildren()) {
             TreeItem childItem = new TreeItem<>(place.toString());
+            childItem.setExpanded(true);
             TreeItem children = recursePopulateTreeView(place, childItem, searchKey);
+
             if(children != null || place.toString().toLowerCase().contains(searchKey.toLowerCase())){
                 sourceItem.getChildren().add(children);
                 childItem.setGraphic(iconize(place.getType()));
@@ -300,7 +302,7 @@ public class MainController extends ParentController {
         TreeItem rootItem = new TreeItem<>(itemName);
         rootItem.setExpanded(true);
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
-        Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem));
+        Left_Tree_View.setRoot(recursePopulateTreeView(rootPlace, rootItem, searchKey));
     }
 
     /**
