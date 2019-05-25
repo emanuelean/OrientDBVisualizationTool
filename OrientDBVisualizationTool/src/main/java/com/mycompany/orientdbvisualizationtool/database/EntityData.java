@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
+import com.mycompany.orientdbvisualizationtool.model.Entity;
+import com.mycompany.orientdbvisualizationtool.model.places.Place;
 
 /**
  * Responsible for retrieving specific information about entities from the
@@ -128,5 +130,16 @@ public class EntityData extends Database {
             }
         }
         return false;
+    }
+    
+    /**
+     * Retrieves the attributes of a certain entity
+     * 
+     * @param entity The place we want to retrieve the attributes from
+     * @return A class containing all the attributes
+     */
+    public EntityAttributes getAttributes(Entity ent) {
+        Vertex v = getVertexById("V_instance.id", ent.getId());
+        return new EntityAttributes(v);
     }
 }
