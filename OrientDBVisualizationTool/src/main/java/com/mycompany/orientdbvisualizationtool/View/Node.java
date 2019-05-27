@@ -1,8 +1,11 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
+import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseClickedAction;
+import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseEnteredAction;
+import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseExitedAction;
+import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMousePressedAction;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -39,7 +42,7 @@ public class Node extends StackPane {
      * @param NodeType The type of the node
      * @param displayName The display name of the node
      */
-    public Node(String id, String nodeName, String NodeType, String displayName) {
+    public Node(String id, String nodeName, String NodeType, String displayName, MainController controller) {
         this.nodeId = id;
         this.selected = false;
         this.expanded = false;
@@ -55,6 +58,7 @@ public class Node extends StackPane {
         this.label.setFont(new Font(13));
         this.label.setId("NodeLabel");
 
+        this.mainController = controller;
         this.setRectangleProperty();
         this.setLayoutProperties();
 
@@ -68,17 +72,16 @@ public class Node extends StackPane {
     private void setLayoutProperties() {
         this.getChildren().addAll(rectangle, this.getLabel());
         this.layout();
-        //this.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         this.childrenVBox = new VBox(15);
-        this.childrenVBox.setLayoutX(200);
+        this.childrenVBox.setLayoutX(this.getBoundsInLocal().getWidth() + 50);
         this.childrenVBox.setLayoutY(0);
-        //this.childrenVBox.setBorder(new Border(new BorderStroke(Color.RED, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+        this.childrenVBox.layout();
 
         this.containerPane = new Pane();
         this.containerPane.getChildren().addAll(this, childrenVBox);
         this.containerPane.layout();
-        //this.containerPane.setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
     }
 
     /**
@@ -103,8 +106,8 @@ public class Node extends StackPane {
      * @param nodeName The name of the node
      * @param NodeType The type of the node
      */
-    public Node(String id, String nodeName, String NodeType) {
-        this(id, nodeName, NodeType, nodeName);
+    public Node(String id, String nodeName, String NodeType, MainController controller) {
+        this(id, nodeName, NodeType, nodeName, controller);
         this.DEFAULT_COLOR = Color.LIGHTGRAY;
         this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
     }
@@ -114,39 +117,10 @@ public class Node extends StackPane {
      * click -> expansion of node Mouse entered/exited -> highlight node
      */
     private void setMouseListenerProperties() {
-        this.setOnMousePressed(event -> {
-            if (!this.isSelected()) {
-                this.setSelected(true);
-            } else {
-                this.setSelected(false);
-            }
-        }
-        );
-        this.setOnMouseClicked(event -> {
-            if (event.getButton().equals(MouseButton.PRIMARY)) {
-                //Double click
-                if (event.getClickCount() == 2) {
-                    mainController.expandContractNode(this);
-                }
-            }
-        }
-        );
-        this.setOnMouseEntered(event -> {
-            if (!selected) {
-                rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 0.8, 1));
-            } else {
-                rectangle.setFill(DEFAULT_COLOR.deriveColor(0, 1, 1 / 0.8, 1));
-            }
-        }
-        );
-        this.setOnMouseExited(event -> {
-            if (selected) {
-                rectangle.setFill(Color.LAVENDER);
-            } else {
-                rectangle.setFill(DEFAULT_COLOR);
-            }
-        }
-        );
+        this.setOnMousePressed(new NodeMousePressedAction(this));
+        this.setOnMouseClicked(new NodeMouseClickedAction(this, mainController, mainController.getNodes(), mainController.getEdges()));
+        this.setOnMouseEntered(new NodeMouseEnteredAction(this));
+        this.setOnMouseExited(new NodeMouseExitedAction(this));
 
     }
 
@@ -202,16 +176,6 @@ public class Node extends StackPane {
     }
 
     /**
-     * Assigns the controller instance to node in view
-     *
-     * @param mainController the main controller
-     */
-    public void setController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    /**
-     *
      * @param expanded The new expanded value
      */
     public void setExpanded(Boolean expanded) {
@@ -219,7 +183,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @param vbox The new vertical box
      */
     public void setChildrenVBox(VBox vbox) {
@@ -227,7 +190,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return The node id
      */
     public String getNodeId() {
@@ -235,7 +197,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return The node name
      */
     public String getNodeName() {
@@ -243,7 +204,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return The display name
      */
     public String getDisplayName() {
@@ -251,7 +211,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return The node type
      */
     public String getNodeType() {
@@ -259,7 +218,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return The vertical box for the children
      */
     public VBox getChildrenVBox() {
@@ -267,7 +225,6 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return If this is expanded
      */
     public Boolean isExpanded() {
@@ -275,11 +232,16 @@ public class Node extends StackPane {
     }
 
     /**
-     *
      * @return the container pane that holds this node and its children (a subtree containing pane)
      */
     public Pane getContainerPane() {
         return containerPane;
     }
 
+    /**
+     * @return default color of node
+     */
+    public Color getDEFAULT_COLOR() {
+        return DEFAULT_COLOR;
+    }
 }

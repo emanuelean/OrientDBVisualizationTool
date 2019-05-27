@@ -44,6 +44,11 @@
     -fx-fill: #1c3f00;
 }
 
+#NodeRectangle{
+    -fx-fill: lightgray;
+    -fx-stroke: darkgray;
+}
+
 #Edge{
     -fx-stroke: #8ec3a2;
 }

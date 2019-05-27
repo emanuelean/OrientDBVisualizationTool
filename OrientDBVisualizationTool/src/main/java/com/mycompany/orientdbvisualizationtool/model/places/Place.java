@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.model.places;
 
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
+import com.mycompany.orientdbvisualizationtool.database.PlaceAttributes;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public abstract class Place {
     private ArrayList<Place> children;
     private ArrayList<Entity> entities;
     private ArrayList<Entity> childrenEntities;
+    private PlaceAttributes attributes;
 
     /**
      * The type/category of place
@@ -196,4 +198,22 @@ public abstract class Place {
         }
         return path.toString();
     }
+
+    /**
+     * 
+     * @return The attributes of a place
+     */
+    public PlaceAttributes getAttributes() {
+        return attributes;
+    }
+    
+    /**
+     * Loads the attributes for this place
+     */
+    public void loadAttributes() {
+        if(attributes == null) {
+            attributes = DatabaseManager.getInstance().getPlaceData().getAttributes(this);
+        }
+    }
+    
 }

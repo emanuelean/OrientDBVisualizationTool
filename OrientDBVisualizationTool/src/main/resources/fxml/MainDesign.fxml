@@ -29,6 +29,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
+                        <!--TODO remove menu items
                         <MenuItem mnemonicParsing="false" text="New" />
                         <MenuItem mnemonicParsing="false" text="Open…" />
                         <Menu mnemonicParsing="false" text="Open Recent" />
@@ -37,8 +38,8 @@
                         <MenuItem mnemonicParsing="false" text="Save" />
                         <MenuItem mnemonicParsing="false" text="Save As…" />
                         <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Preferences…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />-->
+                        <MenuItem mnemonicParsing="false" text="Preferences…" onAction="#openPreferences"/>
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#switchToMainMenu" text="Main Menu" />
                         <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="Quit" />
@@ -48,11 +49,12 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Undo" />
                         <MenuItem mnemonicParsing="false" text="Redo" />
+                        <!-- TODO remove menu items
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Cut" />
                         <MenuItem mnemonicParsing="false" text="Copy" />
                         <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />-->
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" text="Select All" />
                         <MenuItem mnemonicParsing="false" text="Unselect All" />
@@ -79,7 +81,7 @@
                         </Label>
                         <TreeView fx:id="Left_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
                         <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
-                        <TextField layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
+                        <TextField fx:id="Location_Search" layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
                         <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>
@@ -88,7 +90,7 @@
                 </AnchorPane>
                 <ScrollPane prefHeight="200.0" prefWidth="200.0">
                     <content>
-                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane" onMouseDragged="#centerPaneDragged" onMousePressed="#centerPanePressed" onMouseReleased="#centerPaneReleased">
+                        <AnchorPane id="Content" fx:id="Center_Anchor_Pane">
                             <children>
                                 <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Tree" textAlignment="CENTER" textFill="$x2" />
                             </children>
@@ -100,25 +102,25 @@
                         <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="#9f9f9f" />
                         <VBox layoutX="14.0" layoutY="41.0" prefHeight="481.0" prefWidth="237.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0">
                             <children>
-                                <Label text="Name" textFill="#9f9f9f" />
+                                <Label text="Name" textFill="#000000" />
                                 <TextField fx:id="Node_Name_Text_Field">
                                     <VBox.margin>
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Label text="ID" textFill="#9f9f9f" />
+                                <Label text="ID" textFill="#000000" />
                                 <TextField fx:id="Node_ID_Text_Field">
                                     <VBox.margin>
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Label text="Type" textFill="#9f9f9f" />
+                                <Label text="Type" textFill="#000000" />
                                 <TextField fx:id="Node_Type_Text_Field">
                                     <VBox.margin>
                                         <Insets bottom="10.0" top="5.0" />
                                     </VBox.margin>
                                 </TextField>
-                                <Label text="Linked Entities" textFill="#9f9f9f">
+                                <Label text="Linked Entities" textFill="#000000">
                                     <VBox.margin>
                                         <Insets bottom="5.0" />
                                     </VBox.margin>
@@ -133,8 +135,8 @@
                                 </TableView>
                                 <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                     <children>
-                                        <Button fx:id="Show_All_Button" mnemonicParsing="false" text="Show All" textFill="#515151" />
-                                        <Button fx:id="Hide_Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Hide" textFill="#515151" />
+                                        <Button fx:id="Show_All_Nodes_Button" mnemonicParsing="false" text="Show All" textFill="#515151" />
+                                        <Button fx:id="Hide_Nodes_Button" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Hide" textFill="#515151" />
                                     </children>
                                 </HBox>
                             </children>
@@ -149,7 +151,7 @@
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
             <children>
             <Button fx:id="Left_Collapse_Button" layoutX="607.0" layoutY="13.0" mnemonicParsing="false" text="◀" />
-                <Label fx:id="Left_Status_Label" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <Label fx:id="Left_Status_Label" textFill="#000000" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                     <font>
                         <Font size="11.0" fx:id="x3" />
                     </font>
@@ -158,7 +160,7 @@
                     </textFill>
                 </Label>
                 <Pane HBox.hgrow="ALWAYS" />
-                <Label fx:id="Right_Status_Label" font="$x3" textFill="$x4" HBox.hgrow="NEVER" />
+                <Label fx:id="Right_Status_Label" font="$x3" textFill="#000000" HBox.hgrow="NEVER" />
             <Button fx:id="Right_Collapse_Button" mnemonicParsing="false" text="▶" />
                 <ChoiceBox fx:id="Theme_Choice_Box" prefHeight="25.0" prefWidth="103.0" />
             </children>
