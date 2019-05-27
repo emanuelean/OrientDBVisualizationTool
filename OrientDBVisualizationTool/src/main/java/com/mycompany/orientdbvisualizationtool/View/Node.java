@@ -81,6 +81,7 @@ public class Node extends StackPane {
         this.containerPane = new Pane();
         this.containerPane.getChildren().addAll(this, childrenVBox);
         this.containerPane.layout();
+
     }
 
     /**

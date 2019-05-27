@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -28,6 +29,7 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param node       node to be clicked on
      * @param controller main controller
      * @param nodes      list for tracking edges when node expanded/contracted
@@ -54,6 +56,13 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
             clearEdgeLinks();
         } else {
             removeNodeAndChildren(parentNode);
+            //if root node
+            if (parentNode.getContainerPane().getParent().getParent() instanceof AnchorPane) {
+                parentNode.setLayoutY(0);
+                double recHeight = parentNode.getRectangle().getHeight() / 2;
+                double vBoxLayoutY = parentNode.getContainerPane().getParent().getLayoutY();
+                parentNode.getContainerPane().getParent().setLayoutY(vBoxLayoutY - recHeight);
+            }
             parentNode.setExpanded(false);
         }
     }

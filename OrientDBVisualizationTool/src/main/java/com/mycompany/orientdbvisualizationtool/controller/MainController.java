@@ -207,7 +207,6 @@ public class MainController extends ParentController {
         VBox rootVBox = new VBox(15);
         rootVBox.getChildren().add(rootNode.getContainerPane());
         rootVBox.layout();
-        //rootVBox.setBorder(new Border(new BorderStroke(Color.RED,BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
         rootVBox.setLayoutX(100);
         rootVBox.setLayoutY(WIDTH * 9 / (16 * 2));
