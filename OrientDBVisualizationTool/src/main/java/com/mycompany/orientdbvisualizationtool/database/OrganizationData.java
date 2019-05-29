@@ -63,6 +63,7 @@ public class OrganizationData extends Database {
         for (Vertex v : queryVertices("SELECT id FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)")) {
             refresh(v);
         }
+        addNoOrganization();
     }
 
     /**
@@ -74,5 +75,17 @@ public class OrganizationData extends Database {
     public OrganizationAttributes getAttributes(Organization org) {
         Vertex v = getVertexById("V_organization.id", org.getId());
         return new OrganizationAttributes(v);
+    }
+    
+    private void addNoOrganization(){
+        Organization organization = new Organization("Unknown");
+        //@RID IN (SELECT out FROM instance-of WHERE id = 'location') AND
+        //WHERE NOT @RID IN (SELECT in FROM E_owns WHERE out IN (SELECT @RID FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)))
+        for (Vertex v : queryVertices("SELECT * FROM V_location ")) {
+            Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
+            organization.addPlace(newPlace);
+            System.out.println("asdf");
+        }
+         organizationManager.addOrganization(organization);
     }
 }
