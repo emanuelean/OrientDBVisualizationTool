@@ -16,6 +16,7 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 public class OrganizationData extends Database {
 
     private final OrganizationManager organizationManager;
+    private Organization allOrganization;
 
     /**
      * constructor
@@ -63,7 +64,8 @@ public class OrganizationData extends Database {
         for (Vertex v : queryVertices("SELECT id FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)")) {
             refresh(v);
         }
-        addNoOrganization();
+        addAllOrganization();
+        //addNoOrganization();
     }
 
     /**
@@ -81,11 +83,18 @@ public class OrganizationData extends Database {
         Organization organization = new Organization("Unknown");
         //@RID IN (SELECT out FROM instance-of WHERE id = 'location') AND
         //WHERE NOT @RID IN (SELECT in FROM E_owns WHERE out IN (SELECT @RID FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)))
-        for (Vertex v : queryVertices("SELECT * FROM V_location ")) {
-            Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
-            organization.addPlace(newPlace);
-            System.out.println("asdf");
+        for (Place p : allOrganization.getPlaces()) {
+            organization.addPlace(p);
         }
          organizationManager.addOrganization(organization);
+    }
+    
+    private void addAllOrganization(){
+        allOrganization = new Organization("All");
+        for (Vertex v : queryVertices("SELECT * FROM V_location ")) {
+            Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
+            allOrganization.addPlace(newPlace);
+        }
+         organizationManager.addOrganization(allOrganization);
     }
 }

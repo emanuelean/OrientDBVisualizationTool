@@ -82,8 +82,8 @@ public class MainMenuController extends ParentController {
      * @param nodePlace Has properties to be shown.
      */
     public void showSelectedPlaceDetails(Place nodePlace) {
-        Node_Name_Text_Field.setText(nodePlace.toString());
-        Node_ID_Text_Field.setText(nodePlace.toString());
+        Node_Name_Text_Field.setText(nodePlace.getShortName());
+        Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
         propertiesTable.clear();
         nodePlace.loadAttributes();
