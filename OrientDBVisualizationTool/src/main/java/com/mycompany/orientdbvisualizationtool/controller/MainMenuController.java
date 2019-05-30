@@ -3,16 +3,20 @@ package com.mycompany.orientdbvisualizationtool.controller;
 import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
+import com.mycompany.orientdbvisualizationtool.model.Property;
 import com.mycompany.orientdbvisualizationtool.model.managers.OrganizationManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
-import com.mycompany.orientdbvisualizationtool.model.places.PlaceCategory;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 /**
@@ -20,7 +24,7 @@ import javafx.scene.image.ImageView;
  *
  * @author Niels, Albert
  */
-public class MainMenuController {
+public class MainMenuController extends ParentController {
 
     @FXML
     private TextField Node_Name_Text_Field;
@@ -32,9 +36,21 @@ public class MainMenuController {
     private TreeView Organization_Tree_View;
     @FXML
     private TreeView Location_Tree_View;
+    @FXML
+    private TableColumn Table_View_PropertyKey;
+    @FXML
+    private TableColumn Table_View_PropertyValue;
+    @FXML
+    private TableView Properties_Table;
+    @FXML
+    private TextField Organization_Search;
+    @FXML
+    private TextField Location_Search;
 
+    private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
     private Place currentPlace;
+    private Organization currentOrganization;
 
     /**
      * The main default properties of controller are initialized
@@ -43,10 +59,21 @@ public class MainMenuController {
     public void initialize() {
 
         Node_Name_Text_Field.setDisable(true);
+        Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
         Node_ID_Text_Field.setDisable(true);
+        Node_ID_Text_Field.setStyle("-fx-opacity: 1;");
         Node_Type_Text_Field.setDisable(true);
+        Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
+        Properties_Table.setSelectionModel(null);
         organizationManager = OrganizationManager.getInstance();
+        initLocationTreeView();
         populateOrganizationTreeView();
+
+        Properties_Table.setPrefWidth(240);
+        Properties_Table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        Table_View_PropertyKey.setCellValueFactory(new PropertyValueFactory<Property, String>("key"));
+        Table_View_PropertyValue.setCellValueFactory(new PropertyValueFactory<Property, String>("value"));
+        Properties_Table.setItems(propertiesTable);
     }
 
     /**
@@ -58,60 +85,32 @@ public class MainMenuController {
         Node_Name_Text_Field.setText(nodePlace.toString());
         Node_ID_Text_Field.setText(nodePlace.toString());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
+        propertiesTable.clear();
+        nodePlace.loadAttributes();
+        propertiesTable.addAll(nodePlace.getAttributes().getProperties());
     }
 
-    /**
-     * returns the correct icon for a given place type.
-     *
-     * @param placeType enum for the place type
-     * @return image view icon for given place type
-     */
-    private ImageView iconize(PlaceCategory placeType) {
-        ImageView view = new ImageView();
-        switch (placeType) {
-            case Location:
-                view.setImage(new Image("icons/location-icon.png"));
-                break;
-            case Building:
-                view.setImage(new Image("icons/building-icon.png"));
-                break;
-            case Floor:
-                view.setImage(new Image("icons/floor-icon.png"));
-                break;
-            case Room:
-                view.setImage(new Image("icons/room-icon.png"));
-                break;
-            case Area:
-                view.setImage(new Image("icons/area-icon.png"));
-                break;
-            case Cell:
-                view.setImage(new Image("icons/cell-icon.png"));
-                break;
-        }
-        return view;
-    }
 
     /**
      * populates the tree view with data from model
      */
     public void populateOrganizationTreeView() {
-        TreeItem<String> rootItem = new TreeItem<>();
-        List<Organization> organizations = organizationManager.getOrganizations();
-        for (Organization o : organizations) {
-            String itemName = o.getId();
-            TreeItem<String> newItem = new TreeItem<>(itemName);
-            newItem.setExpanded(true);
-            newItem.setGraphic(new ImageView("icons/location-icon.png"));
-            rootItem.getChildren().add(newItem);
-        }
-
-        Organization_Tree_View.setRoot(rootItem);
-        Organization_Tree_View.setShowRoot(false);
-
+        Organization_Tree_View.setRoot(new TreeItem<>());
+        searchOrganization("");
+        Organization_Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            searchOrganization(newValue);
+        });
+        
         Organization_Tree_View.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
+                    if (newValue == null) {
+                        return;
+                    }
                     populateLocationTreeView(((TreeItem<String>) newValue).getValue());
                 });
+        
+        Organization_Tree_View.setShowRoot(false);
     }
 
     /**
@@ -120,22 +119,13 @@ public class MainMenuController {
      * @param id The id of the organization we want the locations from
      */
     public void populateLocationTreeView(String id) {
-        TreeItem rootItem = Location_Tree_View.getRoot();
-        if (rootItem != null) {
-            rootItem.getChildren().clear();
-        } else {
-            rootItem = new TreeItem<>();
-        }
-        Organization currentOrganization = organizationManager.getOrganization(id);
-
-        List<Place> places = currentOrganization.getPlaces();
-        for (Place p : places) {
-            TreeItem newItem = new TreeItem<>(p);
-            newItem.setExpanded(true);
-            newItem.setGraphic(iconize(p.getType()));
-            rootItem.getChildren().add(newItem);
-        }
-
+        currentOrganization = organizationManager.getOrganization(id);
+        searchLocations("");
+    }
+    
+    private void initLocationTreeView(){
+        
+        TreeItem rootItem = new TreeItem<>();
         Location_Tree_View.setRoot(rootItem);
         Location_Tree_View.setShowRoot(false);
 
@@ -147,6 +137,11 @@ public class MainMenuController {
                     currentPlace = ((TreeItem<Place>) newValue).getValue();
                     showSelectedPlaceDetails(currentPlace);
                 });
+        
+        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            
+            searchLocations(newValue);
+        });
     }
 
     /**
@@ -167,5 +162,48 @@ public class MainMenuController {
         DatabaseManager db = DatabaseManager.getInstance();
         db.getPlaceData().refresh(currentPlace.getId());
         VisApplication.getInstance().changeToMain();
+    }
+    
+    /**
+     * Searches trough the organizations
+     * @param searchKey string to search for
+     */
+    public void searchOrganization(String searchKey){
+        TreeItem rootItem = Organization_Tree_View.getRoot();
+        rootItem.getChildren().clear();
+        List<Organization> organizations = organizationManager.getOrganizations();
+        for (Organization o : organizations) {
+            String itemName = o.getId();
+            if(itemName.toLowerCase().contains(searchKey.toLowerCase())){
+                TreeItem<String> newItem = new TreeItem<>(itemName);
+                newItem.setExpanded(true);
+                newItem.setGraphic(new ImageView("icons/organization-icon.png"));
+                rootItem.getChildren().add(newItem);
+            }
+        }
+    }
+    
+    /**
+     * Searches trough the locations
+     * @param searchKey string to search for
+     */
+    public void searchLocations(String searchKey){
+        
+        if(currentOrganization == null){
+            return;
+        }
+        
+        TreeItem rootItem = Location_Tree_View.getRoot();
+        rootItem.getChildren().clear();
+        
+        List<Place> places = currentOrganization.getPlaces();
+        for (Place p : places) {
+            if(p.getName().toLowerCase().contains(searchKey.toLowerCase())){
+                TreeItem newItem = new TreeItem<>(p);
+                newItem.setExpanded(true);
+                newItem.setGraphic(iconize(p.getType()));
+                rootItem.getChildren().add(newItem);
+            }
+        }
     }
 }

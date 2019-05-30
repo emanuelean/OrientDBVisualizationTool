@@ -33,9 +33,7 @@ public class Attributes {
     protected void addProperties(Vertex v, String[] keys) {
         for (int i = 0; i < keys.length; i++) {
             if (hasProperty(keys[i], v)) {
-                Property prop = new Property();
-                prop.key = keys[i];
-                prop.value = v.getProperty(keys[i]);
+                Property prop = new Property(keys[i], v.getProperty(keys[i]));
                 properties.add(prop);
             }
         }
