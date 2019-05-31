@@ -5,12 +5,14 @@ import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseCl
 import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseEnteredAction;
 import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMouseExitedAction;
 import com.mycompany.orientdbvisualizationtool.controller.NodeAction.NodeMousePressedAction;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 /**
  * Node represents a vertex in view.
@@ -19,7 +21,7 @@ import javafx.scene.text.Text;
  */
 public class Node extends StackPane {
 
-    private Text label;
+    private Label label;
     private String nodeName;
     private String nodeDisplayName;
     private String nodeId;
@@ -53,17 +55,27 @@ public class Node extends StackPane {
         this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
 
         this.setId("NodeStackPane");
-
-        this.label = new Text(displayName);
-        this.label.setFont(new Font(13));
-        this.label.setId("NodeLabel");
-
+        this.setLabelProperty(displayName);
         this.mainController = controller;
         this.setRectangleProperty();
         this.setLayoutProperties();
 
         Tooltip.install(this, new Tooltip("A " + NodeType + " entity\nDouble click here to expand or contract"));
         this.setMouseListenerProperties();
+    }
+
+    /**
+     * sets the property for Node label
+     * @param displayName is used to construct node label
+     */
+    private void setLabelProperty(String displayName) {
+        this.label = new Label();
+        this.label.setText(displayName);
+        this.label.setAlignment(Pos.CENTER);
+        this.label.setTextOverrun(OverrunStyle.LEADING_ELLIPSIS);
+        this.label.setMaxWidth(170);
+        this.label.setFont(new Font(13));
+        this.label.setId("NodeLabel");
     }
 
     /**
@@ -90,7 +102,7 @@ public class Node extends StackPane {
     private void setRectangleProperty() {
         //rounded rectangle
         this.rectangle = new Rectangle();
-        this.rectangle.setWidth(label.getLayoutBounds().getWidth() + 30);
+        this.rectangle.setWidth(label.getMaxWidth() + 30);
         this.rectangle.setHeight(40.0f);
         this.rectangle.setArcWidth(40);
         this.rectangle.setArcHeight(40);
@@ -129,7 +141,7 @@ public class Node extends StackPane {
      *
      * @return javafx label
      */
-    public Text getLabel() {
+    public Label getLabel() {
         return label;
     }
 
