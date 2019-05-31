@@ -27,8 +27,8 @@
 29/03 - Functionality of sensors
 29/03 - Functionality of sensors
 29/03 - Functionality of sensors
-5/04 - Functionality of sensors
-5/04 - Functionality of sensors
+05/04 - Functionality of sensors
+05/04 - Functionality of sensors
 14/04 - Classifying entities
 14/04 - Classifying entities
 14/04 - Classifying entities
@@ -44,3 +44,10 @@
 11/05 - Retrieving attributes from orgs
 11/05 - Retrieving attributes from orgs
 13/05 - Retrieving attributes from orgs
+21/05 - Unit Testing
+22/05 - Unit Testing
+25/05 - Retrieving attributes from sensors
+25/05 - Retrieving attributes from sensors
+25/05 - Retrieving attributes from sensors
+27/05 - Unit Testing
+27/05 - Unit Testing

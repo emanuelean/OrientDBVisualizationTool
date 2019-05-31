@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import javafx.event.EventHandler;
+import javafx.stage.Stage;
 
 /**
  * Action performed when Table View Item is clicked
@@ -34,16 +35,28 @@ public class TableViewItemClickedAction implements EventHandler<MouseEvent> {
         if (event.getClickCount() == 2) {
             Entity entity = (Entity) Table_View.getSelectionModel().getSelectedItem();
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.getDialogPane().setMinWidth(800);
+            Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+            stage.getIcons().add(new Image("/icons/sb-icon.png"));
             alert.setTitle("Entity Information");
             alert.setHeaderText("Entity details");
-            alert.setContentText("Entity ID:\n" + entity.getId() + "\n\nEntity Description:\n" +
-                    "<Entity detail>\n<Entity detail>\n<Entity detail>");
-            ImageView imageView = new ImageView(new Image("/icons/sb-icon.png"));
-            imageView.setFitHeight(60);
-            imageView.setFitWidth(80);
+            alert.setContentText("Entity ID:\n" + entity.getId() + "\n\nEntity Description:" +
+                    getEntityDescription(entity));
+            ImageView imageView = new ImageView(new Image("/icons/sensor-icon.png"));
+            imageView.setFitHeight(64);
+            imageView.setFitWidth(64);
             alert.setGraphic(imageView);
             alert.showAndWait();
         }
+    }
+    
+    private String getEntityDescription(Entity entity) {
+        String entityDescription = "";
+        entity.loadAttributes();
+        for (String s : entity.getAttributes().getTypes()) {
+            entityDescription += "\n" + s;
+        }
+        return entityDescription;
     }
 
 }

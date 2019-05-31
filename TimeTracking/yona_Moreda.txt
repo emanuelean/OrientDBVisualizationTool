@@ -173,3 +173,54 @@
 11/05 - tree graphing w/o node occlusion demo
 11/05 - tree graphing w/o node occlusion demo
 11/05 - tree graphing w/o node occlusion demo
+16/05 - implement layout design for tree graphing
+16/05 - implement layout design for tree graphing
+16/05 - implement layout design for tree graphing
+16/05 - implement layout design for tree graphing
+16/05 - implement layout design for tree graphing
+16/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+17/05 - implement layout design for tree graphing
+18/05 - collapse/expand left and right side panels
+18/05 - collapse/expand left and right side panels
+18/05 - collapse/expand left and right side panels
+18/05 - collapse/expand left and right side panels
+18/05 - major refactor of controller class
+18/05 - major refactor of controller class
+18/05 - major refactor of controller class
+18/05 - major refactor of controller class
+18/05 - major refactor of controller class
+18/05 - major refactor of controller class
+19/05 - entity details display
+20/05 - created new diagrams for arch. doc.
+20/05 - created new diagrams for arch. doc.
+20/05 - created new diagrams for arch. doc.
+20/05 - created new diagrams for arch. doc.
+20/05 - updated old diagrams arch. doc.
+20/05 - updated old diagrams arch. doc.
+20/05 - client meeting
+20/05 - client meeting
+22/05 - created controller action classes for Node
+22/05 - created controller action classes for Node
+23/05 - Meeting
+23/05 - Meeting
+23/05 - preferences for theme creation/selection
+23/05 - preferences for theme creation/selection
+23/05 - preferences for theme creation/selection
+23/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+24/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection
+25/05 - preferences for theme creation/selection

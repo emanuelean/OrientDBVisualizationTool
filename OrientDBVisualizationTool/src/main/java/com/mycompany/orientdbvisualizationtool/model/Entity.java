@@ -1,5 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
+import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
+import com.mycompany.orientdbvisualizationtool.database.EntityAttributes;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -11,6 +13,7 @@ import javafx.beans.property.StringProperty;
 public class Entity {
 
     private final StringProperty id;
+    private EntityAttributes attributes;
 
     /**
      * constructor
@@ -32,5 +35,22 @@ public class Entity {
     @Override
     public String toString(){
         return id.get();
+    }
+    
+    /**
+     * Loads the attributes for this place
+     */
+    public void loadAttributes() {
+        if(attributes == null) {
+            attributes = DatabaseManager.getInstance().getEntityData().getAttributes(this);
+        }
+    }
+
+    /**
+     * 
+     * @return The entity attributes
+     */
+    public EntityAttributes getAttributes() {
+        return attributes;
     }
 }

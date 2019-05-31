@@ -209,7 +209,7 @@ public class MainController extends ParentController {
         Place nodePlace = placeManager.getPlace(node.getNodeId());
 
         //setting the text fields on right panel
-        Node_Name_Text_Field.setText(nodePlace.toString());
+        Node_Name_Text_Field.setText(nodePlace.getShortName());
         Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
 
@@ -281,7 +281,7 @@ public class MainController extends ParentController {
      */
     public void populateTreeView(String searchKey) {
         Place rootPlace = placeManager.getRoot();
-        String itemName = rootPlace.getType().toString() + ": " + rootPlace.toString();
+        String itemName = rootPlace.toString();
         TreeItem rootItem = new TreeItem<>(itemName);
         rootItem.setExpanded(true);
         rootItem.setGraphic(new ImageView("icons/location-icon.png"));
