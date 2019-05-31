@@ -35,38 +35,22 @@ import java.util.ArrayList;
  */
 public class MainController extends ParentController {
 
-    @FXML
-    private SplitPane Center_Split_Pane;
-    @FXML
-    private Button Left_Collapse_Button;
-    @FXML
-    private Button Right_Collapse_Button;
-    @FXML
-    private TextField Node_Name_Text_Field;
-    @FXML
-    private TextField Node_ID_Text_Field;
-    @FXML
-    private TextField Node_Type_Text_Field;
-    @FXML
-    private TreeView Left_Tree_View;
-    @FXML
-    private TableColumn Table_View_Entity_ID;
-    @FXML
-    private TableView Table_View;
-    @FXML
-    private Button Hide_Nodes_Button;
-    @FXML
-    private Button Show_All_Nodes_Button;
-    @FXML
-    private Label Left_Status_Label;
-    @FXML
-    private Label Right_Status_Label;
-    @FXML
-    private ChoiceBox Theme_Choice_Box;
-    @FXML
-    private AnchorPane Center_Anchor_Pane;
-    @FXML
-    private TextField Location_Search;
+    @FXML private SplitPane Center_Split_Pane;
+    @FXML private Button Left_Collapse_Button;
+    @FXML private Button Right_Collapse_Button;
+    @FXML private TextField Node_Name_Text_Field;
+    @FXML private TextField Node_ID_Text_Field;
+    @FXML private TextField Node_Type_Text_Field;
+    @FXML private TreeView Left_Tree_View;
+    @FXML private TableColumn Table_View_Entity_ID;
+    @FXML private TableView Table_View;
+    @FXML private Button Hide_Nodes_Button;
+    @FXML private Button Show_All_Nodes_Button;
+    @FXML private Label Left_Status_Label;
+    @FXML private Label Right_Status_Label;
+    @FXML private ChoiceBox Theme_Choice_Box;
+    @FXML private AnchorPane Center_Anchor_Pane;
+    @FXML private TextField Location_Search;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
@@ -107,16 +91,16 @@ public class MainController extends ParentController {
         setThemeChoiceBoxProperty();
         zoomFunction();
 
-        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            populateTreeView(newValue);
-        });
+        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> populateTreeView(newValue));
     }
 
     /**
      * Buttons for collapsing left and right panels are set up.
      */
     private void setCollapseButtons() {
+        SplitPane.setResizableWithParent(Center_Split_Pane.getItems().get(0), Boolean.FALSE);
+        SplitPane.setResizableWithParent(Center_Split_Pane.getItems().get(2), Boolean.FALSE);
+
         AnchorPane left_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(0);
         AnchorPane right_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(2);
 

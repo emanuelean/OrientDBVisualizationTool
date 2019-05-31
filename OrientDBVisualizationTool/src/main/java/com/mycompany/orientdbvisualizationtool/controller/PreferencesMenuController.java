@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 public class PreferencesMenuController {
 
@@ -86,64 +88,129 @@ public class PreferencesMenuController {
     private void setButtonActions() {
         Save_Button.setOnAction(event -> {
             try {
-                fileChooserDialog(event, true);
+                saveThemeDialog();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-        Open_Button.setOnAction(event -> {
-            try {
-                fileChooserDialog(event, false);
-            } catch (IOException e) {
-                e.printStackTrace();
+        Open_Button.setOnAction(this::loadingDialogue);
+        Cancel_Button.setOnAction(event -> {
+            Alert alert = getAlert("Return to main application without saving?", "");
+            if (alert.getResult() == ButtonType.YES) {
+                VisApplication.getInstance().changeToMain();
             }
         });
-        Cancel_Button.setOnAction(event -> VisApplication.getInstance().changeToMain());
     }
 
     /**
-     * opens a file choosing dialog for saving or choosing a theme css file
+     * dialogue for loading theme files
      *
-     * @param event    button action event
-     * @param isSaving boolean to distinguish between a saving and a loading file chooser
+     * @param event action event for getting stage window
+     */
+    private void loadingDialogue(ActionEvent event) {
+        FileChooser fileChooser = fileChooserWithInitialProperties();
+        Window mainStage = ((Node) event.getTarget()).getScene().getWindow();
+        File selectedFile = fileChooser.showOpenDialog(mainStage);
+        if (selectedFile != null) {
+            mainScene.getStylesheets().add("styles/" + selectedFile.getName());
+            VisApplication.getInstance().changeToMain();
+        }
+    }
+
+    /**
+     * opens a file choosing dialog for saving a theme css file
+     *
      * @throws IOException for bufferedWriter and creating new file
      */
-    private void fileChooserDialog(ActionEvent event, boolean isSaving) throws IOException {
-        FileChooser fileChooser = fileChooserWithInitialProperties(isSaving);
-        File selectedFile;
-        Window mainStage = ((Node) event.getTarget()).getScene().getWindow();
-        if (isSaving) { //saving theme file
-            selectedFile = fileChooser.showSaveDialog(mainStage);
-            if (selectedFile != null) {
-                if (!selectedFile.exists()) {
-                    selectedFile.createNewFile();
+    private void saveThemeDialog() throws IOException {
+        TextInputDialog textInputDialog = getTextInputDialogue();
+        Optional<String> text = textInputDialog.showAndWait();
+        if (text.isPresent()) {
+            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+            File selectedFile = new File(currentPath + "/OrientDBVisualizationTool/src/main/resources/styles/" + text.get() + ".css");
+            if (selectedFile.exists()) {
+                Alert alert = getAlert("Replace already existing file?", "");
+                if (alert.getResult() == ButtonType.YES) {
+                    saveToFile(selectedFile);
+                } else if (alert.getResult() == ButtonType.NO) {
+                    text = textInputDialog.showAndWait();
+                    if (text.isPresent()) {
+                        selectedFile = new File(currentPath + "/OrientDBVisualizationTool/src/main/resources/styles/" + text.get() + ".css");
+                        saveToFile(selectedFile);
+                    }
                 }
+            } else {
                 saveToFile(selectedFile);
-                showConfirmationDialog(selectedFile);
-            }
-        } else { //loading or opening theme file
-            selectedFile = fileChooser.showOpenDialog(mainStage);
-            if (selectedFile != null) {//TODO:: MAKE SURE ALL CSS FILES ARE STORED IN RESOURCES/STYLES FOLDER
-                mainScene.getStylesheets().add("styles/" + selectedFile.getName());
-                VisApplication.getInstance().changeToMain();
             }
         }
+    }
+
+    /**
+     * shows the save confirmation dialogue
+     *
+     * @param fileName file name that is saved.
+     */
+    private void showSaveConfirmation(String fileName) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, fileName + " has been saved successfully.\n\n" +
+                "Theme file can be applied after application restart.", ButtonType.OK);
+        confirm.setHeaderText("");
+        confirm.setGraphic(getSBIcon());
+        confirm.showAndWait();
+        VisApplication.getInstance().changeToMain();
+    }
+
+    /**
+     * gets alert dialog with given content text
+     *
+     * @param contentText displayed as content for alert
+     * @param headerText  displayed as header text for alert
+     * @return alert with contentText
+     */
+    private Alert getAlert(String contentText, String headerText) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, contentText,
+                ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        alert.setGraphic(getSBIcon());
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
+        return alert;
+    }
+
+    /**
+     * gets the text input dialogue for saving
+     *
+     * @return text input dialogue for saving
+     */
+    private TextInputDialog getTextInputDialogue() {
+        TextInputDialog textInputDialog = new TextInputDialog("Untitled_Theme");
+        textInputDialog.setGraphic(getSBIcon());
+        textInputDialog.setTitle("Save As");
+        textInputDialog.setContentText("File name: ");
+        textInputDialog.setHeaderText("Do you want to save changes to Untitled_Theme?");
+        return textInputDialog;
+    }
+
+    /**
+     * gets the sb icon with ImageView wrapper
+     *
+     * @return the SB-icon within image view
+     */
+    private ImageView getSBIcon() {
+        ImageView imageView = new ImageView(new Image("/icons/sb-icon.png"));
+        imageView.setFitHeight(60);
+        imageView.setFitWidth(80);
+        return imageView;
     }
 
     /**
      * fileChooser is created with a starting directory and title
-     * @param isSaving for setting the title ("Open Theme File" or "Save Theme File")
+     *
      * @return fileChooser
      */
-    private FileChooser fileChooserWithInitialProperties(boolean isSaving) {
+    private FileChooser fileChooserWithInitialProperties() {
         FileChooser fileChooser = new FileChooser();
         String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         File initialDirectory = new File(currentPath + "/OrientDBVisualizationTool/src/main/resources/styles");
-        if (isSaving) {
-            fileChooser.setTitle("Save Theme File");
-        } else {
-            fileChooser.setTitle("Open Theme File");
-        }
+        fileChooser.setTitle("Open Theme File");
         if (initialDirectory.exists()) {
             fileChooser.setInitialDirectory(initialDirectory);
         }
@@ -153,6 +220,7 @@ public class PreferencesMenuController {
 
     /**
      * writes to selected file
+     *
      * @param selectedFile file to which contents are written in
      * @throws IOException for bufferedWriter
      */
@@ -160,25 +228,7 @@ public class PreferencesMenuController {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
         bufferedWriter.write(getNewCssContent());
         bufferedWriter.close();
-    }
-
-    /**
-     * After saving, gives option to apply newly created theme
-     * @param selectedFile newly created and saved theme file.
-     */
-    private void showConfirmationDialog(File selectedFile) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Apply the saved theme?\nTheme file must be located under resources/styles", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-        ImageView imageView = new ImageView("icons/sb-icon.png");
-        imageView.setFitHeight(60);
-        imageView.setFitWidth(80);
-        alert.setGraphic(imageView);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            mainScene.getStylesheets().add("styles/" + selectedFile.getName());
-            VisApplication.getInstance().changeToMain();
-        } else {
-            VisApplication.getInstance().changeToMain();
-        }
+        showSaveConfirmation(selectedFile.getName());
     }
 
     /**
@@ -224,8 +274,9 @@ public class PreferencesMenuController {
 
     /**
      * converts color picker hex values to web RGB color values
+     *
      * @param color colorPicker with hex value
-     * @return
+     * @return rgb code in web format
      */
     private String toRGBCode(ColorPicker color) {
         Color color1 = color.getValue();
@@ -235,6 +286,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for centerPane
+     *
      * @return New css configuration for centerPane
      */
     private String getNewCenterPaneStyle() {
@@ -247,6 +299,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for MenuBar
+     *
      * @return New css configuration for MenuBar
      */
     private String getNewMenuBarStyle() {
@@ -255,6 +308,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for Menu
+     *
      * @return New css configuration for Menu
      */
     private String getNewMenuStyle() {
@@ -263,6 +317,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for NodeLabel
+     *
      * @return New css configuration for NodeLabel
      */
     private String getNewNodeLabelStyle() {
@@ -271,6 +326,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for Edge
+     *
      * @return New css configuration for Edge
      */
     private String getNewEdgeStyle() {
@@ -279,6 +335,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for Button
+     *
      * @return New css configuration for Button
      */
     private String getNewButtonStyle() {
@@ -288,6 +345,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for TextFieldLabel
+     *
      * @return New css configuration for TextFieldLabel
      */
     private String getNewTextFieldLabelStyle() {
@@ -296,6 +354,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for TextField
+     *
      * @return New css configuration for TextField
      */
     private String getNewTextFieldStyle() {
@@ -305,6 +364,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration for Root
+     *
      * @return New css configuration for Root
      */
     private String getNewRootStyle() {
@@ -325,6 +385,7 @@ public class PreferencesMenuController {
 
     /**
      * generates a css configuration from all css components
+     *
      * @return New css configuration
      */
     private String getNewCssContent() {
@@ -356,6 +417,7 @@ public class PreferencesMenuController {
 
     /**
      * sets the main application scene for applying the theme
+     *
      * @param scene used for applying the theme
      */
     public void setApplicationScene(Scene scene) {

@@ -53,6 +53,7 @@ public class VisApplication extends Application {
         primaryStage.setWidth(MainView.getWIDTH());
         primaryStage.setHeight(MainView.getWIDTH() * 9 / 16);
         primaryStage.centerOnScreen();
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 
@@ -62,6 +63,7 @@ public class VisApplication extends Application {
     public void changeToMenu() {
         menuView.start();
         primaryStage.setScene(menuView.getScene());
+        primaryStage.setResizable(true);
         primaryStage.show();
     }
 
@@ -74,6 +76,7 @@ public class VisApplication extends Application {
         primaryStage.setScene(appearancePrefView.getScene());
         primaryStage.setWidth(600);
         primaryStage.setHeight(490);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

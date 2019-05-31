@@ -12,6 +12,7 @@ import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 public class MainView extends View {
 
     private MainController controller;
+    private boolean hasStarted = false;
 
     /**
      * Constructor
@@ -27,8 +28,11 @@ public class MainView extends View {
      */
     @Override
     public void start() {
-        controller.setPlaceManager(PlaceManager.getInstance());
-        controller.addRootNodeToPane();
-        controller.populateTreeView("");
+        if(!hasStarted) {
+            controller.setPlaceManager(PlaceManager.getInstance());
+            controller.addRootNodeToPane();
+            controller.populateTreeView("");
+            hasStarted = true;
+        }
     }
 }

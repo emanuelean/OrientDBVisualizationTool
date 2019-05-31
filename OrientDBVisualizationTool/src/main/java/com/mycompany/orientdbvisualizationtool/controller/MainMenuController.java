@@ -26,26 +26,16 @@ import javafx.scene.image.ImageView;
  */
 public class MainMenuController extends ParentController {
 
-    @FXML
-    private TextField Node_Name_Text_Field;
-    @FXML
-    private TextField Node_ID_Text_Field;
-    @FXML
-    private TextField Node_Type_Text_Field;
-    @FXML
-    private TreeView Organization_Tree_View;
-    @FXML
-    private TreeView Location_Tree_View;
-    @FXML
-    private TableColumn Table_View_PropertyKey;
-    @FXML
-    private TableColumn Table_View_PropertyValue;
-    @FXML
-    private TableView Properties_Table;
-    @FXML
-    private TextField Organization_Search;
-    @FXML
-    private TextField Location_Search;
+    @FXML private TextField Node_Name_Text_Field;
+    @FXML private TextField Node_ID_Text_Field;
+    @FXML private TextField Node_Type_Text_Field;
+    @FXML private TreeView Organization_Tree_View;
+    @FXML private TreeView Location_Tree_View;
+    @FXML private TableColumn Table_View_PropertyKey;
+    @FXML private TableColumn Table_View_PropertyValue;
+    @FXML private TableView Properties_Table;
+    @FXML private TextField Organization_Search;
+    @FXML private TextField Location_Search;
 
     private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
@@ -55,8 +45,7 @@ public class MainMenuController extends ParentController {
     /**
      * The main default properties of controller are initialized
      */
-    @FXML
-    public void initialize() {
+    @FXML public void initialize() {
 
         Node_Name_Text_Field.setDisable(true);
         Node_Name_Text_Field.setStyle("-fx-opacity: 1;");

@@ -33,7 +33,7 @@ public class ThemeChoiceBoxAction implements ChangeListener<Number> {
      * Setting the check choice box property
      */
     private void setThemeChoiceBoxProperty() {
-        Theme_Choice_Box.getItems().addAll("Default Theme", "Dark Mode", "Natural Blue", "S.B. Green", "Crimson Red", "Create a custom theme");
+        Theme_Choice_Box.getItems().addAll("Default Theme", "Dark Mode", "Natural Blue", "S.B. Green", "Crimson Red", "Custom Theme");
         Theme_Choice_Box.getSelectionModel().selectFirst();
     }
 
