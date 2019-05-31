@@ -138,8 +138,8 @@ public class EntityData extends Database {
      * @param entity The place we want to retrieve the attributes from
      * @return A class containing all the attributes
      */
-    public EntityAttributes getAttributes(Entity ent) {
-        Vertex v = getVertexById("V_instance.id", ent.getId());
+    public EntityAttributes getAttributes(Entity entity) {
+        Vertex v = getVertexById("V_instance.id", entity.getId());
         return new EntityAttributes(v);
     }
 }

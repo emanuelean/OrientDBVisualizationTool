@@ -90,11 +90,10 @@ public class OrganizationData extends Database {
         for (Place p : allOrganization.getPlaces()) {
             organization.addPlace(p);
         }
-        List<Place> places = new ArrayList<>();
+        //list of places that have an organization
         for (Organization o : OrganizationManager.getInstance().getOrganizations()) {
-            places.addAll(o.getPlaces());
+            organization.getPlaces().removeAll(o.getPlaces());
         }
-        organization.getPlaces().removeAll(places);
         organizationManager.addOrganization(organization);
     }
 
