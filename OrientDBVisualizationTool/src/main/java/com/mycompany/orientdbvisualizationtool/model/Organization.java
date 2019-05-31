@@ -56,4 +56,8 @@ public class Organization {
     public List<Place> getPlaces() {
         return places;
     }
+    
+    public void setPlaces(List<Place> newPlaces) {
+        this.places = newPlaces;
+    }
 }

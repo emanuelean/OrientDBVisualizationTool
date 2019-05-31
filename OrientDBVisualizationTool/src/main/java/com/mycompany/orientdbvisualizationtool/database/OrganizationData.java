@@ -6,6 +6,8 @@ import com.mycompany.orientdbvisualizationtool.model.places.Location;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Responsible for retrieving specific information about organizations from the
@@ -65,7 +67,8 @@ public class OrganizationData extends Database {
             refresh(v);
         }
         addAllOrganization();
-        //addNoOrganization();
+        addNoOrganization();
+        organizationManager.addOrganization(allOrganization);
     }
 
     /**
@@ -78,23 +81,31 @@ public class OrganizationData extends Database {
         Vertex v = getVertexById("V_organization.id", org.getId());
         return new OrganizationAttributes(v);
     }
-    
-    private void addNoOrganization(){
+
+    /**
+     * Adds all the unconnected places
+     */
+    private void addNoOrganization() {
         Organization organization = new Organization("Unknown");
-        //@RID IN (SELECT out FROM instance-of WHERE id = 'location') AND
-        //WHERE NOT @RID IN (SELECT in FROM E_owns WHERE out IN (SELECT @RID FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)))
         for (Place p : allOrganization.getPlaces()) {
             organization.addPlace(p);
         }
-         organizationManager.addOrganization(organization);
+        List<Place> places = new ArrayList<>();
+        for (Organization o : OrganizationManager.getInstance().getOrganizations()) {
+            places.addAll(o.getPlaces());
+        }
+        organization.getPlaces().removeAll(places);
+        organizationManager.addOrganization(organization);
     }
-    
-    private void addAllOrganization(){
+
+    /**
+     * Adds all the places
+     */
+    private void addAllOrganization() {
         allOrganization = new Organization("All");
         for (Vertex v : queryVertices("SELECT * FROM V_location ")) {
             Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
             allOrganization.addPlace(newPlace);
         }
-         organizationManager.addOrganization(allOrganization);
     }
 }
