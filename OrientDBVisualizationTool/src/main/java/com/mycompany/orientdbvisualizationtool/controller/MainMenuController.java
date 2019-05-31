@@ -89,6 +89,15 @@ public class MainMenuController extends ParentController {
         nodePlace.loadAttributes();
         propertiesTable.addAll(nodePlace.getAttributes().getProperties());
     }
+    
+    public void showSelectedPlaceDetails(Organization nodeOrganization) {
+        Node_Name_Text_Field.setText(nodeOrganization.getId());
+        Node_ID_Text_Field.setText(nodeOrganization.getId());
+        Node_Type_Text_Field.setText("Organization");
+        propertiesTable.clear();
+        nodeOrganization.loadAttributes();
+        propertiesTable.addAll(nodeOrganization.getAttributes().getProperties());
+    }
 
 
     /**
@@ -108,6 +117,7 @@ public class MainMenuController extends ParentController {
                         return;
                     }
                     populateLocationTreeView(((TreeItem<String>) newValue).getValue());
+                    showSelectedPlaceDetails(currentOrganization);
                 });
         
         Organization_Tree_View.setShowRoot(false);
@@ -139,7 +149,6 @@ public class MainMenuController extends ParentController {
                 });
         
         Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
-            
             searchLocations(newValue);
         });
     }
