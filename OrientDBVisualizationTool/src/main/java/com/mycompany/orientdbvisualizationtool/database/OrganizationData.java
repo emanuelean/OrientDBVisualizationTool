@@ -6,6 +6,8 @@ import com.mycompany.orientdbvisualizationtool.model.places.Location;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Responsible for retrieving specific information about organizations from the
@@ -16,6 +18,7 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 public class OrganizationData extends Database {
 
     private final OrganizationManager organizationManager;
+    private Organization allOrganization;
 
     /**
      * constructor
@@ -63,6 +66,9 @@ public class OrganizationData extends Database {
         for (Vertex v : queryVertices("SELECT id FROM V_organization WHERE @RID IN (SELECT out FROM E_owns)")) {
             refresh(v);
         }
+        addAllOrganization();
+        addNoOrganization();
+        organizationManager.addOrganization(allOrganization);
     }
 
     /**
@@ -74,5 +80,32 @@ public class OrganizationData extends Database {
     public OrganizationAttributes getAttributes(Organization org) {
         Vertex v = getVertexById("V_organization.id", org.getId());
         return new OrganizationAttributes(v);
+    }
+
+    /**
+     * Adds all the unconnected places
+     */
+    private void addNoOrganization() {
+        Organization organization = new Organization("Unknown");
+        for (Place p : allOrganization.getPlaces()) {
+            organization.addPlace(p);
+        }
+        List<Place> places = new ArrayList<>();
+        for (Organization o : OrganizationManager.getInstance().getOrganizations()) {
+            places.addAll(o.getPlaces());
+        }
+        organization.getPlaces().removeAll(places);
+        organizationManager.addOrganization(organization);
+    }
+
+    /**
+     * Adds all the places
+     */
+    private void addAllOrganization() {
+        allOrganization = new Organization("All");
+        for (Vertex v : queryVertices("SELECT * FROM V_location ")) {
+            Place newPlace = new Location(v.getProperty("id"), v.getProperty("name"));
+            allOrganization.addPlace(newPlace);
+        }
     }
 }

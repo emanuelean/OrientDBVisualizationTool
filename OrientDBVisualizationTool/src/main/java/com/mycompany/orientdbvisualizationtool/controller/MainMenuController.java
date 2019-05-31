@@ -82,12 +82,21 @@ public class MainMenuController extends ParentController {
      * @param nodePlace Has properties to be shown.
      */
     public void showSelectedPlaceDetails(Place nodePlace) {
-        Node_Name_Text_Field.setText(nodePlace.toString());
-        Node_ID_Text_Field.setText(nodePlace.toString());
+        Node_Name_Text_Field.setText(nodePlace.getShortName());
+        Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
         propertiesTable.clear();
         nodePlace.loadAttributes();
         propertiesTable.addAll(nodePlace.getAttributes().getProperties());
+    }
+    
+    public void showSelectedPlaceDetails(Organization nodeOrganization) {
+        Node_Name_Text_Field.setText(nodeOrganization.getId());
+        Node_ID_Text_Field.setText(nodeOrganization.getId());
+        Node_Type_Text_Field.setText("Organization");
+        propertiesTable.clear();
+        nodeOrganization.loadAttributes();
+        propertiesTable.addAll(nodeOrganization.getAttributes().getProperties());
     }
 
 
@@ -108,6 +117,7 @@ public class MainMenuController extends ParentController {
                         return;
                     }
                     populateLocationTreeView(((TreeItem<String>) newValue).getValue());
+                    showSelectedPlaceDetails(currentOrganization);
                 });
         
         Organization_Tree_View.setShowRoot(false);
@@ -139,7 +149,6 @@ public class MainMenuController extends ParentController {
                 });
         
         Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
-            
             searchLocations(newValue);
         });
     }
