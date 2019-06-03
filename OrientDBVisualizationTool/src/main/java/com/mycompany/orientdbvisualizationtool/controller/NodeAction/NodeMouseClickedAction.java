@@ -81,10 +81,9 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
         if (!childrenPlaces.isEmpty()) {
             for (Place place : childrenPlaces) {
                 String id = place.getId();
-                String name = place.getName();
                 String type = place.getType().toString();
                 String displayName = place.toString();
-                Node childNode = new Node(id, name, type, displayName, controller);
+                Node childNode = new Node(id, type, displayName, controller);
                 nodes.add(childNode);
                 childrenVBox.getChildren().add(childNode.getContainerPane());
                 childrenVBox.layout();

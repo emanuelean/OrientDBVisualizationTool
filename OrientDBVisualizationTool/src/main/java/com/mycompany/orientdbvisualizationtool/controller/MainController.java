@@ -182,10 +182,9 @@ public class MainController extends ParentController {
     public void addRootNodeToPane() {
         Place rootPlace = placeManager.getRoot();
         String id = rootPlace.getId();
-        String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
         String displayName = rootPlace.toString();
-        Node rootNode = new Node(id, name, type, displayName, this);
+        Node rootNode = new Node(id, type, displayName, this);
         nodes.add(rootNode);
 
         VBox rootVBox = new VBox(15);
@@ -334,7 +333,31 @@ public class MainController extends ParentController {
         this.mouseSourceY = mouseSourceY;
     }
 
+    /**
+     * opens the preferences window
+     * @param actionEvent for preferences menu item
+     */
     public void openPreferences(ActionEvent actionEvent) {
         VisApplication.getInstance().changeToPreferences();
+    }
+
+    /**
+     * select all nodes
+     * @param actionEvent for select all menu item
+     */
+    public void selectAllNodes(ActionEvent actionEvent) {
+        for(Node node : nodes) {
+            node.setSelected(true);
+        }
+    }
+
+    /**
+     * unselect all nodes
+     * @param actionEvent for un select all menu item
+     */
+    public void unselectAllNodes(ActionEvent actionEvent) {
+        for(Node node : nodes) {
+            node.setSelected(false);
+        }
     }
 }

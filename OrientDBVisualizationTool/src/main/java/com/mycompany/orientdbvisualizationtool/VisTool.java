@@ -7,6 +7,8 @@ import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.mycompany.orientdbvisualizationtool.model.Organization;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import javafx.application.Application;
 
@@ -82,7 +84,7 @@ public class VisTool {
         addEntities(newPlace);
 
         //recursvily call it for all the children
-        int childrenAmount = 5;
+        int childrenAmount = 3 + (new Random()).nextInt(5);
         for (int i = 0; i < childrenAmount; i++) {
             addTestPlaces(newPlace, index + 1);
         }
@@ -95,8 +97,17 @@ public class VisTool {
      */
     private static void addEntities(Place currentPlace) {
         Random random = new Random();
+        List<String> entities = Arrays.asList("Electricity-", "Gas-", "Light-", "Sound-", "Humidity-");
+        List<String> type = Arrays.asList("Generation", "Balance", "Consumption", "Environment", "Simulation");
+        List<String> sensor = Arrays.asList("", "", "-Sensor", "-Virtual-Sensor", "-Windowed-Data");
         for (int i = 0; i < random.nextInt(100); i++) {
-            Entity newEntity = new Entity("long_name_for_testdata_sensor_stuff_" + i);
+            int j = random.nextInt(5);
+            String entityName = entities.get(j);
+            j = random.nextInt(5);
+            entityName += type.get(j);
+            j = random.nextInt(5);
+            entityName += sensor.get(j);
+            Entity newEntity = new Entity(entityName + i);
             currentPlace.addEntity(newEntity);
         }
     }
