@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.io.BufferedWriter;
@@ -98,6 +99,12 @@ public class PreferencesMenuController {
             Alert alert = getAlert("Return to main application without saving?", "");
             if (alert.getResult() == ButtonType.YES) {
                 VisApplication.getInstance().changeToMain();
+            } else if (alert.getResult() == ButtonType.NO) {
+                try {
+                    saveThemeDialog();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -148,11 +155,15 @@ public class PreferencesMenuController {
     /**
      * shows the save confirmation dialogue
      *
-     * @param fileName file name that is saved.
+     * @param selectedFile file that is saved.
      */
-    private void showSaveConfirmation(String fileName) {
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, fileName + " has been saved successfully.\n\n" +
-                "Theme file can be applied after application restart.", ButtonType.OK);
+    private void showSaveConfirmation(File selectedFile) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, selectedFile.getName() + " has been saved successfully.\n\n" +
+                selectedFile.getPath() +
+                "\n\nTheme file can be applied after the application is restarted.\n" +
+                "Program will now return to the Main Tree View.", ButtonType.OK);
+        confirm.setHeight(300);
+        setStageIcon(confirm);
         confirm.setHeaderText("");
         confirm.setGraphic(getSBIcon());
         confirm.showAndWait();
@@ -169,10 +180,20 @@ public class PreferencesMenuController {
     private Alert getAlert(String contentText, String headerText) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, contentText,
                 ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        setStageIcon(alert);
         alert.setGraphic(getSBIcon());
         alert.setHeaderText(headerText);
         alert.showAndWait();
         return alert;
+    }
+
+    /**
+     * sets the stage icon for an alert
+     * @param alert which is needs an icon
+     */
+    private void setStageIcon(Dialog alert) {
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/icons/sb-icon.png"));
     }
 
     /**
@@ -186,6 +207,9 @@ public class PreferencesMenuController {
         textInputDialog.setTitle("Save As");
         textInputDialog.setContentText("File name: ");
         textInputDialog.setHeaderText("Do you want to save changes to Untitled_Theme?");
+        setStageIcon(textInputDialog);
+        Stage stage = (Stage) textInputDialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/icons/sb-icon.png"));
         return textInputDialog;
     }
 
@@ -228,7 +252,8 @@ public class PreferencesMenuController {
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(selectedFile));
         bufferedWriter.write(getNewCssContent());
         bufferedWriter.close();
-        showSaveConfirmation(selectedFile.getName());
+        showSaveConfirmation(selectedFile);
+        VisApplication.getInstance().changeToMain();
     }
 
     /**

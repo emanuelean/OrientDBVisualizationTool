@@ -28,7 +28,7 @@ public abstract class View {
         try {
             fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(resource));
             Parent root = fxmlLoader.load();
-            scene = new Scene(root, WIDTH, WIDTH * 9 / 16);
+            scene = new Scene(root, WIDTH, WIDTH * AspectRatio.Vertical / AspectRatio.Horizontal);
             scene.getStylesheets().add("styles/01_DefaultStyle.css");
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,7 +48,6 @@ public abstract class View {
      */
     public void start() {
     }
-
 
     /**
      * 

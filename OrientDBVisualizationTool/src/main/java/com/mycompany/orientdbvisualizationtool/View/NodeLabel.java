@@ -12,6 +12,7 @@ public class NodeLabel extends Label {
 
     /**
      * constructor
+     *
      * @param displayName the string that the label displays
      */
     public NodeLabel(String displayName) {

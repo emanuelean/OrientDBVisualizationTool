@@ -83,8 +83,8 @@ public class VisTool {
         Place newPlace = manager.addPlace(id, name, currentCategory, parent);
         addEntities(newPlace);
 
-        //recursvily call it for all the children
-        int childrenAmount = 3 + (new Random()).nextInt(5);
+        //recursively call it for all the children
+        int childrenAmount = 3 + (new Random()).nextInt(15);
         for (int i = 0; i < childrenAmount; i++) {
             addTestPlaces(newPlace, index + 1);
         }

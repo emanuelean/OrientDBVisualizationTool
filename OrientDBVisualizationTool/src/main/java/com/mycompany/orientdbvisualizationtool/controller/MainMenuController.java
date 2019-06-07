@@ -88,18 +88,17 @@ public class MainMenuController extends ParentController {
         propertiesTable.addAll(nodeOrganization.getAttributes().getProperties());
     }
 
-
     /**
      * populates the tree view with data from model
      */
     public void populateOrganizationTreeView() {
         Organization_Tree_View.setRoot(new TreeItem<>());
         searchOrganization("");
+
         Organization_Search.textProperty().addListener((observable, oldValue, newValue) -> {
-            
             searchOrganization(newValue);
         });
-        
+
         Organization_Tree_View.getSelectionModel().selectedItemProperty()
                 .addListener((v, oldValue, newValue) -> {
                     if (newValue == null) {
@@ -182,7 +181,7 @@ public class MainMenuController extends ParentController {
     }
     
     /**
-     * Searches trough the locations
+     * Searches through the locations
      * @param searchKey string to search for
      */
     public void searchLocations(String searchKey){

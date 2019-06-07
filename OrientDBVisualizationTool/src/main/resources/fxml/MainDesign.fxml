@@ -29,17 +29,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <!--TODO remove menu items
-                        <MenuItem mnemonicParsing="false" text="New" />
-                        <MenuItem mnemonicParsing="false" text="Open…" />
-                        <Menu mnemonicParsing="false" text="Open Recent" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save As…" />
-                        <MenuItem mnemonicParsing="false" text="Revert" />
-                        <SeparatorMenuItem mnemonicParsing="false" />-->
-                        <MenuItem mnemonicParsing="false" text="Preferences…" onAction="#openPreferences"/>
+                        <MenuItem mnemonicParsing="false" onAction="#openPreferences" text="Preferences…" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#switchToMainMenu" text="Main Menu" />
                         <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="Quit" />
@@ -49,20 +39,14 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Undo" />
                         <MenuItem mnemonicParsing="false" text="Redo" />
-                        <!-- TODO remove menu items
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Cut" />
-                        <MenuItem mnemonicParsing="false" text="Copy" />
-                        <MenuItem mnemonicParsing="false" text="Paste" />
-                        <MenuItem mnemonicParsing="false" text="Delete" />-->
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" text="Select All" onAction="#selectAllNodes"/>
-                        <MenuItem mnemonicParsing="false" text="Unselect All" onAction="#unselectAllNodes"/>
+                        <MenuItem mnemonicParsing="false" onAction="#selectAllNodes" text="Select All" />
+                        <MenuItem mnemonicParsing="false" onAction="#unselectAllNodes" text="Unselect All" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About Visualization Tool" />
+                        <MenuItem mnemonicParsing="false" onAction="#showAboutVisTool" text="About Visualization Tool" />
                     </items>
                 </Menu>
             </menus>
@@ -82,7 +66,7 @@
                         <TreeView fx:id="Left_Tree_View" layoutX="14.0" layoutY="105.0" prefHeight="397.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0" />
                         <Separator layoutY="86.0" prefHeight="2.0" prefWidth="206.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="110.0" />
                         <TextField fx:id="Location_Search" layoutX="14.0" layoutY="60.0" prefHeight="39.0" prefWidth="170.0" promptText="Search" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="60.0" />
-                        <Button layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
+                        <Button fx:id="Search_Button" layoutX="193.0" layoutY="60.0" minWidth="39.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="39.0" text="🔍" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="60.0" />
                     </children>
                     <effect>
                         <Blend />
@@ -151,7 +135,7 @@
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
             <children>
             <Button fx:id="Left_Collapse_Button" layoutX="607.0" layoutY="13.0" mnemonicParsing="false" text="◀" />
-                <Label fx:id="Left_Status_Label" textFill="#000000" maxHeight="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                <Label fx:id="Left_Status_Label" maxHeight="1.7976931348623157E308" textFill="#000000" HBox.hgrow="ALWAYS">
                     <font>
                         <Font size="11.0" fx:id="x3" />
                     </font>

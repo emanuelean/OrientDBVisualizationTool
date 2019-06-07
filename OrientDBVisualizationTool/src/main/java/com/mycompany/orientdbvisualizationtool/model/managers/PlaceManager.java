@@ -35,7 +35,7 @@ public class PlaceManager {
     }
 
     /**
-     * Links a child and a parent to eachother if they exist
+     * Links a child and a parent to each other if they exist
      *
      * @param child The child we want to link the parent to
      * @param parent The parent we want to link a child to
