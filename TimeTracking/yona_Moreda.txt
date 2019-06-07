@@ -224,3 +224,23 @@
 25/05 - preferences for theme creation/selection
 25/05 - preferences for theme creation/selection
 25/05 - preferences for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+31/05 - bug fixing for theme creation/selection
+01/06 - revising save/load in theme preferences
+01/06 - revising save/load in theme preferences
+01/06 - revising save/load in theme preferences
+01/06 - revising save/load in theme preferences
+03/06 - assist with presentation prep.
+03/06 - assist with presentation prep.
+04/06 - presentation meeting
+07/06 - fixing minor bugs
+07/06 - fixing minor bugs
+07/06 - fixing minor bugs
+07/06 - final changes
+07/06 - final changes
