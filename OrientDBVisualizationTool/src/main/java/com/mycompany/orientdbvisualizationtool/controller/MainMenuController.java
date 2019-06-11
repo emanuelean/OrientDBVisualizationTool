@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,6 +37,7 @@ public class MainMenuController extends ParentController {
     @FXML private TableView Properties_Table;
     @FXML private TextField Organization_Search;
     @FXML private TextField Location_Search;
+    @FXML private Button Select_Field;
 
     private final ObservableList<Property> propertiesTable = FXCollections.observableArrayList();
     private OrganizationManager organizationManager;
@@ -54,6 +56,7 @@ public class MainMenuController extends ParentController {
         Node_Type_Text_Field.setDisable(true);
         Node_Type_Text_Field.setStyle("-fx-opacity: 1;");
         Properties_Table.setSelectionModel(null);
+        Select_Field.setVisible(false);
         organizationManager = OrganizationManager.getInstance();
         initLocationTreeView();
         populateOrganizationTreeView();
@@ -71,6 +74,7 @@ public class MainMenuController extends ParentController {
      * @param nodePlace Has properties to be shown.
      */
     public void showSelectedPlaceDetails(Place nodePlace) {
+        Select_Field.setVisible(true);
         Node_Name_Text_Field.setText(nodePlace.getShortName());
         Node_ID_Text_Field.setText(nodePlace.getId());
         Node_Type_Text_Field.setText(nodePlace.getType().toString());
@@ -80,7 +84,8 @@ public class MainMenuController extends ParentController {
     }
     
     public void showSelectedPlaceDetails(Organization nodeOrganization) {
-        Node_Name_Text_Field.setText(nodeOrganization.getId());
+        Select_Field.setVisible(false);
+        Node_Name_Text_Field.setText(nodeOrganization.getName());
         Node_ID_Text_Field.setText(nodeOrganization.getId());
         Node_Type_Text_Field.setText("Organization");
         propertiesTable.clear();

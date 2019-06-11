@@ -104,6 +104,7 @@ public class PlaceManager {
         for (Place p : places) {
             p.dereferenceAll();
         }
+        places = null;
         places = new ArrayList<>();
     }
 
