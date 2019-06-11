@@ -21,6 +21,7 @@ public class CenterPaneReleasedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param selectionArea rectangle drawn to represent an area selection
      * @param Center_Anchor_Pane anchor to which the mouse released event occurs
      * @param nodes list of nodes for keeping track of selection/deselection

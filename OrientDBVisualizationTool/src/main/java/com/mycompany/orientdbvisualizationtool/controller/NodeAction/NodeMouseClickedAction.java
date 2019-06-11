@@ -31,10 +31,10 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
     /**
      * constructor
      *
-     * @param node       node to be clicked on
+     * @param node node to be clicked on
      * @param controller main controller
-     * @param nodes      list for tracking edges when node expanded/contracted
-     * @param edges      list for tracking edges when edges expanded/contracted
+     * @param nodes list for tracking edges when node expanded/contracted
+     * @param edges list for tracking edges when edges expanded/contracted
      */
     public NodeMouseClickedAction(Node node, MainController controller, ArrayList<Node> nodes, ArrayList<Edge> edges) {
         this.node = node;
@@ -49,7 +49,8 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
      * otherwise.
      *
      * @param parentNode source node for expansion
-     * @param limit the limit to the number of nodes to be displayed on expansion
+     * @param limit the limit to the number of nodes to be displayed on
+     * expansion
      */
     private void expandContractNode(Node parentNode, int limit) {
         if (!parentNode.isExpanded()) {                     //for expanding node
@@ -78,7 +79,8 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
      * expands a nodes to show the children of the node
      *
      * @param parentNode source node for expansion
-     * @param limit the limit to the number of nodes to be displayed on expansion
+     * @param limit the limit to the number of nodes to be displayed on
+     * expansion
      */
     private void expandNode(Node parentNode, int limit) {
         VBox childrenVBox = parentNode.getChildrenVBox();
@@ -195,7 +197,8 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
     }
 
     /**
-     * Mouse click event handle for expanding/contracting node to a certain expansion point
+     * Mouse click event handle for expanding/contracting node to a certain
+     * expansion point
      *
      * @param event for mouse clicked
      */
@@ -204,7 +207,7 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
             //ShowMore node is clicked
             if (node.getNodeId().equals("Show more node")) {
-                VBox childrenVBox =(VBox) node.getContainerPane().getParent();
+                VBox childrenVBox = (VBox) node.getContainerPane().getParent();
                 Pane containerPane = (Pane) childrenVBox.getParent();
                 Node showMoreParentNode = (Node) containerPane.getChildren().get(0);
                 expandContractNode(showMoreParentNode, -1);

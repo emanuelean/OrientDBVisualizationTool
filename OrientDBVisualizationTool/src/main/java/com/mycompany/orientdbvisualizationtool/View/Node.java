@@ -34,6 +34,7 @@ public class Node extends StackPane {
      * @param id The id of the node
      * @param NodeType The type of the node
      * @param displayName The display name of the node
+     * @param controller The controller for this node
      */
     public Node(String id, String NodeType, String displayName, MainController controller) {
         this.nodeId = id;

@@ -13,6 +13,7 @@ public class NodeMouseEnteredAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param node to be handled with mouse entered event
      */
     public NodeMouseEnteredAction(Node node) {
@@ -21,6 +22,7 @@ public class NodeMouseEnteredAction implements EventHandler<MouseEvent> {
 
     /**
      * Node is highlighted when entered
+     *
      * @param event for mouse entered
      */
     @Override

@@ -6,8 +6,6 @@ import com.mycompany.orientdbvisualizationtool.model.places.Location;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Responsible for retrieving specific information about organizations from the

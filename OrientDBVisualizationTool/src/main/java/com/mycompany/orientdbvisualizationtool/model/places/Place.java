@@ -6,7 +6,6 @@ import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Super class for places Contains all the functionality for locations,

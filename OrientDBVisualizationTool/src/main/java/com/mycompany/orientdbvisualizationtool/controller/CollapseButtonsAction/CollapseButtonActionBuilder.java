@@ -40,7 +40,8 @@ public class CollapseButtonActionBuilder {
     /**
      * setting collapse_anchor_pane
      *
-     * @param collapse_anchor_pane the isLeft or right pane that is to be collapsed
+     * @param collapse_anchor_pane the isLeft or right pane that is to be
+     * collapsed
      * @return builder with collapse_anchor_pane set
      */
     public CollapseButtonActionBuilder setCollapse_Anchor_Pane(AnchorPane collapse_anchor_pane) {
@@ -51,8 +52,8 @@ public class CollapseButtonActionBuilder {
     /**
      * setting the center_anchor_pane
      *
-     * @param center_anchor_pane the pane on the center that adjusts size accordingly to the
-     *                           collapse or expansion of isLeft/right pane
+     * @param center_anchor_pane the pane on the center that adjusts size
+     * accordingly to the collapse or expansion of isLeft/right pane
      * @return builder with Center_anchor_pane set
      */
     public CollapseButtonActionBuilder setCenter_Anchor_Pane(AnchorPane center_anchor_pane) {
@@ -93,16 +94,16 @@ public class CollapseButtonActionBuilder {
         if (isLeft == null) {
             throw new IllegalStateException("Parameter isLeft is not set and is required for build.");
         }
-        if(collapse_button == null) {
+        if (collapse_button == null) {
             throw new IllegalStateException("Parameter collapse_button is not set and is required for build.");
         }
-        if(split_pane == null) {
+        if (split_pane == null) {
             throw new IllegalStateException("Parameter split_pane is not set and is required for build.");
         }
-        if(collapse_anchor_pane == null) {
+        if (collapse_anchor_pane == null) {
             throw new IllegalStateException("Parameter collapse_anchor_pane is not set and is required for build.");
         }
-        if(center_anchor_pane == null) {
+        if (center_anchor_pane == null) {
             throw new IllegalStateException("Parameter center_anchor_pane is not set and is required for build.");
         }
     }

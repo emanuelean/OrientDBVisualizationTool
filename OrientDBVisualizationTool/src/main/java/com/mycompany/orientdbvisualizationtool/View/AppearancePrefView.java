@@ -2,6 +2,11 @@ package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.PreferencesMenuController;
 
+/**
+ * Used for the preference view appearance
+ * 
+ * @author Yona
+ */
 public class AppearancePrefView extends View {
 
     private PreferencesMenuController controller;
@@ -17,6 +22,7 @@ public class AppearancePrefView extends View {
 
     /**
      * sets the controller for the view
+     *
      * @return controller
      */
     public PreferencesMenuController getController() {

@@ -70,7 +70,7 @@ public class PlaceData extends Database {
 
     /**
      * Retrieves the attributes of a certain place
-     * 
+     *
      * @param place The place we want to retrieve the attributes from
      * @return A class containing all the attributes
      */

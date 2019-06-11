@@ -29,12 +29,12 @@ public class Organization {
         name = getNameFromId(id);
         places = new ArrayList<>();
     }
-    
+
     private String getNameFromId(String id) {
         String newName;
-        try{ 
+        try {
             newName = id.substring(id.lastIndexOf('.') + 1);
-        } catch(Exception e) {
+        } catch (Exception e) {
             return id;
         }
         return newName;

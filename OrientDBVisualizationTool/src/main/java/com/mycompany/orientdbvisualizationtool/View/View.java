@@ -31,7 +31,7 @@ public abstract class View {
             scene = new Scene(root, WIDTH, WIDTH * AspectRatio.Vertical / AspectRatio.Horizontal);
             scene.getStylesheets().add("styles/01_DefaultStyle.css");
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //needs to change to some sort of error pane
         }
     }
 
@@ -50,7 +50,7 @@ public abstract class View {
     }
 
     /**
-     * 
+     *
      * @return The scene
      */
     public Scene getScene() {

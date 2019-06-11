@@ -36,38 +36,59 @@ import java.util.ArrayList;
  */
 public class MainController extends ParentController {
 
-    @FXML private SplitPane Center_Split_Pane;
-    @FXML private Button Left_Collapse_Button;
-    @FXML private Button Right_Collapse_Button;
-    @FXML private TextField Node_Name_Text_Field;
-    @FXML private TextField Node_ID_Text_Field;
-    @FXML private TextField Node_Type_Text_Field;
-    @FXML private TreeView Left_Tree_View;
-    @FXML private TableColumn Table_View_Entity_ID;
-    @FXML private TableView Table_View;
-    @FXML private Button Hide_Nodes_Button;
-    @FXML private Button Show_All_Nodes_Button;
-    @FXML private Label Left_Status_Label;
-    @FXML private Label Right_Status_Label;
-    @FXML private ChoiceBox Theme_Choice_Box;
-    @FXML private AnchorPane Center_Anchor_Pane;
-    @FXML private TextField Location_Search;
-    @FXML private Button Search_Button;
+    @FXML
+    private SplitPane Center_Split_Pane;
+    @FXML
+    private Button Left_Collapse_Button;
+    @FXML
+    private Button Right_Collapse_Button;
+    @FXML
+    private TextField Node_Name_Text_Field;
+    @FXML
+    private TextField Node_ID_Text_Field;
+    @FXML
+    private TextField Node_Type_Text_Field;
+    @FXML
+    private TreeView Left_Tree_View;
+    @FXML
+    private TableColumn Table_View_Entity_ID;
+    @FXML
+    private TableView Table_View;
+    @FXML
+    private Button Hide_Nodes_Button;
+    @FXML
+    private Button Show_All_Nodes_Button;
+    @FXML
+    private Label Left_Status_Label;
+    @FXML
+    private Label Right_Status_Label;
+    @FXML
+    private ChoiceBox Theme_Choice_Box;
+    @FXML
+    private AnchorPane Center_Anchor_Pane;
+    @FXML
+    private TextField Location_Search;
+    @FXML
+    private Button Search_Button;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
-    private Double mouseSourceX = 0.;
-    private Double mouseSourceY = 0.;
+    private Double mouseSourceX;
+    private Double mouseSourceY;
     private Rectangle selectionArea;
     private PlaceManager placeManager;
     private static final int WIDTH = MainView.getWIDTH();
+    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
 
     /**
      * The main default properties of controller are initialized
      */
-    @FXML public void initialize() {
+    @FXML
+    public void initialize() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+        mouseSourceX = 0.;
+        mouseSourceY = 0.;
 
         Node_Name_Text_Field.setDisable(true);
         Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
@@ -160,9 +181,9 @@ public class MainController extends ParentController {
     }
 
     /**
-     * Action taken when mouse dragged in center anchor pane
-     * Action taken when mouse pressed in center anchor pane
-     * Action taken when mouse released in center anchor pane
+     * Action taken when mouse dragged in center anchor pane Action taken when
+     * mouse pressed in center anchor pane Action taken when mouse released in
+     * center anchor pane
      */
     private void setCenterAnchorMouseProperties() {
         Center_Anchor_Pane.setOnMouseDragged(new CenterPaneDraggedAction(Center_Anchor_Pane, selectionArea, this));
@@ -200,10 +221,9 @@ public class MainController extends ParentController {
         Center_Anchor_Pane.layout();
     }
 
-    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
-
     /**
-     * Sets the fields of a node/place object when the node is selected (to be shown on right panel).
+     * Sets the fields of a node/place object when the node is selected (to be
+     * shown on right panel).
      *
      * @param node has properties to be shown.
      */
@@ -248,8 +268,9 @@ public class MainController extends ParentController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items are added
-     * @param searchKey   the string to search for
+     * @param sourceItem a source treeView-item to which children treeView-items
+     * are added
+     * @param searchKey the string to search for
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem, String searchKey) {
@@ -370,11 +391,12 @@ public class MainController extends ParentController {
 
     /**
      * shows the about dialogue for the program.
+     *
      * @param actionEvent for the 'About' menu item.
      */
     public void showAboutVisTool(ActionEvent actionEvent) {
-        String aboutContent = "A tool to visualize the hierarchical data from Sustainable Buildings.\n\n" +
-                "Authors:\nNiels Bugel\nAlbert Dijkstra\nCarlos Isasa\nEmanuel Nae\nYona Moreda\n";
+        String aboutContent = "A tool to visualize the hierarchical data from Sustainable Buildings.\n\n"
+                + "Authors:\nNiels Bugel\nAlbert Dijkstra\nCarlos Isasa\nEmanuel Nae\nYona Moreda\n";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, aboutContent, ButtonType.OK);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image("/icons/sb-icon.png"));

@@ -1,6 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.controller.TableViewAction;
 
-
 import com.mycompany.orientdbvisualizationtool.model.Entity;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
@@ -20,6 +19,7 @@ public class TableViewItemClickedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param table_View the table on which action is performed on
      */
     public TableViewItemClickedAction(TableView table_View) {
@@ -27,7 +27,9 @@ public class TableViewItemClickedAction implements EventHandler<MouseEvent> {
     }
 
     /**
-     * Entity details are displayed as an entity item is double clicked in table view.
+     * Entity details are displayed as an entity item is double clicked in table
+     * view.
+     *
      * @param event mouse event for action
      */
     @Override
@@ -40,8 +42,8 @@ public class TableViewItemClickedAction implements EventHandler<MouseEvent> {
             stage.getIcons().add(new Image("/icons/sb-icon.png"));
             alert.setTitle("Entity Information");
             alert.setHeaderText("Entity details");
-            alert.setContentText("Entity ID:\n" + entity.getId() + "\n\nEntity Description:" +
-                    getEntityDescription(entity));
+            alert.setContentText("Entity ID:\n" + entity.getId() + "\n\nEntity Description:"
+                    + getEntityDescription(entity));
             ImageView imageView = new ImageView(new Image("/icons/sensor-icon.png"));
             imageView.setFitHeight(64);
             imageView.setFitWidth(64);
@@ -49,7 +51,7 @@ public class TableViewItemClickedAction implements EventHandler<MouseEvent> {
             alert.showAndWait();
         }
     }
-    
+
     private String getEntityDescription(Entity entity) {
         String entityDescription = "";
         entity.loadAttributes();

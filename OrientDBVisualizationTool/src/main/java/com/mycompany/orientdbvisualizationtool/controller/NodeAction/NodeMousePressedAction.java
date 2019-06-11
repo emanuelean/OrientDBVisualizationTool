@@ -13,6 +13,7 @@ public class NodeMousePressedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param node for setting selection when mouse pressed
      */
     public NodeMousePressedAction(Node node) {
@@ -21,6 +22,7 @@ public class NodeMousePressedAction implements EventHandler<MouseEvent> {
 
     /**
      * Node is selected when mouse pressed
+     *
      * @param event event for setting selection
      */
     @Override

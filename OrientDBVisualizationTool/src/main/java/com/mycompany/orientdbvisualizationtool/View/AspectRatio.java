@@ -5,7 +5,13 @@ package com.mycompany.orientdbvisualizationtool.View;
  */
 public class AspectRatio {
 
+    /**
+     * horizontal ratio part
+     */
     public static int Horizontal = 16;
+    /**
+     * vertical ratio part
+     */
     public static int Vertical = 9;
 
 }
