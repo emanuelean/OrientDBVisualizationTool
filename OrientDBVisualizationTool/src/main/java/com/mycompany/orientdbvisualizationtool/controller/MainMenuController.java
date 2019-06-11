@@ -76,13 +76,13 @@ public class MainMenuController extends ParentController {
         organizationManager = OrganizationManager.getInstance();
         initLocationTreeView();
         populateOrganizationTreeView();
+        setThemeChoiceBoxProperty();
 
         Properties_Table.setPrefWidth(240);
         Properties_Table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         Table_View_PropertyKey.setCellValueFactory(new PropertyValueFactory<Property, String>("key"));
         Table_View_PropertyValue.setCellValueFactory(new PropertyValueFactory<Property, String>("value"));
         Properties_Table.setItems(propertiesTable);
-        setThemeChoiceBoxProperty();
     }
 
     /**
@@ -119,7 +119,7 @@ public class MainMenuController extends ParentController {
      * Setting the check choice box property to enable different themes
      */
     private void setThemeChoiceBoxProperty() {
-        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(null, Theme_Choice_Box));
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Theme_Choice_Box));
     }
 
     /**

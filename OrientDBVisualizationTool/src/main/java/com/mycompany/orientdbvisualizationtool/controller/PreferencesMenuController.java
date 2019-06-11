@@ -137,7 +137,7 @@ public class PreferencesMenuController {
         Cancel_Button.setOnAction(event -> {
             Alert alert = getAlert("Return to main application without saving?", "");
             if (alert.getResult() == ButtonType.YES) {
-                VisApplication.getInstance().changeToMain();
+                VisApplication.getInstance().changeToMenu();
             } else if (alert.getResult() == ButtonType.NO) {
                 try {
                     saveThemeDialog();

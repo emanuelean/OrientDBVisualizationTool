@@ -149,7 +149,7 @@ public class MainController extends ParentController {
      * Setting the check choice box property to enable different themes
      */
     private void setThemeChoiceBoxProperty() {
-        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Center_Anchor_Pane, Theme_Choice_Box));
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Theme_Choice_Box));
     }
 
     /**

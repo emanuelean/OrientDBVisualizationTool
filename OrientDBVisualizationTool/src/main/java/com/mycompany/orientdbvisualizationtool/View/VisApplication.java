@@ -1,6 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.View;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -65,6 +66,10 @@ public class VisApplication extends Application {
         primaryStage.setScene(menuView.getScene());
         primaryStage.setResizable(true);
         primaryStage.show();
+    }
+    
+    public Scene getScene() {
+        return primaryStage.getScene();
     }
 
     /**

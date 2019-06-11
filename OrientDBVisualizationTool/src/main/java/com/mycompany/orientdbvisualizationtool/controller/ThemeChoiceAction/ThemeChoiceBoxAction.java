@@ -1,30 +1,28 @@
 package com.mycompany.orientdbvisualizationtool.controller.ThemeChoiceAction;
 
+import com.mycompany.orientdbvisualizationtool.View.View;
 import com.mycompany.orientdbvisualizationtool.View.VisApplication;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.layout.AnchorPane;
 
 import java.io.File;
 import java.util.Objects;
+import javafx.scene.Scene;
 
 /**
  * Action taken when theme choice box is used/clicked.
  */
 public class ThemeChoiceBoxAction implements ChangeListener<Number> {
 
-    private AnchorPane Center_Anchor_Pane;
     private ChoiceBox Theme_Choice_Box;
 
     /**
      * constructor
      *
-     * @param Center_Anchor_Pane anchor pane to which theme adjustments are made to.
      * @param Theme_Choice_Box   choice box that contains options for different themes.
      */
-    public ThemeChoiceBoxAction(AnchorPane Center_Anchor_Pane, ChoiceBox Theme_Choice_Box) {
-        this.Center_Anchor_Pane = Center_Anchor_Pane;
+    public ThemeChoiceBoxAction(ChoiceBox Theme_Choice_Box) {
         this.Theme_Choice_Box = Theme_Choice_Box;
         setThemeChoiceBoxProperty();
     }
@@ -48,8 +46,9 @@ public class ThemeChoiceBoxAction implements ChangeListener<Number> {
     public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
         if (newValue.intValue() != 5) {
             File folder = new File(getClass().getResource("/styles").getPath());
-            Center_Anchor_Pane.getScene().getStylesheets().remove("styles/" + Objects.requireNonNull(folder.listFiles())[oldValue.intValue()].getName());
-            Center_Anchor_Pane.getScene().getStylesheets().add("styles/" + Objects.requireNonNull(folder.listFiles())[newValue.intValue()].getName());
+            Scene currentScene = VisApplication.getInstance().getScene();
+            currentScene.getStylesheets().remove("styles/" + Objects.requireNonNull(folder.listFiles())[oldValue.intValue()].getName());
+            currentScene.getStylesheets().add("styles/" + Objects.requireNonNull(folder.listFiles())[newValue.intValue()].getName());
         } else {
             VisApplication.getInstance().changeToPreferences();
         }
