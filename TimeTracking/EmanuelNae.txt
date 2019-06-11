@@ -80,3 +80,81 @@
 01/04 - slides presentation
 01/04 - try solve issues
 01/04 - hand in
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+02/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation preparation
+03/04 - presentation
+03/04 - presentation
+07/04 - tree view bugs
+07/04 - tree view bugs
+07/04 - tree view bugs
+07/04 - tree view bugs
+07/04 - tree view bugs
+07/04 - tree view bugs
+12/04 - meeting
+12/04 - meeting
+14/04 - client
+14/04 - client
+18/04 - meeting
+18/04 - meeting
+20/04 - dependencies
+20/04 - dependencies
+20/04 - dependencies
+20/04 - dependencies
+22/04 - fix Intellij
+22/04 - fix Intellij
+22/04 - fix Intellij
+22/04 - fix Intellij
+22/04 - fix Intellij
+22/04 - fix Intellij
+25/04 - meeting
+25/04 - meeting
+26/04 - docs
+26/04 - docs
+02/05 - layout
+02/05 - layout
+02/05 - layout
+02/05 - layout
+02/05 - layout
+02/05 - layout
+06/05 - client
+06/05 - client
+14/05 - docs
+14/05 - docs
+14/05 - docs
+14/05 - docs
+18/05 - refactoring
+18/05 - refactoring
+18/05 - refactoring
+18/05 - refactoring
+18/05 - refactoring
+18/05 - refactoring
+24/05 - docs
+24/05 - docs
+24/05 - docs
+24/05 - docs
+25/05 - diagrams
+25/05 - diagrams
+25/05 - diagrams
+25/05 - diagrams
+25/05 - diagrams
+25/05 - diagrams
+01/06 - slides
+01/06 - slides
+01/06 - slides
+01/06 - slides
+01/06 - slides
+01/06 - slides
+03/06 - slides
+03/06 - slides
+04/06 - presentation doc
+04/06 - presentation doc
+04/06 - presentation meeting
+04/06 - presentation meeting
+05/06 - presentations
+05/06 - presentations
+05/06 - presentations
+05/06 - presentations
