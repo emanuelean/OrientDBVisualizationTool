@@ -36,6 +36,10 @@
     -fx-text-fill: white;
 }
 
+.NodeLabel #NodeLabel {
+    -fx-fill: #000000;
+}
+
 .label {
     -fx-text-fill: whitesmoke;
 }
@@ -53,9 +57,6 @@
     -fx-stroke: darkgray;
 }
 
-#NodeLabel {
-    -fx-fill: #000000;
-}
 
 #Edge{
     -fx-stroke: #a2a296;

@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -67,21 +68,27 @@ public class MainController extends ParentController {
     private AnchorPane Center_Anchor_Pane;
     @FXML
     private TextField Location_Search;
+    @FXML
+    private Button Search_Button;
 
     private ArrayList<Node> nodes;
     private ArrayList<Edge> edges;
-    private Double mouseSourceX = 0.;
-    private Double mouseSourceY = 0.;
+    private Double mouseSourceX;
+    private Double mouseSourceY;
     private Rectangle selectionArea;
     private PlaceManager placeManager;
     private static final int WIDTH = MainView.getWIDTH();
+    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
 
     /**
      * The main default properties of controller are initialized
      */
-    @FXML public void initialize() {
+    @FXML
+    public void initialize() {
         nodes = new ArrayList<>();
         edges = new ArrayList<>();
+        mouseSourceX = 0.;
+        mouseSourceY = 0.;
 
         Node_Name_Text_Field.setDisable(true);
         Node_Name_Text_Field.setStyle("-fx-opacity: 1;");
@@ -97,7 +104,7 @@ public class MainController extends ParentController {
         Center_Anchor_Pane.layout();
 
         Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
-        Center_Anchor_Pane.setPrefHeight(WIDTH * 9 / 16);
+        Center_Anchor_Pane.setPrefHeight(WIDTH * AspectRatio.Vertical / AspectRatio.Horizontal);
         Center_Anchor_Pane.setId("Center_Anchor_Pane");
 
         setCenterAnchorMouseProperties();
@@ -107,16 +114,17 @@ public class MainController extends ParentController {
         setThemeChoiceBoxProperty();
         zoomFunction();
 
-        Location_Search.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            populateTreeView(newValue);
-        });
+        Location_Search.setOnAction(event -> populateTreeView(Location_Search.getText()));
+        Search_Button.setOnAction(event -> populateTreeView(Location_Search.getText()));
     }
 
     /**
      * Buttons for collapsing left and right panels are set up.
      */
     private void setCollapseButtons() {
+        SplitPane.setResizableWithParent(Center_Split_Pane.getItems().get(0), Boolean.FALSE);
+        SplitPane.setResizableWithParent(Center_Split_Pane.getItems().get(2), Boolean.FALSE);
+
         AnchorPane left_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(0);
         AnchorPane right_Anchor_Pane = (AnchorPane) Center_Split_Pane.getItems().get(2);
 
@@ -141,7 +149,7 @@ public class MainController extends ParentController {
      * Setting the check choice box property to enable different themes
      */
     private void setThemeChoiceBoxProperty() {
-        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Center_Anchor_Pane, Theme_Choice_Box));
+        Theme_Choice_Box.getSelectionModel().selectedIndexProperty().addListener(new ThemeChoiceBoxAction(Theme_Choice_Box));
     }
 
     /**
@@ -173,9 +181,9 @@ public class MainController extends ParentController {
     }
 
     /**
-     * Action taken when mouse dragged in center anchor pane
-     * Action taken when mouse pressed in center anchor pane
-     * Action taken when mouse released in center anchor pane
+     * Action taken when mouse dragged in center anchor pane Action taken when
+     * mouse pressed in center anchor pane Action taken when mouse released in
+     * center anchor pane
      */
     private void setCenterAnchorMouseProperties() {
         Center_Anchor_Pane.setOnMouseDragged(new CenterPaneDraggedAction(Center_Anchor_Pane, selectionArea, this));
@@ -198,10 +206,9 @@ public class MainController extends ParentController {
     public void addRootNodeToPane() {
         Place rootPlace = placeManager.getRoot();
         String id = rootPlace.getId();
-        String name = rootPlace.getName();
         String type = rootPlace.getType().toString();
         String displayName = rootPlace.toString();
-        Node rootNode = new Node(id, name, type, displayName, this);
+        Node rootNode = new Node(id, type, displayName, this);
         nodes.add(rootNode);
 
         VBox rootVBox = new VBox(15);
@@ -214,33 +221,32 @@ public class MainController extends ParentController {
         Center_Anchor_Pane.layout();
     }
 
-    private final ObservableList<Entity> tableViewObserveData = FXCollections.observableArrayList();
-
     /**
-     * Sets the fields of a node/place object when the node is selected (to be shown on right panel).
+     * Sets the fields of a node/place object when the node is selected (to be
+     * shown on right panel).
      *
      * @param node has properties to be shown.
      */
     public void showSelectedNodeDetails(Node node) {
-        Place nodePlace = placeManager.getPlace(node.getNodeId());
+        if (!node.getNodeId().equals("Show more node")) {
+            Place nodePlace = placeManager.getPlace(node.getNodeId());
 
-        //setting the text fields on right panel
-        Node_Name_Text_Field.setText(nodePlace.getShortName());
-        Node_ID_Text_Field.setText(nodePlace.getId());
-        Node_Type_Text_Field.setText(nodePlace.getType().toString());
+            //setting the text fields on right panel
+            Node_Name_Text_Field.setText(nodePlace.getShortName());
+            Node_ID_Text_Field.setText(nodePlace.getId());
+            Node_Type_Text_Field.setText(nodePlace.getType().toString());
 
-        //setting the status bar contents
-        Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
-        Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
-        Left_Status_Label.setText("/" + nodePlace.getPath());
-        Right_Status_Label.setText(nodePlace.getChildren().size() + " | children  ");
+            //setting the status bar contents
+            Left_Status_Label.setTooltip(new Tooltip("Path to the currently selected place"));
+            Left_Status_Label.setGraphic(iconize(nodePlace.getType()));
+            Left_Status_Label.setText("/" + nodePlace.getPath());
+            Right_Status_Label.setText(nodePlace.getChildren().size() + " | children  ");
 
-        tableViewObserveData.clear();
-        PlaceManager placeManager = PlaceManager.getInstance();
-        Place place = placeManager.getPlace(node.getNodeId());
-        place.loadEntities();
-        ArrayList<Entity> placeEntities = place.getEntities();
-        tableViewObserveData.addAll(placeEntities);
+            tableViewObserveData.clear();
+            nodePlace.loadEntities();
+            ArrayList<Entity> placeEntities = nodePlace.getEntities();
+            tableViewObserveData.addAll(placeEntities);
+        }
     }
 
     /**
@@ -262,15 +268,16 @@ public class MainController extends ParentController {
      * function for populateTreeView();
      *
      * @param sourcePlace source Place to create a parent treeView item
-     * @param sourceItem  a source treeView-item to which children treeView-items are added
+     * @param sourceItem a source treeView-item to which children treeView-items
+     * are added
      * @param searchKey the string to search for
      * @return source tree item populated with children tree items
      */
     private TreeItem recursePopulateTreeView(Place sourcePlace, TreeItem sourceItem, String searchKey) {
         if (sourcePlace.getChildren().isEmpty()) {
-            if(sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase())){
+            if (sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase())) {
                 return sourceItem;
-            }else{
+            } else {
                 return null;
             }
         }
@@ -280,12 +287,12 @@ public class MainController extends ParentController {
             childItem.setExpanded(true);
             TreeItem children = recursePopulateTreeView(place, childItem, searchKey);
 
-            if(children != null || place.toString().toLowerCase().contains(searchKey.toLowerCase())){
+            if (children != null || place.toString().toLowerCase().contains(searchKey.toLowerCase())) {
                 sourceItem.getChildren().add(children);
                 childItem.setGraphic(iconize(place.getType()));
             }
         }
-        if(sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase()) || !sourceItem.getChildren().isEmpty()){
+        if (sourcePlace.toString().toLowerCase().contains(searchKey.toLowerCase()) || !sourceItem.getChildren().isEmpty()) {
             return sourceItem;
         }
         return null;
@@ -293,6 +300,7 @@ public class MainController extends ParentController {
 
     /**
      * populates the tree view with data from model
+     *
      * @param searchKey the string to search for
      */
     public void populateTreeView(String searchKey) {
@@ -350,7 +358,51 @@ public class MainController extends ParentController {
         this.mouseSourceY = mouseSourceY;
     }
 
+    /**
+     * opens the preferences window
+     *
+     * @param actionEvent for preferences menu item
+     */
     public void openPreferences(ActionEvent actionEvent) {
         VisApplication.getInstance().changeToPreferences();
+    }
+
+    /**
+     * select all nodes
+     *
+     * @param actionEvent for select all menu item
+     */
+    public void selectAllNodes(ActionEvent actionEvent) {
+        for (Node node : nodes) {
+            node.setSelected(true);
+        }
+    }
+
+    /**
+     * unselect all nodes
+     *
+     * @param actionEvent for un select all menu item
+     */
+    public void unselectAllNodes(ActionEvent actionEvent) {
+        for (Node node : nodes) {
+            node.setSelected(false);
+        }
+    }
+
+    /**
+     * shows the about dialogue for the program.
+     *
+     * @param actionEvent for the 'About' menu item.
+     */
+    public void showAboutVisTool(ActionEvent actionEvent) {
+        String aboutContent = "A tool to visualize the hierarchical data from Sustainable Buildings.\n\n"
+                + "Authors:\nNiels Bugel\nAlbert Dijkstra\nCarlos Isasa\nEmanuel Nae\nYona Moreda\n";
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, aboutContent, ButtonType.OK);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image("/icons/sb-icon.png"));
+        alert.setHeaderText("OrientDB Visualization Tool 2019\n");
+        alert.setTitle("ABOUT");
+        alert.setHeight(450);
+        alert.showAndWait();
     }
 }

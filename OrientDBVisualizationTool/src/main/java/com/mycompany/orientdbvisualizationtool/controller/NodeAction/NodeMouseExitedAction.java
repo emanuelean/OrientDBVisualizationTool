@@ -14,6 +14,7 @@ public class NodeMouseExitedAction implements EventHandler<MouseEvent> {
 
     /**
      * constructor
+     *
      * @param node to be handled with mouse exited event
      */
     public NodeMouseExitedAction(Node node) {
@@ -22,6 +23,7 @@ public class NodeMouseExitedAction implements EventHandler<MouseEvent> {
 
     /**
      * Node is no longer highlighted when exited
+     *
      * @param event for mouse exited.
      */
     @Override

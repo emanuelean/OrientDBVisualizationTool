@@ -56,20 +56,4 @@ public class Edge extends Line {
     public Node getSecondNode() {
         return secondNode;
     }
-
-    /**
-     *
-     * @param firstNode start node of edge line
-     */
-    public void setFirstNode(Node firstNode) {
-        this.firstNode = firstNode;
-    }
-
-    /**
-     *
-     * @param secondNode end node of edge line
-     */
-    public void setSecondNode(Node secondNode) {
-        this.secondNode = secondNode;
-    }
 }

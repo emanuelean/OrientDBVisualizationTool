@@ -19,7 +19,7 @@
 }
 
 .label {
-    -fx-text-fill: #f6f1f1;
+    -fx-text-fill: #000000;
 }
 
 .text-input:focused {

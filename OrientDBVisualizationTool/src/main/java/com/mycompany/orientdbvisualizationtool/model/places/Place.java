@@ -6,7 +6,6 @@ import com.mycompany.orientdbvisualizationtool.model.Entity;
 import com.tinkerpop.blueprints.Vertex;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Super class for places Contains all the functionality for locations,
@@ -201,37 +200,37 @@ public abstract class Place {
     }
 
     /**
-     * 
+     *
      * @return The attributes of a place
      */
     public PlaceAttributes getAttributes() {
         return attributes;
     }
-    
+
     /**
      * Loads the attributes for this place
      */
     public void loadAttributes() {
-        if(attributes == null) {
+        if (attributes == null) {
             attributes = DatabaseManager.getInstance().getPlaceData().getAttributes(this);
         }
     }
-    
+
     /**
      * Checks if this place is equal to an object
-     * 
+     *
      * @param o The object this place is compared to
      * @return Whether or not this place is equal to the object
      */
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Place) {
+        if (o instanceof Place) {
             Place p = (Place) o;
-            if(p.getId().equals(id) && p.getName().equals(name)) {
+            if (p.getId().equals(id) && p.getName().equals(name)) {
                 return true;
             }
         }
         return false;
     }
-    
+
 }

@@ -4,7 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 
-
 /**
  * Class that defines action taken when left collapse button is clicked.
  */
@@ -12,6 +11,7 @@ public class LeftCollapseButtonAction extends CollapseButtonAction {
 
     /**
      * constructor for collapse button for left pane
+     *
      * @param Collapse_Button button for collapsing pane
      * @param Split_Pane pane containing the pane that is to be collapsed
      * @param Collapse_Anchor_Pane pane to be collapsed/expanded

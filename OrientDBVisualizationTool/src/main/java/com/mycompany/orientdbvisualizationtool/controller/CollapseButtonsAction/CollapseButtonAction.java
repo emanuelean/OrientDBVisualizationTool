@@ -66,7 +66,7 @@ public abstract class CollapseButtonAction {
     /**
      * Expands the menu
      *
-     * @param textSymbol The symbol that should be printed on the footer
+     * @param symbol The symbol that should be printed on the footer
      * @param dividerLocation The location of the divider for the menu
      */
     private void splitPaneAdd(String symbol, double dividerLocation) {
@@ -86,7 +86,7 @@ public abstract class CollapseButtonAction {
     /**
      * Adds items to the anchor pane
      *
-     * @param textSymbol The symbol that is used to determine which size to add
+     * @param symbol The symbol that is used to determine which size to add
      */
     private void addToAnchorPane(String symbol) {
         if (symbol.equals("▶")) {
@@ -100,7 +100,7 @@ public abstract class CollapseButtonAction {
     /**
      * Collapses the menu
      *
-     * @param textSymbol The symbol that should be printed on the footer
+     * @param symbol The symbol that should be printed on the footer
      * @param dividerLocation The location of the divider for the menu
      */
     private void splitPaneRemove(String symbol, double dividerLocation) {

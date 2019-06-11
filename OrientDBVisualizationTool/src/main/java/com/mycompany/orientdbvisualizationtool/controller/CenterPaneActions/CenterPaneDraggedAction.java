@@ -14,15 +14,17 @@ public class CenterPaneDraggedAction implements EventHandler<MouseEvent> {
 
     private AnchorPane Center_Anchor_Pane;
     private Rectangle selectionArea;
+    private MainController controller;
     private Double mouseSourceX;
     private Double mouseSourceY;
-    private MainController controller;
 
     /**
      * constructor
+     *
      * @param Center_Anchor_Pane anchor to which the mouse drag event occurs
      * @param selectionArea rectangle drawn to represent an area selection
-     * @param controller mainController class containing the source mouse pressed x and y properties
+     * @param controller mainController class containing the source mouse
+     * pressed x and y properties
      */
     public CenterPaneDraggedAction(AnchorPane Center_Anchor_Pane, Rectangle selectionArea, MainController controller) {
         this.Center_Anchor_Pane = Center_Anchor_Pane;

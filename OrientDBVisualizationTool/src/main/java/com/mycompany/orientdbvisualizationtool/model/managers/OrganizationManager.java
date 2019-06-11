@@ -73,7 +73,7 @@ public class OrganizationManager {
 
     /**
      * Retrieves an organization based on an id
-     * 
+     *
      * @param id The id of the organization
      * @return The organization
      */

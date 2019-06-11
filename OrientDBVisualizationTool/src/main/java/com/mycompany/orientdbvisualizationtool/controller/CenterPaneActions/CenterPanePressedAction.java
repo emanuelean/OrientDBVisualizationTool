@@ -17,7 +17,8 @@ public class CenterPanePressedAction implements EventHandler<MouseEvent> {
 
     /**
      *
-     * @param controller main controller class that contains source mouse x and y for mouse pressed
+     * @param controller main controller class that contains source mouse x and
+     * y for mouse pressed
      * @param nodes list of nodes for keeping track of selection/deselection
      */
     public CenterPanePressedAction(MainController controller, ArrayList<Node> nodes) {

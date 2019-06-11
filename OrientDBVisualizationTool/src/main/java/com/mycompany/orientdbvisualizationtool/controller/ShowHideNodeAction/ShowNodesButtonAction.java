@@ -17,6 +17,7 @@ public class ShowNodesButtonAction implements EventHandler<ActionEvent> {
 
     /**
      * constructor
+     *
      * @param nodes list of nodes for keeping track of selection/deselection
      * @param edges list of edges for keeping track of selection/deselection
      */
@@ -27,6 +28,7 @@ public class ShowNodesButtonAction implements EventHandler<ActionEvent> {
 
     /**
      * shows hidden nodes by setting their visibility to true.
+     *
      * @param event action event for button
      */
     @Override
