@@ -2,7 +2,12 @@ package com.mycompany.orientdbvisualizationtool.View;
 
 import com.mycompany.orientdbvisualizationtool.controller.PreferencesMenuController;
 
-public class ApperancePrefView extends View {
+/**
+ * Used for the preference view appearance
+ * 
+ * @author Yona
+ */
+public class AppearancePrefView extends View {
 
     private PreferencesMenuController controller;
 
@@ -10,11 +15,16 @@ public class ApperancePrefView extends View {
      * Constructor
      *
      */
-    public ApperancePrefView() {
+    public AppearancePrefView() {
         super("fxml/PreferencesMenu.fxml");
         controller = fxmlLoader.getController();
     }
 
+    /**
+     * sets the controller for the view
+     *
+     * @return controller
+     */
     public PreferencesMenuController getController() {
         return controller;
     }

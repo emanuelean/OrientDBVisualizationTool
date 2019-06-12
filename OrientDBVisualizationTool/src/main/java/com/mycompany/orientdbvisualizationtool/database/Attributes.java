@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Class that can retrieve and save the attributes of a certain vertex
- * 
+ *
  * @author Niels, Albert, Carlos
  */
 public class Attributes {
@@ -31,9 +31,9 @@ public class Attributes {
      * @param keys The list of property keys we want to try to add
      */
     protected void addProperties(Vertex v, String[] keys) {
-        for (int i = 0; i < keys.length; i++) {
-            if (hasProperty(keys[i], v)) {
-                Property prop = new Property(keys[i], v.getProperty(keys[i]));
+        for (String key : keys) {
+            if (hasProperty(key, v)) {
+                Property prop = new Property(key, v.getProperty(key));
                 properties.add(prop);
             }
         }

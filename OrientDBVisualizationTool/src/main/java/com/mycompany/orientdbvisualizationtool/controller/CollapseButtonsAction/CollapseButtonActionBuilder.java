@@ -19,7 +19,7 @@ public class CollapseButtonActionBuilder {
      * setting the Collapse_Button
      *
      * @param collapse_button button that collapses panel
-     * @return
+     * @return builder with collapse_button
      */
     public CollapseButtonActionBuilder setCollapse_Button(Button collapse_button) {
         this.collapse_button = collapse_button;
@@ -30,7 +30,7 @@ public class CollapseButtonActionBuilder {
      * setting the split_pane
      *
      * @param split_pane container for the panel to be collapsed
-     * @return
+     * @return builder with split_pane set
      */
     public CollapseButtonActionBuilder setSplit_Pane(SplitPane split_pane) {
         this.split_pane = split_pane;
@@ -40,8 +40,9 @@ public class CollapseButtonActionBuilder {
     /**
      * setting collapse_anchor_pane
      *
-     * @param collapse_anchor_pane the isLeft or right pane that is to be collapsed
-     * @return
+     * @param collapse_anchor_pane the isLeft or right pane that is to be
+     * collapsed
+     * @return builder with collapse_anchor_pane set
      */
     public CollapseButtonActionBuilder setCollapse_Anchor_Pane(AnchorPane collapse_anchor_pane) {
         this.collapse_anchor_pane = collapse_anchor_pane;
@@ -51,9 +52,9 @@ public class CollapseButtonActionBuilder {
     /**
      * setting the center_anchor_pane
      *
-     * @param center_anchor_pane the pane on the center that adjusts size accordingly to the
-     *                           collapse or expansion of isLeft/right pane
-     * @return
+     * @param center_anchor_pane the pane on the center that adjusts size
+     * accordingly to the collapse or expansion of isLeft/right pane
+     * @return builder with Center_anchor_pane set
      */
     public CollapseButtonActionBuilder setCenter_Anchor_Pane(AnchorPane center_anchor_pane) {
         this.center_anchor_pane = center_anchor_pane;
@@ -63,8 +64,8 @@ public class CollapseButtonActionBuilder {
     /**
      * setting the isLeft parameter
      *
-     * @param isLeft boolean to distinguish betten isLeft or right panel.
-     * @return
+     * @param isLeft boolean to distinguish between isLeft or right panel.
+     * @return setting isLeft
      */
     public CollapseButtonActionBuilder setIsLeft(Boolean isLeft) {
         this.isLeft = isLeft;
@@ -74,7 +75,7 @@ public class CollapseButtonActionBuilder {
     /**
      * the creation of the CollapseButtonAction
      *
-     * @return
+     * @return a collapse button action for left/right
      */
     public CollapseButtonAction createCollapseButtonAction() {
         if (isLeft) {
@@ -86,20 +87,23 @@ public class CollapseButtonActionBuilder {
         }
     }
 
+    /**
+     * validates if the action built has all the required fields
+     */
     private void validate() {
         if (isLeft == null) {
             throw new IllegalStateException("Parameter isLeft is not set and is required for build.");
         }
-        if(collapse_button == null) {
+        if (collapse_button == null) {
             throw new IllegalStateException("Parameter collapse_button is not set and is required for build.");
         }
-        if(split_pane == null) {
+        if (split_pane == null) {
             throw new IllegalStateException("Parameter split_pane is not set and is required for build.");
         }
-        if(collapse_anchor_pane == null) {
+        if (collapse_anchor_pane == null) {
             throw new IllegalStateException("Parameter collapse_anchor_pane is not set and is required for build.");
         }
-        if(center_anchor_pane == null) {
+        if (center_anchor_pane == null) {
             throw new IllegalStateException("Parameter center_anchor_pane is not set and is required for build.");
         }
     }

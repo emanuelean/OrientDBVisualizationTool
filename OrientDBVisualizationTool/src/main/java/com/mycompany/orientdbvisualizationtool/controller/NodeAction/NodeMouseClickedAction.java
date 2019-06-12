@@ -2,6 +2,7 @@ package com.mycompany.orientdbvisualizationtool.controller.NodeAction;
 
 import com.mycompany.orientdbvisualizationtool.View.Edge;
 import com.mycompany.orientdbvisualizationtool.View.Node;
+import com.mycompany.orientdbvisualizationtool.View.ShowMoreNode;
 import com.mycompany.orientdbvisualizationtool.controller.MainController;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
@@ -30,10 +31,10 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
     /**
      * constructor
      *
-     * @param node       node to be clicked on
+     * @param node node to be clicked on
      * @param controller main controller
-     * @param nodes      list for tracking edges when node expanded/contracted
-     * @param edges      list for tracking edges when edges expanded/contracted
+     * @param nodes list for tracking edges when node expanded/contracted
+     * @param edges list for tracking edges when edges expanded/contracted
      */
     public NodeMouseClickedAction(Node node, MainController controller, ArrayList<Node> nodes, ArrayList<Edge> edges) {
         this.node = node;
@@ -44,17 +45,24 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
 
     /**
      * expands a node to add/show the children of the node, if node is not
-     * expanded and contracts a node to remove/hide the children of the node
+     * expanded. Contracts a node to remove/hide the children of the node
      * otherwise.
      *
      * @param parentNode source node for expansion
+     * @param limit the limit to the number of nodes to be displayed on
+     * expansion
      */
-    private void expandContractNode(Node parentNode) {
-        if (!parentNode.isExpanded()) {
-            expandNode(parentNode);
+    private void expandContractNode(Node parentNode, int limit) {
+        if (!parentNode.isExpanded()) {                     //for expanding node
+            expandNode(parentNode, limit);
             parentNode.setExpanded(true);
             clearEdgeLinks();
-        } else {
+        } else if (parentNode.isExpanded() && limit == -1) { //for showing more than limit, flag = -1
+            removeNodeAndChildren(parentNode);
+            expandNode(parentNode, limit);
+            parentNode.setExpanded(true);
+            clearEdgeLinks();
+        } else {                                            //for contracting node
             removeNodeAndChildren(parentNode);
             //if root node
             if (parentNode.getContainerPane().getParent().getParent() instanceof AnchorPane) {
@@ -71,23 +79,33 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
      * expands a nodes to show the children of the node
      *
      * @param parentNode source node for expansion
+     * @param limit the limit to the number of nodes to be displayed on
+     * expansion
      */
-    private void expandNode(Node parentNode) {
+    private void expandNode(Node parentNode, int limit) {
         VBox childrenVBox = parentNode.getChildrenVBox();
         PlaceManager placeManager = PlaceManager.getInstance();
         Place sourcePlace = placeManager.getPlace(parentNode.getNodeId());
         ArrayList<Place> childrenPlaces = sourcePlace.getChildren();
 
+        int i = 0;
         if (!childrenPlaces.isEmpty()) {
             for (Place place : childrenPlaces) {
                 String id = place.getId();
-                String name = place.getName();
                 String type = place.getType().toString();
                 String displayName = place.toString();
-                Node childNode = new Node(id, name, type, displayName, controller);
+                Node childNode = new Node(id, type, displayName, controller);
                 nodes.add(childNode);
                 childrenVBox.getChildren().add(childNode.getContainerPane());
                 childrenVBox.layout();
+                if (limit != -1 && i > limit) {
+                    ShowMoreNode showMoreNode = new ShowMoreNode(controller, childrenPlaces.size() - i);
+                    nodes.add(showMoreNode);
+                    childrenVBox.getChildren().add(showMoreNode.getContainerPane());
+                    childrenVBox.layout();
+                    break;
+                }
+                i++;
             }
         }
         redrawEdges(parentNode);
@@ -179,16 +197,23 @@ public class NodeMouseClickedAction implements EventHandler<MouseEvent> {
     }
 
     /**
-     * Mouse click event handle for expanding/contracting node
+     * Mouse click event handle for expanding/contracting node to a certain
+     * expansion point
      *
      * @param event for mouse clicked
      */
     @Override
     public void handle(MouseEvent event) {
         if (event.getButton().equals(MouseButton.PRIMARY)) {
-            //Double click
-            if (event.getClickCount() == 2) {
-                expandContractNode(node);
+            //ShowMore node is clicked
+            if (node.getNodeId().equals("Show more node")) {
+                VBox childrenVBox = (VBox) node.getContainerPane().getParent();
+                Pane containerPane = (Pane) childrenVBox.getParent();
+                Node showMoreParentNode = (Node) containerPane.getChildren().get(0);
+                expandContractNode(showMoreParentNode, -1);
+            } else if (event.getClickCount() == 2) { //Double click -> expand to a integer limit
+                int expansionLimit = 10;
+                expandContractNode(node, expansionLimit);
             }
         }
     }

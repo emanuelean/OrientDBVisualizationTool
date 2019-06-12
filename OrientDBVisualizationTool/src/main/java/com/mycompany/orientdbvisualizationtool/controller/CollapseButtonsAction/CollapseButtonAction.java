@@ -19,6 +19,7 @@ public abstract class CollapseButtonAction {
 
     /**
      * constructor
+     *
      * @param Collapse_Button button for collapsing pane
      * @param Split_Pane pane containing the pane that is to be collapsed
      * @param Collapse_Anchor_Pane pane to be collapsed/expanded
@@ -38,58 +39,79 @@ public abstract class CollapseButtonAction {
      * Sets up the properties of panel collapse or panel contract button
      */
     private void setPanelCollapseButtonProperty() {
-        if(left) {
-            Collapse_Button.setOnAction(event -> {
-                if (Split_Pane.getItems().contains(Collapse_Anchor_Pane)) {
-                    Split_Pane.getItems().remove(Collapse_Anchor_Pane);
-                    int splitPaneSize = Split_Pane.getItems().size();
-                    if (splitPaneSize == 2) {
-                        Split_Pane.setDividerPosition(0, 0.8);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                    } else if (splitPaneSize == 1) {
-                        Center_Anchor_Pane.setPrefWidth(WIDTH);
-                    }
-                    Collapse_Button.setText("▶");
-                } else {
-                    Split_Pane.getItems().add(0, Collapse_Anchor_Pane);
-                    int splitPaneSize = Split_Pane.getItems().size();
-                    if (splitPaneSize == 2) {
-                        Split_Pane.setDividerPosition(0, 0.2);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                    } else if (splitPaneSize == 3) {
-                        Split_Pane.setDividerPosition(0, 0.2);
-                        Split_Pane.setDividerPosition(1, 0.8);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
-                    }
-                    Collapse_Button.setText("◀");
-                }
-            });
+        if (left) {
+            setCollapseButton("▶", "◀", 0.8);
         } else {
-            Collapse_Button.setOnAction(event -> {
-                if (Split_Pane.getItems().contains(Collapse_Anchor_Pane)) {
-                    Split_Pane.getItems().remove(Collapse_Anchor_Pane);
-                    int splitPaneSize = Split_Pane.getItems().size();
-                    if (splitPaneSize == 2) {
-                        Split_Pane.setDividerPosition(0, 0.2);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                    } else if (splitPaneSize == 1) {
-                        Center_Anchor_Pane.setPrefWidth(WIDTH);
-                    }
-                    Collapse_Button.setText("◀");
-                } else {
-                    Split_Pane.getItems().add(Split_Pane.getItems().size(), Collapse_Anchor_Pane);
-                    int splitPaneSize = Split_Pane.getItems().size();
-                    if (splitPaneSize == 2) {
-                        Split_Pane.setDividerPosition(0, 0.8);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
-                    } else if (splitPaneSize == 3) {
-                        Split_Pane.setDividerPosition(0, 0.2);
-                        Split_Pane.setDividerPosition(1, 0.8);
-                        Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
-                    }
-                    Collapse_Button.setText("▶");
-                }
-            });
+            setCollapseButton("◀", "▶", 0.2);
         }
+    }
+
+    /**
+     * Sets the collapse button
+     *
+     * @param collapseSymbol The symbol that represents collapsing
+     * @param expandSymbol The symbol that represents expanding
+     * @param dividerLocation The location of the divider for the menu
+     */
+    private void setCollapseButton(String collapseSymbol, String expandSymbol, double dividerLocation) {
+        Collapse_Button.setOnAction(event -> {
+            if (Split_Pane.getItems().contains(Collapse_Anchor_Pane)) {
+                splitPaneRemove(collapseSymbol, dividerLocation);
+            } else {
+                splitPaneAdd(expandSymbol, 1 - dividerLocation);
+            }
+        });
+    }
+
+    /**
+     * Expands the menu
+     *
+     * @param symbol The symbol that should be printed on the footer
+     * @param dividerLocation The location of the divider for the menu
+     */
+    private void splitPaneAdd(String symbol, double dividerLocation) {
+        addToAnchorPane(symbol);
+        int splitPaneSize = Split_Pane.getItems().size();
+        if (splitPaneSize == 2) {
+            Split_Pane.setDividerPosition(0, dividerLocation);
+            Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+        } else if (splitPaneSize == 3) {
+            Split_Pane.setDividerPosition(0, 0.2);
+            Split_Pane.setDividerPosition(1, 0.8);
+            Center_Anchor_Pane.setPrefWidth(WIDTH * .60);
+        }
+        Collapse_Button.setText(symbol);
+    }
+
+    /**
+     * Adds items to the anchor pane
+     *
+     * @param symbol The symbol that is used to determine which size to add
+     */
+    private void addToAnchorPane(String symbol) {
+        if (symbol.equals("▶")) {
+            Split_Pane.getItems().add(Split_Pane.getItems().size(), Collapse_Anchor_Pane);
+
+        } else {
+            Split_Pane.getItems().add(0, Collapse_Anchor_Pane);
+        }
+    }
+
+    /**
+     * Collapses the menu
+     *
+     * @param symbol The symbol that should be printed on the footer
+     * @param dividerLocation The location of the divider for the menu
+     */
+    private void splitPaneRemove(String symbol, double dividerLocation) {
+        Split_Pane.getItems().remove(Collapse_Anchor_Pane);
+        int splitPaneSize = Split_Pane.getItems().size();
+        if (splitPaneSize == 2) {
+            Split_Pane.setDividerPosition(0, dividerLocation);
+            Center_Anchor_Pane.setPrefWidth(WIDTH * .80);
+        } else if (splitPaneSize == 1) {
+            Center_Anchor_Pane.setPrefWidth(WIDTH);
+        }
+        Collapse_Button.setText(symbol);
     }
 }

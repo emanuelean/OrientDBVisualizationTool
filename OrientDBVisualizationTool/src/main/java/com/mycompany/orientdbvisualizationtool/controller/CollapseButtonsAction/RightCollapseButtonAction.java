@@ -1,6 +1,5 @@
 package com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction;
 
-import com.mycompany.orientdbvisualizationtool.controller.CollapseButtonsAction.CollapseButtonAction;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
@@ -12,6 +11,7 @@ public class RightCollapseButtonAction extends CollapseButtonAction {
 
     /**
      * constructor for collapse button for right pane
+     *
      * @param Collapse_Button button for collapsing pane
      * @param Split_Pane pane containing the pane that is to be collapsed
      * @param Collapse_Anchor_Pane pane to be collapsed/expanded

@@ -3,15 +3,13 @@ package com.mycompany.orientdbvisualizationtool.model;
 import com.mycompany.orientdbvisualizationtool.model.managers.PlaceManager;
 import com.mycompany.orientdbvisualizationtool.model.places.*;
 import java.lang.reflect.Field;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
+ * Tests for placeManager
+ * 
  * @author Niels
  */
 public class PlaceManagerTest {
@@ -34,18 +32,9 @@ public class PlaceManagerTest {
     private Room roomBBA;
     private Room roomBBB;
 
-    public PlaceManagerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
+    /**
+     * Initialises all the fields
+     */
     @Before
     public void setUp() {
 
@@ -56,7 +45,7 @@ public class PlaceManagerTest {
             instance.set(null, null);
         } catch (Exception ex) {
             ex.printStackTrace();
-        } 
+        }
 
         manager = PlaceManager.getInstance();
 
@@ -75,10 +64,6 @@ public class PlaceManagerTest {
         roomBAB = new Room("L.B.A.B", "BAB");
         roomBBA = new Room("L.B.B.A", "BBA");
         roomBBB = new Room("L.B.B.B", "BBB");
-    }
-
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -157,7 +142,7 @@ public class PlaceManagerTest {
 
         assertEquals(manager.getPlace(buildingA.getId()), buildingA);
         assertNull(buildingA.getParent());
-        
+
         manager.addPlace(floorAA, null);
         manager.addPlace(roomAAB, floorAA);
         assertEquals(manager.getPlace(floorAA.getId()), floorAA);

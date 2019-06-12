@@ -1,5 +1,7 @@
 package com.mycompany.orientdbvisualizationtool.model;
 
+import com.mycompany.orientdbvisualizationtool.database.DatabaseManager;
+import com.mycompany.orientdbvisualizationtool.database.OrganizationAttributes;
 import com.mycompany.orientdbvisualizationtool.model.places.Place;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,9 @@ import java.util.List;
 public class Organization {
 
     private final String id;
+    private final String name;
     private List<Place> places;
+    private OrganizationAttributes attributes;
 
     /**
      * Constructor
@@ -22,7 +26,18 @@ public class Organization {
      */
     public Organization(String id) {
         this.id = id;
+        name = getNameFromId(id);
         places = new ArrayList<>();
+    }
+
+    private String getNameFromId(String id) {
+        String newName;
+        try {
+            newName = id.substring(id.lastIndexOf('.') + 1);
+        } catch (Exception e) {
+            return id;
+        }
+        return newName;
     }
 
     /**
@@ -43,6 +58,14 @@ public class Organization {
     }
 
     /**
+     *
+     * @return The name of the organization
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * Dereferences the list of places
      */
     public void dereferenceAll() {
@@ -55,5 +78,22 @@ public class Organization {
      */
     public List<Place> getPlaces() {
         return places;
+    }
+
+    /**
+     * Loads the attributes for this place
+     */
+    public void loadAttributes() {
+        if (attributes == null) {
+            attributes = DatabaseManager.getInstance().getOrganizationData().getAttributes(this);
+        }
+    }
+
+    /**
+     *
+     * @return The organization attributes
+     */
+    public OrganizationAttributes getAttributes() {
+        return attributes;
     }
 }

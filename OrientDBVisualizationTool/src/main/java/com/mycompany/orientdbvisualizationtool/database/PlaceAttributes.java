@@ -34,14 +34,13 @@ public class PlaceAttributes extends Attributes {
             "name",
             "postal",
             "e-label",
-            "building-type",
-        };
+            "building-type",};
         addProperties(v, keys);
     }
-    
+
     /**
-     * Adds all the properties to the list of properties that have a double/float
-     * values
+     * Adds all the properties to the list of properties that have a
+     * double/float values
      *
      * @param v The vertex we want the properties from
      */

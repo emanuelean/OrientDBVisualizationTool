@@ -9,8 +9,6 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 /**
  * Node represents a vertex in view.
@@ -19,11 +17,8 @@ import javafx.scene.text.Text;
  */
 public class Node extends StackPane {
 
-    private Text label;
-    private String nodeName;
-    private String nodeDisplayName;
+    private NodeLabel nodeLabel;
     private String nodeId;
-    private String nodeType;
     private boolean selected;
     private Rectangle rectangle;
     private Color DEFAULT_COLOR;
@@ -33,31 +28,23 @@ public class Node extends StackPane {
     private VBox childrenVBox;
     private Pane containerPane;
 
-
     /**
      * Constructor
      *
      * @param id The id of the node
-     * @param nodeName The name of the node
      * @param NodeType The type of the node
      * @param displayName The display name of the node
+     * @param controller The controller for this node
      */
-    public Node(String id, String nodeName, String NodeType, String displayName, MainController controller) {
+    public Node(String id, String NodeType, String displayName, MainController controller) {
         this.nodeId = id;
         this.selected = false;
         this.expanded = false;
-        this.nodeName = nodeName;
-        this.nodeType = NodeType;
-        this.nodeDisplayName = displayName;
         this.DEFAULT_COLOR = Color.LIGHTGRAY;
         this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
 
         this.setId("NodeStackPane");
-
-        this.label = new Text(displayName);
-        this.label.setFont(new Font(13));
-        this.label.setId("NodeLabel");
-
+        this.nodeLabel = new NodeLabel(displayName);
         this.mainController = controller;
         this.setRectangleProperty();
         this.setLayoutProperties();
@@ -81,7 +68,6 @@ public class Node extends StackPane {
         this.containerPane = new Pane();
         this.containerPane.getChildren().addAll(this, childrenVBox);
         this.containerPane.layout();
-
     }
 
     /**
@@ -90,26 +76,13 @@ public class Node extends StackPane {
     private void setRectangleProperty() {
         //rounded rectangle
         this.rectangle = new Rectangle();
-        this.rectangle.setWidth(label.getLayoutBounds().getWidth() + 30);
+        this.rectangle.setWidth(nodeLabel.getMaxWidth() + 30);
         this.rectangle.setHeight(40.0f);
         this.rectangle.setArcWidth(40);
         this.rectangle.setArcHeight(40);
         this.rectangle.setFill(DEFAULT_COLOR);
         this.rectangle.setStroke(Color.DARKGREY);
         this.rectangle.setId("NodeRectangle");
-    }
-
-    /**
-     * Constructor
-     *
-     * @param id The id of the node
-     * @param nodeName The name of the node
-     * @param NodeType The type of the node
-     */
-    public Node(String id, String nodeName, String NodeType, MainController controller) {
-        this(id, nodeName, NodeType, nodeName, controller);
-        this.DEFAULT_COLOR = Color.LIGHTGRAY;
-        this.DEFAULT_SELECTED_COLOR = Color.LAVENDER;
     }
 
     /**
@@ -129,17 +102,8 @@ public class Node extends StackPane {
      *
      * @return javafx label
      */
-    public Text getLabel() {
-        return label;
-    }
-
-    /**
-     * Adds aa vertical box to a vertical box
-     * @param vBox The vertical box that needs to be added
-     */
-    public void addToVBox(VBox vBox) {
-        vBox.getChildren().add(this);
-        vBox.layout();
+    public NodeLabel getLabel() {
+        return nodeLabel;
     }
 
     /**
@@ -183,38 +147,10 @@ public class Node extends StackPane {
     }
 
     /**
-     * @param vbox The new vertical box
-     */
-    public void setChildrenVBox(VBox vbox) {
-        this.childrenVBox = vbox;
-    }
-
-    /**
      * @return The node id
      */
     public String getNodeId() {
         return nodeId;
-    }
-
-    /**
-     * @return The node name
-     */
-    public String getNodeName() {
-        return nodeName;
-    }
-
-    /**
-     * @return The display name
-     */
-    public String getDisplayName() {
-        return nodeDisplayName;
-    }
-
-    /**
-     * @return The node type
-     */
-    public String getNodeType() {
-        return nodeType;
     }
 
     /**
